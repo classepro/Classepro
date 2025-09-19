@@ -7,29 +7,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --accent: #4cc9f0;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --success: #4bb543;
+            --primary: #FF7E5F;
+            --secondary: #3D3B8E;
+            --accent: #6883BA;
+            --light: #F9F9F9;
+            --dark: #2F2F2F;
+            --success: #4BB543;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --card-shadow: 0 10px 20px rgba(61, 59, 142, 0.15);
+            --hover-shadow: 0 15px 30px rgba(61, 59, 142, 0.25);
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background-color: #f5f7ff;
+            background-color: var(--light);
             color: var(--dark);
             line-height: 1.6;
         }
         
         header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: var(--gradient);
             color: white;
             padding: 1rem;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -111,14 +114,14 @@
             padding: 0 1.5rem;
         }
         
-        /* Styles pour le diaporama - Format paysage sur mobile */
+        /* Styles pour le diaporama */
         .carousel {
             position: relative;
             overflow: hidden;
-            border-radius: 12px;
+            border-radius: 16px;
             height: 400px;
             margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--card-shadow);
         }
         
         .carousel-inner {
@@ -149,7 +152,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(rgba(67, 97, 238, 0.85), rgba(58, 12, 163, 0.85));
+            background: linear-gradient(rgba(61, 59, 142, 0.85), rgba(255, 126, 95, 0.85));
             z-index: 1;
         }
         
@@ -161,13 +164,15 @@
         }
         
         .carousel-item h2 {
-            font-size: 2rem;
+            font-size: 2.2rem;
             margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .carousel-item p {
             font-size: 1.1rem;
             margin-bottom: 2rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
         
         .carousel-controls {
@@ -186,11 +191,12 @@
             background-color: rgba(255, 255, 255, 0.5);
             margin: 0 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
         
         .carousel-indicator.active {
             background-color: white;
+            transform: scale(1.2);
         }
         
         .carousel-nav {
@@ -200,19 +206,21 @@
             background-color: rgba(255, 255, 255, 0.2);
             color: white;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             z-index: 10;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 1.2rem;
         }
         
         .carousel-nav:hover {
             background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
         }
         
         .carousel-prev {
@@ -227,7 +235,7 @@
             display: inline-block;
             background-color: var(--accent);
             color: white;
-            padding: 0.8rem 1.5rem;
+            padding: 0.8rem 1.8rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
@@ -236,48 +244,92 @@
             cursor: pointer;
             z-index: 2;
             position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
         }
         
         .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn:hover::before {
+            left: 100%;
         }
         
         .section-title {
             text-align: center;
             margin-bottom: 2rem;
             color: var(--secondary);
-            font-size: 1.8rem;
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
         }
         
         .exposés {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 1.5rem;
             margin-bottom: 3rem;
         }
         
         .exposé-card {
             background-color: white;
-            border-radius: 12px;
+            border-radius: 14px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: var(--card-shadow);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
         }
         
         .exposé-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--hover-shadow);
         }
         
         .exposé-img {
-            height: 160px;
-            background-color: var(--primary);
+            height: 100px; /* Réduit de 130px à 100px */
+            background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 2.5rem;
+            font-size: 1.5rem; /* Réduit de 2rem à 1.5rem */
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .exposé-img::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' width='80' height='80'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M14 16H9v-2h5V9.87a4 4 0 1 1 2 0V14h5v2h-5v15.95A10 10 0 0 0 23.66 27l-3.46-2 8.2-2.2-2.9 5a12 12 0 0 1-21 0l-2.89-5 8.2 2.2-3.47 2A10 10 0 0 0 14 31.95V16zm40 0h-5v-2h5V9.87a4 4 0 1 1 2 0V14h5v2h-5v15.95A10 10 0 0 0 63.66 27l-3.47-2 8.2-2.2-2.88 5a12 12 0 0 1-21.02 0l-2.88-5 8.2 2.2-3.47 2A10 10 0 0 0 54 31.95V16z'%3E%3C/path%3E%3C/svg%3E");
+            opacity: 0.1;
         }
         
         .exposé-content {
@@ -285,15 +337,20 @@
         }
         
         .exposé-content h3 {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
             color: var(--secondary);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
         
         .exposé-content p {
             margin-bottom: 1.2rem;
             color: #666;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         
         .exposé-actions {
@@ -311,9 +368,28 @@
             border-radius: 50%;
             text-decoration: none;
             transition: all 0.3s ease;
-            font-size: 1.1rem;
+            font-size: 1rem;
             border: none;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(0);
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+        
+        .action-btn:hover::before {
+            transform: scale(1.1);
         }
         
         .download-btn {
@@ -327,21 +403,22 @@
         }
         
         .preview-btn {
-            background-color: var(--success);
+            background-color: var(--accent);
             color: white;
         }
         
         .preview-btn:hover {
-            background-color: #3d9a35;
+            background-color: var(--secondary);
             transform: scale(1.1);
         }
         
         footer {
-            background: linear-gradient(135deg, var(--secondary), var(--dark));
+            background: var(--dark);
             color: white;
-            padding: 2rem 1rem;
+            padding: 1.5rem 1rem;
             text-align: center;
-            margin-top: 3rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
         }
         
         .footer-content {
@@ -352,29 +429,13 @@
             align-items: center;
         }
         
-        .social-links {
-            display: flex;
-            margin: 1rem 0;
-            flex-wrap: wrap;
-            justify-content: center;
+        .footer-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
         }
         
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            margin: 0 0.5rem;
-            transition: all 0.3s ease;
-        }
-        
-        .social-links a:hover {
-            background-color: var(--accent);
-            transform: translateY(-3px);
+        .footer-content p {
+            font-size: 0.85rem;
         }
         
         /* Modal de prévisualisation */
@@ -385,7 +446,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.95);
             z-index: 1000;
             overflow: hidden;
         }
@@ -404,7 +465,7 @@
         
         .modal-header {
             padding: 1rem;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.9);
             color: white;
             display: flex;
             justify-content: space-between;
@@ -423,6 +484,11 @@
             font-size: 1.5rem;
             cursor: pointer;
             padding: 0.5rem;
+            transition: color 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: var(--primary);
         }
         
         .modal-iframe-container {
@@ -449,7 +515,7 @@
                 height: 100vh;
                 width: 70%;
                 flex-direction: column;
-                background: linear-gradient(135deg, var(--primary), var(--secondary));
+                background: var(--gradient);
                 padding: 6rem 2rem 2rem;
                 transition: right 0.3s ease-in-out;
                 box-shadow: -5px 0 15px rgba(0, 0, 0, 0.15);
@@ -470,7 +536,7 @@
             
             /* Format paysage pour le diaporama sur mobile */
             .carousel {
-                height: 250px; /* Hauteur réduite pour format paysage */
+                height: 250px;
                 margin: 1rem 0;
                 width: 100vw;
                 position: relative;
@@ -483,15 +549,15 @@
             
             .carousel-item {
                 padding: 1rem;
-                flex-direction: row; /* Disposition horizontale */
-                text-align: center; /* Centrer le texte */
-                justify-content: center; /* Centrer le contenu */
+                flex-direction: row;
+                text-align: center;
+                justify-content: center;
                 align-items: center;
             }
             
             .carousel-content {
                 padding: 0 0.5rem;
-                max-width: 90%; /* Augmentation de la largeur du texte */
+                max-width: 90%;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -499,16 +565,16 @@
             }
             
             .carousel-item h2 {
-                font-size: 1.1rem; /* Taille réduite */
+                font-size: 1.1rem;
                 margin-bottom: 0.5rem;
                 line-height: 1.3;
             }
             
             .carousel-item p {
-                font-size: 0.8rem; /* Taille réduite */
+                font-size: 0.8rem;
                 margin-bottom: 1rem;
                 display: -webkit-box;
-                -webkit-line-clamp: 2; /* Limite à 2 lignes */
+                -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
                 line-height: 1.4;
@@ -516,13 +582,13 @@
             
             .carousel-item .btn {
                 padding: 0.4rem 0.8rem;
-                font-size: 0.7rem; /* Taille réduite */
+                font-size: 0.7rem;
             }
             
             .carousel-nav {
-                width: 30px;
-                height: 30px;
-                font-size: 0.8rem;
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
             }
             
             .carousel-controls {
@@ -538,12 +604,43 @@
                 font-size: 1.6rem;
             }
             
+            /* MODIFICATION: Deux cartes par ligne sur mobile */
             .exposés {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
             }
             
             .container {
-                padding: 0 0.5rem; /* Réduction des marges intérieures */
+                padding: 0 0.5rem;
+            }
+            
+            /* Ajustements pour les cartes sur mobile */
+            .exposé-card {
+                margin-bottom: 1rem;
+            }
+            
+            .exposé-img {
+                height: 90px; /* Réduit pour mobile */
+                font-size: 1.5rem; /* Réduit pour mobile */
+            }
+            
+            .exposé-content h3 {
+                font-size: 0.95rem; /* Légèrement réduit */
+            }
+            
+            .exposé-content p {
+                font-size: 0.8rem;
+                -webkit-line-clamp: 2; /* Moins de lignes de texte */
+            }
+            
+            .exposé-actions {
+                gap: 0.5rem;
+            }
+            
+            .action-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
             }
         }
         
@@ -567,7 +664,7 @@
             
             .carousel-item p {
                 font-size: 0.75rem;
-                -webkit-line-clamp: 2; /* Limite à 2 lignes */
+                -webkit-line-clamp: 2;
             }
             
             .btn {
@@ -576,13 +673,33 @@
             }
             
             .exposé-img {
-                height: 140px;
-                font-size: 2rem;
+                height: 80px; /* Plus réduit pour très petits écrans */
+                font-size: 1.3rem; /* Plus réduit pour très petits écrans */
             }
             
             .carousel-nav {
-                width: 25px;
-                height: 25px;
+                width: 30px;
+                height: 30px;
+            }
+            
+            footer {
+                padding: 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .footer-content h3 {
+                font-size: 1rem;
+            }
+            
+            .footer-content p {
+                font-size: 0.8rem;
+            }
+            
+            /* Pour les écrans très étroits, on revient à une colonne */
+            @media (max-width: 360px) {
+                .exposés {
+                    grid-template-columns: 1fr;
+                }
             }
         }
 
@@ -631,10 +748,10 @@
                 <span></span>
             </button>
             <ul class="nav-links">
-    <li><a href="index.html">Accueil</a></li>  <!-- Chang� de # -->
-    <li><a href="#" class="active">Menu</a></li>
-    <li><a href="support.html">Support</a></li>  <!-- Chang� de admin.html -->
-</ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="#" class="active">Menu</a></li>
+                <li><a href="support.html">Support</a></li>
+            </ul>
         </nav>
     </header>
 
@@ -742,12 +859,6 @@
     <footer>
         <div class="footer-content">
             <h3>ClassePro - Votre réussite, notre priorité</h3>
-            <div class="social-links">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            </div>
             <p>&copy; 2023 ClassePro. Tous droits réservés.</p>
         </div>
     </footer>
