@@ -1,1199 +1,281 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClassePro - Plateforme Éducative</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --accent: #4cc9f0;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --success: #4bb543;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClassePro - Plateforme Éducative</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    :root {
+        --primary: #4361ee;
+        --secondary: #3a0ca3;
+        --accent: #4cc9f0;
+        --light: #f8f9fa;
+        --dark: #212529;
+        --success: #4bb543;
+        --shadow: 0 4px 12px rgba(0,0,0,0.08);
+        --shadow-hover: 0 6px 15px rgba(67, 97, 238, 0.3);
+        --radius: 16px;
+        --text-on-dark: #ffffff;
+        --text-light: #eef2ff;
+    }
+    
+    * {
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+    }
+    
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(180deg, #f5f7ff 0%, #e6eeff 100%);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+        color: var(--dark);
+    }
+    
+    body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 35%;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border-bottom-left-radius: 30% 20%;
+        border-bottom-right-radius: 30% 20%;
+        z-index: -1;
+    }
+    
+    .container {
+        width: 100%;
+        max-width: 450px;
+        padding: 20px;
+        text-align: center;
+    }
+    
+    .logo {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 25px;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 12px 24px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(5px);
+    }
+    
+    .logo-icon {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        font-weight: bold;
+        padding: 10px;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        margin-right: 12px;
+        box-shadow: 0 4px 8px rgba(67, 97, 238, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    h1 {
+        margin: 0;
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--secondary);
+    }
+    
+    h2 {
+        margin: 15px 0;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 1.5;
+        color: var(--text-on-dark);
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .highlight {
+        color: var(--text-light);
+        background: rgba(255, 255, 255, 0.2);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-weight: 600;
+        display: inline-block;
+        margin: 0 2px;
+        backdrop-filter: blur(4px);
+    }
+    
+    .subtitle {
+        color: var(--text-light);
+        margin: 20px 0;
+        font-size: 16px;
+        line-height: 1.6;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .btn {
+        display: block;
+        width: 100%;
+        padding: 16px;
+        margin: 15px 0;
+        font-size: 16px;
+        border-radius: var(--radius);
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-hover);
+        background: linear-gradient(135deg, var(--secondary), var(--primary));
+    }
+    
+    .btn-outline {
+        background-color: rgba(255, 255, 255, 0.9);
+        color: var(--secondary);
+        border: 2px solid var(--secondary);
+    }
+    
+    .btn-outline:hover {
+        background-color: var(--secondary);
+        color: white;
+        transform: translateY(-3px);
+    }
+    
+    .features {
+        background: white;
+        text-align: left;
+        margin-top: 30px;
+        font-size: 15px;
+        padding: 25px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+    }
+    
+    .features p {
+        margin: 15px 0;
+        color: #444;
+        display: flex;
+        align-items: center;
+        padding: 8px 0;
+    }
+    
+    .features span {
+        background: rgba(76, 201, 240, 0.15);
+        color: var(--accent);
+        margin-right: 15px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        flex-shrink: 0;
+    }
+    
+    .footer {
+        margin-top: 25px;
+        font-size: 14px;
+        color: var(--text-on-dark);
+        text-align: center;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    
+    .link {
+        color: var(--text-light);
+        cursor: pointer;
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 1px dashed rgba(255,255,255,0.5);
+    }
+    
+    .link:hover {
+        text-decoration: none;
+        border-bottom: 1px solid var(--text-light);
+    }
+    
+    /* Animation entre pages */
+    .page {
+        animation: fadeIn 0.4s ease-out;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @media (max-width: 480px) {
+        .container {
+            padding: 15px;
         }
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        h1 {
+            font-size: 22px;
         }
         
-        body {
-            background-color: #f5f7ff;
-            color: var(--dark);
-            line-height: 1.6;
-        }
-        
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
+        h2 {
+            font-size: 18px;
         }
         
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            z-index: 101;
+            padding: 10px 20px;
         }
         
-        .logo i {
-            margin-right: 10px;
-            font-size: 1.8rem;
+        .features {
+            padding: 20px;
         }
-        
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 30px;
-            height: 25px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 101;
-        }
-        
-        .menu-toggle span {
-            width: 100%;
-            height: 3px;
-            background-color: white;
-            border-radius: 5px;
-            transition: all 0.3s linear;
-            transform-origin: center;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 1.5rem;
-        }
-        
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 0.5rem;
-            border-radius: 4px;
-            display: block;
-        }
-        
-        .nav-links a:hover, .nav-links a.active {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
-        
-        /* Styles pour le diaporama - Format paysage sur mobile */
-        .carousel {
-            position: relative;
-            overflow: hidden;
-            border-radius: 12px;
-            height: 400px;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        }
-        
-        .carousel-inner {
-            display: flex;
-            transition: transform 0.5s ease;
-            height: 100%;
-        }
-        
-        .carousel-item {
-            min-width: 100%;
-            height: 100%;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-            color: white;
-            background-size: cover;
-            background-position: center;
-        }
-        
-        .carousel-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(67, 97, 238, 0.85), rgba(58, 12, 163, 0.85));
-            z-index: 1;
-        }
-        
-        .carousel-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            padding: 0 1rem;
-        }
-        
-        .carousel-item h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        
-        .carousel-item p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .carousel-controls {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            z-index: 10;
-        }
-        
-        .carousel-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.5);
-            margin: 0 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        
-        .carousel-indicator.active {
-            background-color: white;
-        }
-        
-        .carousel-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-            transition: background-color 0.3s ease;
-        }
-        
-        .carousel-nav:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-        }
-        
-        .carousel-prev {
-            left: 15px;
-        }
-        
-        .carousel-next {
-            right: 15px;
-        }
-        
-        .btn {
-            display: inline-block;
-            background-color: var(--accent);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            z-index: 2;
-            position: relative;
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: var(--secondary);
-            font-size: 1.8rem;
-        }
-        
-        /* Nouveaux styles pour les carousels de services et ressources */
-        .services-carousel-container,
-        .resources-carousel-container {
-            position: relative;
-            margin-bottom: 3rem;
-            overflow: hidden;
-        }
-        
-        .services-carousel,
-        .resources-carousel {
-            display: flex;
-            transition: transform 0.5s ease;
-        }
-        
-        .service-card,
-        .resource-card {
-            flex: 0 0 calc(33.333% - 1rem);
-            margin: 0 0.5rem;
-            background-color: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .service-card:hover,
-        .resource-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        }
-        
-        .service-img,
-        .resource-img {
-            height: 160px;
-            background-color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2.5rem;
-        }
-        
-        .resource-img {
-            height: 140px;
-            background-color: var(--accent);
-            font-size: 2rem;
-        }
-        
-        .service-content,
-        .resource-content {
-            padding: 1.2rem;
-        }
-        
-        .service-content h3,
-        .resource-content h3 {
-            margin-bottom: 0.8rem;
-            color: var(--secondary);
-            font-size: 1.2rem;
-        }
-        
-        .service-content p,
-        .resource-content p {
-            margin-bottom: 1.2rem;
-            color: #666;
-            font-size: 0.95rem;
-        }
-        
-        .contact-btn,
-        .download-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--primary);
-            color: white;
-            padding: 0.6rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-            font-size: 0.9rem;
-        }
-        
-        .download-btn {
-            background-color: var(--accent);
-        }
-        
-        .contact-btn:hover {
-            background-color: var(--secondary);
-        }
-        
-        .download-btn:hover {
-            background-color: var(--secondary);
-        }
-        
-        .contact-btn i,
-        .download-btn i {
-            margin-right: 8px;
-        }
-        
-        .carousel-nav-secondary {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: white;
-            color: var(--primary);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .carousel-nav-secondary:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .carousel-nav-prev {
-            left: -20px;
-        }
-        
-        .carousel-nav-next {
-            right: -20px;
-        }
-        
-        .carousel-indicators-secondary {
-            display: flex;
-            justify-content: center;
-            margin-top: 1.5rem;
-        }
-        
-        .carousel-indicator-secondary {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: #ccc;
-            margin: 0 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        
-        .carousel-indicator-secondary.active {
-            background-color: var(--primary);
-        }
-        
-        .vision-section {
-            background-color: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            margin-bottom: 3rem;
-        }
-        
-        .vision-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .vision-item i {
-            font-size: 1.5rem;
-            color: var(--accent);
-            background-color: rgba(76, 201, 240, 0.1);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        
-        .vision-content h3 {
-            margin-bottom: 0.5rem;
-            color: var(--secondary);
-        }
-        
-        .vision-content p {
-            color: #666;
-        }
-        
-        .cta {
-            text-align: center;
-            padding: 2rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border-radius: 12px;
-            margin-top: 2rem;
-        }
-        
-        .cta h2 {
-            margin-bottom: 1rem;
-        }
-        
-        footer {
-            background: linear-gradient(135deg, var(--secondary), var(--dark));
-            color: white;
-            padding: 2rem 1rem;
-            text-align: center;
-            margin-top: 3rem;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .social-links {
-            display: flex;
-            margin: 1rem 0;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            margin: 0 0.5rem;
-            transition: all 0.3s ease;
-        }
-        
-        .social-links a:hover {
-            background-color: var(--accent);
-            transform: translateY(-3px);
-        }
-        
-        /* Media Queries pour la responsivité - MOBILE EN FORMAT PAYSAGE */
-        @media (max-width: 1024px) {
-            .service-card,
-            .resource-card {
-                flex: 0 0 calc(50% - 1rem);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: flex;
-            }
-            
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                height: 100vh;
-                width: 70%;
-                flex-direction: column;
-                background: linear-gradient(135deg, var(--primary), var(--secondary));
-                padding: 6rem 2rem 2rem;
-                transition: right 0.3s ease-in-out;
-                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.15);
-            }
-            
-            .nav-links.active {
-                right: 0;
-            }
-            
-            .nav-links li {
-                margin: 1.5rem 0;
-            }
-            
-            .nav-links a {
-                padding: 0.8rem;
-                font-size: 1.1rem;
-            }
-            
-            /* Format paysage pour le diaporama sur mobile */
-            .carousel {
-                height: 250px; /* Hauteur réduite pour format paysage */
-                margin: 1rem 0;
-                width: 100vw;
-                position: relative;
-                left: 50%;
-                right: 50%;
-                margin-left: -50vw;
-                margin-right: -50vw;
-                border-radius: 0;
-            }
-            
-            .carousel-item {
-                padding: 1rem;
-                flex-direction: row; /* Disposition horizontale */
-                text-align: center; /* Centrer le texte */
-                justify-content: center; /* Centrer le contenu */
-                align-items: center;
-            }
-            
-            .carousel-content {
-                padding: 0 0.5rem;
-                max-width: 90%; /* Augmentation de la largeur du texte */
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-            }
-            
-            .carousel-item h2 {
-                font-size: 1.1rem; /* Taille réduite */
-                margin-bottom: 0.5rem;
-                line-height: 1.3;
-            }
-            
-            .carousel-item p {
-                font-size: 0.8rem; /* Taille réduite */
-                margin-bottom: 1rem;
-                display: -webkit-box;
-                -webkit-line-clamp: 2; /* Limite à 2 lignes */
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-                line-height: 1.4;
-            }
-            
-            .carousel-item .btn {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.7rem; /* Taille réduite */
-            }
-            
-            .carousel-nav {
-                width: 30px;
-                height: 30px;
-                font-size: 0.8rem;
-            }
-            
-            .carousel-controls {
-                bottom: 10px;
-            }
-            
-            .carousel-indicator {
-                width: 8px;
-                height: 8px;
-            }
-            
-            .section-title {
-                font-size: 1.6rem;
-            }
-            
-            .service-card,
-            .resource-card {
-                flex: 0 0 calc(100% - 1rem);
-            }
-            
-            .container {
-                padding: 0 0.5rem; /* Réduction des marges intérieures */
-            }
-            
-            .carousel-nav-secondary {
-                width: 30px;
-                height: 30px;
-                font-size: 0.8rem;
-            }
-            
-            .carousel-nav-prev {
-                left: -15px;
-            }
-            
-            .carousel-nav-next {
-                right: -15px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .logo {
-                font-size: 1.3rem;
-            }
-            
-            .logo i {
-                font-size: 1.5rem;
-            }
-            
-            /* Ajustements supplémentaires pour très petits écrans */
-            .carousel {
-                height: 220px;
-            }
-            
-            .carousel-item h2 {
-                font-size: 1rem;
-            }
-            
-            .carousel-item p {
-                font-size: 0.75rem;
-                -webkit-line-clamp: 2; /* Limite à 2 lignes */
-            }
-            
-            .btn {
-                padding: 0.5rem 0.9rem;
-                font-size: 0.75rem;
-            }
-            
-            .service-img,
-            .resource-img {
-                height: 140px;
-                font-size: 2rem;
-            }
-            
-            .carousel-nav {
-                width: 25px;
-                height: 25px;
-            }
-            
-            .carousel-nav-secondary {
-                width: 25px;
-                height: 25px;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="logo">
-                <i class="fas fa-graduation-cap"></i>
-                <span>ClassePro</span>
-            </div>
-            <button class="menu-toggle" aria-label="Toggle navigation menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-links">
-    <li><a href="#" class="active">Accueil</a></li>
-    <li><a href="menu.html">Menu</a></li>  <!-- Chang� de support.html -->
-    <li><a href="support.html">Support</a></li>  <!-- Chang� de acceuil.html -->
-</ul>
-        </nav>
-    </header>
 
-    <div class="container">
-        <!-- Diaporama remplaçant la section hero -->
-        <div class="carousel">
-            <div class="carousel-inner">
-                <!-- Carte 1: Accueil originale -->
-                <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1522881193457-37ae97c905bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
-                    <div class="carousel-content">
-                        <h2>Bienvenue sur ClassePro</h2>
-                        <p>Votre plateforme éducative pour accéder à des services de qualité et obtenir de l'aide pour vos projets académiques et professionnels</p>
-                        <a href="#services" class="btn">Découvrir nos services</a>
-                    </div>
-                </div>
-                
-                <!-- Carte 2: Rapports de stage -->
-                <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
-                    <div class="carousel-content">
-                        <h2>Rapports de Stage Professionnels</h2>
-                        <p>ClassePro est spécialisé dans le traitement des rapports de stage. Obtenez un rapport structuré et professionnel.</p>
-                        <a href="support.html?service=rapport-stage" class="btn">Contacter le support</a>
-                    </div>
-                </div>
-                
-                <!-- Carte 3: CV et lettres de motivation -->
-                <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
-                    <div class="carousel-content">
-                        <h2>CV et Lettres de Motivation</h2>
-                        <p>Des CV attractifs et des lettres de motivation percutantes pour booster votre recherche d'emploi.</p>
-                        <a href="support.html?service=cv-lettre" class="btn">Contacter le support</a>
-                    </div>
-                </div>
-                
-                <!-- Carte 4: Outil éducatif sérieux -->
-                <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1591123120675-133d0a4dc34d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80');">
-                    <div class="carousel-content">
-                        <h2>Outil Éducatif Complet</h2>
-                        <p>ClassePro est un outil éducatif sérieux conçu pour aider les élèves à accroître leurs connaissances et réussir leurs études.</p>
-                        <a href="support.html?service=outil-educatif" class="btn">En savoir plus</a>
-                    </div>
-                </div>
-                
-                <!-- Carte 5: Mise en forme de rapports -->
-                <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1589652717521-10c0d092dea9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
-                    <div class="carousel-content">
-                        <h2>Mise en Forme Professionnelle</h2>
-                        <p>Nous sommes spécialisés dans la mise en forme de rapports de mémoire et de rapports de stage selon les normes académiques.</p>
-                        <a href="support.html?service=mise-en-forme" class="btn">Contacter le support</a>
-                    </div>
-                </div>
-                
-                <!-- Carte 6: Conception de documents professionnels -->
-                <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
-                    <div class="carousel-content">
-                        <h2>Documents Professionnels</h2>
-                        <p>ClassePro vous aide également dans la conception de CV professionnels, lettres de motivation, demandes de stage et rédactions de discours.</p>
-                        <a href="support.html?service=conception-cv" class="btn">Contacter le support</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Contrôles de navigation du diaporama -->
-            <button class="carousel-nav carousel-prev">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="carousel-nav carousel-next">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-            
-            <!-- Indicateurs de diapositive -->
-            <div class="carousel-controls">
-                <div class="carousel-indicator active" data-index="0"></div>
-                <div class="carousel-indicator" data-index="1"></div>
-                <div class="carousel-indicator" data-index="2"></div>
-                <div class="carousel-indicator" data-index="3"></div>
-                <div class="carousel-indicator" data-index="4"></div>
-                <div class="carousel-indicator" data-index="5"></div>
-            </div>
-        </div>
-
-        <h2 class="section-title" id="services">Nos Services</h2>
-        
-        <!-- Carousel pour Nos Services -->
-        <div class="services-carousel-container">
-            <div class="services-carousel">
-                <div class="service-card">
-                    <div class="service-img">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <div class="service-content">
-                        <h3>Traitement d'exposés</h3>
-                        <p>Des exposés complets et bien structurés sur tous les sujets académiques.</p>
-                        <a href="support.html?service=exposés" class="contact-btn">
-                            <i class="fas fa-envelope"></i> Contacter
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-img">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <div class="service-content">
-                        <h3>Rapports de stage</h3>
-                        <p>Des rapports professionnels selon les normes académiques exigées.</p>
-                        <a href="support.html?service=rapports-stage" class="contact-btn">
-                            <i class="fas fa-envelope"></i> Contacter
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-img">
-                        <i class="fas fa-id-card"></i>
-                    </div>
-                    <div class="service-content">
-                        <h3>CV professionnels</h3>
-                        <p>CV attractifs et adaptés à votre domaine professionnel.</p>
-                        <a href="support.html?service=cv" class="contact-btn">
-                            <i class="fas fa-envelope"></i> Contacter
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-img">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <div class="service-content">
-                        <h3>Demandes d'emploi</h3>
-                        <p>Des lettres de motivation percutantes pour vos candidatures.</p>
-                        <a href="support.html?service=demandes-emploi" class="contact-btn">
-                            <i class="fas fa-envelope"></i> Contacter
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-img">
-                        <i class="fas fa-building"></i>
-                    </div>
-                    <div class="service-content">
-                        <h3>Demandes de stage</h3>
-                        <p>Des candidatures qui marquent les esprits des recruteurs.</p>
-                        <a href="support.html?service=demandes-stage" class="contact-btn">
-                            <i class="fas fa-envelope"></i> Contacter
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-img">
-                        <i class="fas fa-microphone"></i>
-                    </div>
-                    <div class="service-content">
-                        <h3>Discours pour autorité</h3>
-                        <p>Des discours percutants et adaptés à l'occasion.</p>
-                        <a href="support.html?service=discours" class="contact-btn">
-                            <i class="fas fa-envelope"></i> Contacter
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Contrôles de navigation du carousel de services -->
-            <button class="carousel-nav-secondary carousel-nav-prev services-prev">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="carousel-nav-secondary carousel-nav-next services-next">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-            
-            <!-- Indicateurs pour le carousel de services -->
-            <div class="carousel-indicators-secondary services-indicators">
-                <div class="carousel-indicator-secondary active" data-index="0"></div>
-                <div class="carousel-indicator-secondary" data-index="1"></div>
-            </div>
-        </div>
-
-        <h2 class="section-title">Ressources Gratuites</h2>
-        
-        <!-- Carousel pour Ressources Gratuites -->
-        <div class="resources-carousel-container">
-            <div class="resources-carousel">
-                <div class="resource-card">
-                    <div class="resource-img">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h3>Exemples de CV</h3>
-                        <p>Téléchargez des modèles de CV adaptés à différents secteurs professionnels.</p>
-                        <a href="#" class="download-btn">
-                            <i class="fas fa-download"></i> Télécharger
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="resource-card">
-                    <div class="resource-img">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h3>Modèles de demandes</h3>
-                        <p>Lettres de motivation et demandes d'emploi/pré-emploi.</p>
-                        <a href="#" class="download-btn">
-                            <i class="fas fa-download"></i> Télécharger
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="resource-card">
-                    <div class="resource-img">
-                        <i class="fas fa-download"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h3>Exposés téléchargeables</h3>
-                        <p>Accédez à une bibliothèque d'exposés sur divers sujets académiques.</p>
-                        <a href="#" class="download-btn">
-                            <i class="fas fa-download"></i> Télécharger
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="resource-card">
-                    <div class="resource-img">
-                        <i class="fas fa-book-open"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h3>Guides pratiques</h3>
-                        <p>Guides détaillés pour rédiger vos documents professionnels.</p>
-                        <a href="#" class="download-btn">
-                            <i class="fas fa-download"></i> Télécharger
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Contrôles de navigation du carousel de ressources -->
-            <button class="carousel-nav-secondary carousel-nav-prev resources-prev">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="carousel-nav-secondary carousel-nav-next resources-next">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-            
-            <!-- Indicateurs pour le carousel de ressources -->
-            <div class="carousel-indicators-secondary resources-indicators">
-                <div class="carousel-indicator-secondary active" data-index="0"></div>
-                <div class="carousel-indicator-secondary" data-index="1"></div>
-            </div>
-        </div>
-
-        <div class="vision-section">
-            <h2 class="section-title">Notre Vision</h2>
-            <p>ClassePro s'agrandit chaque jour pour vous offrir encore plus de services :</p>
-            
-            <div class="vision-item">
-                <i class="fas fa-folder"></i>
-                <div class="vision-content">
-                    <h3>Organisation par catégorie</h3>
-                    <p>Un classement intuitif pour trouver rapidement ce dont vous avez besoin</p>
-                </div>
-            </div>
-            
-            <div class="vision-item">
-                <i class="fas fa-book"></i>
-                <div class="vision-content">
-                    <h3>Contenus par matière</h3>
-                    <p>Des ressources spécifiques pour chaque discipline académique</p>
-                </div>
-            </div>
-            
-            <div class="vision-item">
-                <i class="fas fa-graduation-cap"></i>
-                <div class="vision-content">
-                    <h3>Ressources par classe</h3>
-                    <p>Du collège à l'université, des contenus adaptés à chaque niveau</p>
-                </div>
-            </div>
-            
-            <p style="text-align: center; margin-top: 1.5rem; padding: 0.8rem; background-color: rgba(75, 181, 67, 0.1); border-radius: 6px; font-weight: 500;">
-                <i class="fas fa-lock-open" style="color: var(--success);"></i>
-                <span>Le tout, accessible gratuitement pour tous les élèves et étudiants</span>
-            </p>
-        </div>
-        
-        <div class="cta">
-            <h2>Avec ClassePro, facilitez vos démarches éducatives et professionnelles</h2>
-            <p>Vos travaux sont simplifiés, vos démarches professionnelles facilitées, et votre réussite scolaire et professionnelle devient notre priorité.</p>
-            <a href="support.html" class="btn">Contactez-nous</a>
-        </div>
+<!-- Page d'accueil -->
+<div class="container page" id="page-accueil">
+    <div class="logo">
+        <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+        <h1>ClassePro</h1>
     </div>
     
-    <footer>
-        <div class="footer-content">
-            <h3>ClassePro - Votre réussite, notre priorité</h3>
-            <div class="social-links">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-            <p>&copy; 2023 ClassePro. Tous droits réservés.</p>
-        </div>
-    </footer>
+    <h2>Votre plateforme éducative <span class="highlight">complète</span><br>pour réussir vos études</h2>
+    
+    <p class="subtitle">Accédez à des services de qualité et obtenez de l'aide pour vos projets académiques et professionnels.</p>
+    
+    <button class="btn btn-primary" onclick="window.location.href='menu.html'">
+        <i class="fas fa-bars"></i> Explorer le Menu
+    </button>
+    
+    <button class="btn btn-outline" onclick="window.location.href='support.html'">
+        <i class="fas fa-headset"></i> Contacter le Support
+    </button>
+    
+    <div class="features">
+        <p><span><i class="fas fa-file-alt"></i></span> Rapports de stage professionnels</p>
+        <p><span><i class="fas fa-id-card"></i></span> CV et lettres de motivation</p>
+        <p><span><i class="fas fa-book"></i></span> Exposés et travaux académiques</p>
+        <p><span><i class="fas fa-download"></i></span> Ressources gratuites</p>
+    </div>
+    
+    <div class="footer">
+        ClassePro - Votre réussite, notre priorité
+    </div>
+</div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Gestion du menu hamburger pour mobile
-            document.querySelectorAll('.menu-toggle').forEach(toggle => {
-                toggle.addEventListener('click', function() {
-                    // Trouver le menu associé à ce toggle
-                    const navLinks = this.closest('.navbar').querySelector('.nav-links');
-                    navLinks.classList.toggle('active');
-                    
-                    // Animation des lignes du hamburger
-                    const spans = this.querySelectorAll('span');
-                    if (navLinks.classList.contains('active')) {
-                        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                        spans[1].style.opacity = '0';
-                        spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
-                    } else {
-                        spans[0].style.transform = 'none';
-                        spans[1].style.opacity = '1';
-                        spans[2].style.transform = 'none';
-                    }
-                });
-            });
-            
-            // Fermer le menu en cliquant à l'extérieur
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.navbar')) {
-                    document.querySelectorAll('.nav-links').forEach(menu => {
-                        menu.classList.remove('active');
-                    });
-                    document.querySelectorAll('.menu-toggle span').forEach(span => {
-                        span.style.transform = 'none';
-                        span.style.opacity = '1';
-                    });
-                }
-            });
-
-            // Gestion du diaporama principal
-            const carousel = document.querySelector('.carousel');
-            const inner = document.querySelector('.carousel-inner');
-            const items = document.querySelectorAll('.carousel-item');
-            const indicators = document.querySelectorAll('.carousel-indicator');
-            const prevBtn = document.querySelector('.carousel-prev');
-            const nextBtn = document.querySelector('.carousel-next');
-            
-            let currentIndex = 0;
-            let intervalId = null;
-            const intervalTime = 5000; // 5 secondes
-            
-            // Fonction pour mettre à jour le diaporama
-            function updateCarousel() {
-                inner.style.transform = `translateX(-${currentIndex * 100}%)`;
-                
-                // Mettre à jour les indicateurs
-                indicators.forEach((indicator, index) => {
-                    if (index === currentIndex) {
-                        indicator.classList.add('active');
-                    } else {
-                        indicator.classList.remove('active');
-                    }
-                });
-            }
-            
-            // Fonction pour passer à la diapositive suivante
-            function nextSlide() {
-                currentIndex = (currentIndex + 1) % items.length;
-                updateCarousel();
-            }
-            
-            // Fonction pour passer à la diapositive précédente
-            function prevSlide() {
-                currentIndex = (currentIndex - 1 + items.length) % items.length;
-                updateCarousel();
-            }
-            
-            // Démarrer le défilement automatique
-            function startAutoSlide() {
-                intervalId = setInterval(nextSlide, intervalTime);
-            }
-            
-            // Arrêter le défilement automatique
-            function stopAutoSlide() {
-                clearInterval(intervalId);
-            }
-            
-            // Événements pour les boutons de navigation
-            nextBtn.addEventListener('click', () => {
-                stopAutoSlide();
-                nextSlide();
-                startAutoSlide();
-            });
-            
-            prevBtn.addEventListener('click', () => {
-                stopAutoSlide();
-                prevSlide();
-                startAutoSlide();
-            });
-            
-            // Événements pour les indicateurs
-            indicators.forEach(indicator => {
-                indicator.addEventListener('click', () => {
-                    stopAutoSlide();
-                    currentIndex = parseInt(indicator.getAttribute('data-index'));
-                    updateCarousel();
-                    startAutoSlide();
-                });
-            });
-            
-            // Arrêter le défilement automatique quand la souris est sur le diaporama
-            carousel.addEventListener('mouseenter', stopAutoSlide);
-            
-            // Redémarrer le défilement automatique quand la souris quitte le diaporama
-            carousel.addEventListener('mouseleave', startAutoSlide);
-            
-            // Démarrer le diaporama
-            startAutoSlide();
-            
-            // Gestion des carousels secondaires (Services et Ressources)
-            function initSecondaryCarousel(containerClass, itemsPerView) {
-                const container = document.querySelector(`.${containerClass}-container`);
-                const carousel = document.querySelector(`.${containerClass}`);
-                const items = document.querySelectorAll(`.${containerClass} .${containerClass.slice(0, -8)}-card`);
-                const prevBtn = document.querySelector(`.${containerClass.slice(0, -8)}-prev`);
-                const nextBtn = document.querySelector(`.${containerClass.slice(0, -8)}-next`);
-                const indicators = document.querySelectorAll(`.${containerClass.slice(0, -8)}-indicators .carousel-indicator-secondary`);
-                
-                if (!carousel || items.length === 0) return;
-                
-                let currentIndex = 0;
-                const totalItems = items.length;
-                const totalSlides = Math.ceil(totalItems / itemsPerView);
-                
-                // Mise à jour des indicateurs
-                function updateIndicators() {
-                    indicators.forEach((indicator, index) => {
-                        if (index === currentIndex) {
-                            indicator.classList.add('active');
-                        } else {
-                            indicator.classList.remove('active');
-                        }
-                    });
-                }
-                
-                // Mise à jour du carousel
-                function updateCarousel() {
-                    const translateValue = -currentIndex * (100 / itemsPerView);
-                    carousel.style.transform = `translateX(${translateValue}%)`;
-                    updateIndicators();
-                }
-                
-                // Événements pour les boutons de navigation
-                nextBtn.addEventListener('click', () => {
-                    currentIndex = (currentIndex + 1) % totalSlides;
-                    updateCarousel();
-                });
-                
-                prevBtn.addEventListener('click', () => {
-                    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-                    updateCarousel();
-                });
-                
-                // Événements pour les indicateurs
-                indicators.forEach(indicator => {
-                    indicator.addEventListener('click', () => {
-                        currentIndex = parseInt(indicator.getAttribute('data-index'));
-                        updateCarousel();
-                    });
-                });
-                
-                // Ajustement en fonction de la taille de l'écran
-                function handleResize() {
-                    let newItemsPerView = 3; // Par défaut sur desktop
-                    
-                    if (window.innerWidth <= 1024) {
-                        newItemsPerView = 2; // Tablet
-                    }
-                    
-                    if (window.innerWidth <= 768) {
-                        newItemsPerView = 1; // Mobile
-                    }
-                    
-                    // Recalculer seulement si le nombre d'éléments par vue a changé
-                    if (newItemsPerView !== itemsPerView) {
-                        itemsPerView = newItemsPerView;
-                        currentIndex = 0;
-                        updateCarousel();
-                    }
-                }
-                
-                // Écouter les changements de taille d'écran
-                window.addEventListener('resize', handleResize);
-                
-                // Initialisation
-                updateCarousel();
-            }
-            
-            // Initialiser les carousels secondaires
-            initSecondaryCarousel('services-carousel', window.innerWidth <= 768 ? 1 : window.innerWidth <= 1024 ? 2 : 3);
-            initSecondaryCarousel('resources-carousel', window.innerWidth <= 768 ? 1 : window.innerWidth <= 1024 ? 2 : 3);
-        });
-    </script>
 </body>
 </html>
