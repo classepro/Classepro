@@ -438,7 +438,7 @@
             font-size: 0.85rem;
         }
         
-        /* Modal de prévisualisation */
+        /* Modal de prévisualisation - MODIFICATIONS ICI */
         .preview-modal {
             display: none;
             position: fixed;
@@ -470,6 +470,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            /* Ajout pour cacher l'en-tête */
+            display: none;
         }
         
         .modal-title {
@@ -944,7 +946,7 @@
                 document.body.style.overflow = ''; // Réactiver le défilement
             }
             
-            // Événement pour fermer la modale
+            // Événement pour fermer la modale (gardé pour la compatibilité mais non visible)
             closeModalBtn.addEventListener('click', closePreviewModal);
             
             // Fermer la modale en cliquant à l'extérieur du contenu
