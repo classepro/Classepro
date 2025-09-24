@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fiches de Révision - ClassePro</title>
+  <title>Exposés - ClassePro</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- SDK Paystack -->
@@ -174,6 +174,160 @@
       font-size: 0.85rem;
     }
     
+    /* Styles pour le diaporama */
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0 0 16px 16px;
+      height: 400px;
+      margin-bottom: 2rem;
+      box-shadow: var(--card-shadow);
+      margin-top: -0.5rem; /* Réduction de l'espace avec la navbar */
+    }
+    
+    .carousel-inner {
+      display: flex;
+      transition: transform 0.5s ease;
+      height: 100%;
+    }
+    
+    .carousel-item {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      color: white;
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .carousel-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(61, 59, 142, 0.85), rgba(255, 126, 95, 0.85));
+      z-index: 1;
+    }
+    
+    .carousel-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 0 1rem;
+    }
+    
+    .carousel-item h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    .carousel-item p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    .carousel-controls {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      z-index: 10;
+    }
+    
+    .carousel-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.5);
+      margin: 0 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    
+    .carousel-indicator.active {
+      background-color: white;
+      transform: scale(1.2);
+    }
+    
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      font-size: 1.2rem;
+    }
+    
+    .carousel-nav:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    .carousel-prev {
+      left: 15px;
+    }
+    
+    .carousel-next {
+      right: 15px;
+    }
+    
+    .btn {
+      display: inline-block;
+      background-color: var(--accent);
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      z-index: 2;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn:hover::before {
+      left: 100%;
+    }
+    
     /* Amélioration des cartes avec les couleurs du thème */
     .card-icon-container {
       background: var(--gradient);
@@ -209,26 +363,8 @@
       border-color: var(--accent);
     }
     
-    /* Styles pour les filtres */
-    .filter-btn {
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 20px;
-      padding: 0.4rem 0.8rem;
-      font-size: 0.8rem;
-      color: var(--dark);
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-    
-    .filter-btn:hover, .filter-btn.active {
-      background: var(--gradient);
-      color: white;
-      border-color: transparent;
-    }
-    
-    /* Styles pour les cartes de fiches */
-    .fiche-card {
+    /* Styles spécifiques à la page exposés */
+    .expose-card {
       background: white;
       border-radius: 12px;
       overflow: hidden;
@@ -237,30 +373,32 @@
       height: 100%;
       display: flex;
       flex-direction: column;
+      position: relative;
     }
     
-    .fiche-card:hover {
+    .expose-card:hover {
       transform: translateY(-5px);
       box-shadow: var(--hover-shadow);
     }
     
-    .fiche-image {
-      height: 150px;
+    .expose-image {
+      height: 180px;
       background-size: cover;
       background-position: center;
       position: relative;
     }
     
-    .fiche-category {
+    .expose-category {
       position: absolute;
       top: 10px;
       right: 10px;
-      background: var(--gradient);
+      background: var(--primary);
       color: white;
-      padding: 0.3rem 0.6rem;
+      padding: 4px 10px;
       border-radius: 20px;
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       font-weight: 600;
+      z-index: 2;
     }
     
     /* Nouveau style pour le bouton d'aperçu */
@@ -290,59 +428,55 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
     
-    .fiche-content {
-      padding: 1rem;
+    .expose-content {
+      padding: 1.25rem;
       flex-grow: 1;
       display: flex;
       flex-direction: column;
     }
     
-    .fiche-title {
+    .expose-title {
+      font-size: 1.1rem;
       font-weight: 600;
-      font-size: 1rem;
       color: var(--secondary);
       margin-bottom: 0.5rem;
+      line-height: 1.3;
     }
     
-    .fiche-description {
+    .expose-description {
       font-size: 0.85rem;
-      color: #64748b;
+      color: var(--dark);
       margin-bottom: 1rem;
+      line-height: 1.4;
       flex-grow: 1;
     }
     
-    .fiche-meta {
+    .expose-meta {
       display: flex;
       justify-content: space-between;
       font-size: 0.75rem;
-      color: #94a3b8;
-      margin-bottom: 0.5rem;
+      color: #666;
+      margin-bottom: 1rem;
     }
     
-    .fiche-download-btn {
+    .expose-download {
       background: var(--gradient);
       color: white;
       border: none;
+      padding: 0.6rem 1rem;
       border-radius: 6px;
-      padding: 0.5rem 1rem;
-      font-size: 0.8rem;
-      font-weight: 600;
+      font-weight: 500;
+      font-size: 0.85rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 0.5rem;
+      text-align: center;
       text-decoration: none;
+      display: block;
     }
     
-    .fiche-download-btn:hover {
+    .expose-download:hover {
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(104, 131, 186, 0.3);
-    }
-    
-    .fiche-download-btn i {
-      margin-right: 5px;
+      box-shadow: 0 5px 15px rgba(61, 59, 142, 0.3);
     }
     
     /* Nouveau style pour le bouton de paiement */
@@ -363,7 +497,6 @@
       justify-content: center;
       gap: 8px;
       box-shadow: 0 4px 6px rgba(76, 175, 80, 0.3);
-      margin-top: 0.5rem;
     }
     
     .payment-btn:hover {
@@ -383,7 +516,24 @@
       display: inline-block;
     }
     
-    /* Indicateur de chargement */
+    .filter-btn {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--secondary);
+      color: white;
+      border-color: var(--secondary);
+    }
+    
     .loading {
       display: flex;
       justify-content: center;
@@ -516,15 +666,113 @@
         padding: 0.8rem;
         font-size: 1.1rem;
       }
+      
+      /* Format paysage pour le diaporama sur mobile */
+      .carousel {
+        height: 250px;
+        margin: -0.5rem 0 1rem 0; /* Ajustement des marges sur mobile - espace réduit */
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        border-radius: 0;
+      }
+      
+      .carousel-item {
+        padding: 1rem;
+        flex-direction: row;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .carousel-content {
+        padding: 0 0.5rem;
+        max-width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .carousel-item h2 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.3;
+      }
+      
+      .carousel-item p {
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 1.4;
+      }
+      
+      .carousel-item .btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.7rem;
+      }
+      
+      .carousel-nav {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+        display: none; /* Cacher les flèches sur mobile pour gagner de l'espace */
+      }
+      
+      .carousel-controls {
+        bottom: 10px;
+      }
+      
+      .carousel-indicator {
+        width: 8px;
+        height: 8px;
+      }
+      
+      .expose-image {
+        height: 150px;
+      }
+      
+      .preview-btn {
+        padding: 4px 8px;
+        font-size: 0.6rem;
+      }
     }
     
     @media (max-width: 480px) {
+      .carousel {
+        height: 220px;
+      }
+      
+      .carousel-item h2 {
+        font-size: 1rem;
+      }
+      
+      .carousel-item p {
+        font-size: 0.75rem;
+        -webkit-line-clamp: 2;
+      }
+      
       .btn {
         padding: 0.5rem 0.9rem;
         font-size: 0.75rem;
       }
       
-      .payment-btn, .fiche-download-btn {
+      .carousel-nav {
+        width: 30px;
+        height: 30px;
+      }
+      
+      .expose-image {
+        height: 120px;
+      }
+      
+      .payment-btn, .expose-download {
         padding: 0.5rem 0.8rem;
         font-size: 0.75rem;
       }
@@ -555,24 +803,29 @@
   </header>
 
   <!-- Contenu principal -->
-  <main class="flex-grow container mx-auto px-4 pt-6 pb-6">
-    <!-- En-tête de page -->
-    <div class="mb-8">
-      <div class="flex items-center mb-4">
-        <div class="card-icon-container">
-          <i class="fas fa-file-alt card-icon"></i>
+  <main class="flex-grow container mx-auto px-4 pt-2 pb-6">
+    <!-- Bannière d'en-tête -->
+    <section class="mb-8">
+      <div class="bg-gradient-to-r from-[#3D3B8E] to-[#FF7E5F] rounded-xl p-6 text-white shadow-lg">
+        <div class="flex items-center mb-4">
+          <div class="bg-white p-3 rounded-full mr-4">
+            <i class="fas fa-chalkboard-teacher text-2xl text-[#3D3B8E]"></i>
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold">Exposés</h1>
+            <p class="text-white/90">Découvrez notre collection d'exposés prêts à l'emploi</p>
+          </div>
         </div>
-        <h1 class="text-2xl font-bold ml-2">Fiches de <span class="text-secondary">révision</span></h1>
+        <p class="text-sm">Accédez à des exposés complets et bien structurés sur divers sujets. Idéal pour les présentations orales et les travaux de recherche.</p>
       </div>
-      <p class="text-gray-600">Retrouvez ici toutes nos fiches de révision pour préparer efficacement vos examens et contrôles.</p>
-    </div>
+    </section>
 
     <!-- Barre de recherche et filtres -->
     <section class="mb-8">
       <div class="bg-white rounded-xl shadow p-4">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
           <div class="relative w-full md:w-1/2 mb-4 md:mb-0">
-            <input type="text" id="search-input" placeholder="Rechercher une fiche de révision..." class="search-input w-full p-3 pl-10 rounded-lg border border-gray-300 focus:border-[#6883BA]">
+            <input type="text" id="search-input" placeholder="Rechercher un exposé..." class="search-input w-full p-3 pl-10 rounded-lg border border-gray-300 focus:border-[#6883BA]">
             <i class="fas fa-search absolute left-3 top-3.5 text-gray-400"></i>
           </div>
           <div class="flex items-center">
@@ -588,38 +841,39 @@
         </div>
         
         <div class="filter-tags">
-          <button class="filter-btn active" data-category="all">Toutes</button>
-          <button class="filter-btn" data-category="mathematiques">Mathématiques</button>
-          <button class="filter-btn" data-category="francais">Français</button>
-          <button class="filter-btn" data-category="histoire">Histoire</button>
-          <button class="filter-btn" data-category="sciences">Sciences</button>
-          <button class="filter-btn" data-category="langues">Langues</button>
-          <button class="filter-btn" data-category="philosophie">Philosophie</button>
-          <button class="filter-btn" data-category="economie">Économie</button>
+          <button class="filter-btn active" data-category="all">Tous</button>
+          <button class="filter-btn" data-category="SVT">SVT</button>
+          <button class="filter-btn" data-category="Histoire">Histoire</button>
+          <button class="filter-btn" data-category="Géographie">Géographie</button>
+          <button class="filter-btn" data-category="Littérature">Littérature</button>
+          <button class="filter-btn" data-category="Arts">Arts</button>
+          <button class="filter-btn" data-category="Technologie">Technologie</button>
+          <button class="filter-btn" data-category="Musique">Musique</button>
+          <button class="filter-btn" data-category="Chimie">Chimie</button>
         </div>
       </div>
     </section>
 
-    <!-- Liste des fiches de révision -->
-    <section class="mb-8">
-      <h2 class="text-xl font-semibold mb-4">Fiches disponibles</h2>
+    <!-- Liste des exposés -->
+    <section>
+      <h2 class="text-xl font-semibold mb-4">Exposés disponibles</h2>
       
       <!-- Indicateur de chargement -->
       <div id="loading-indicator" class="loading">
         <div class="spinner"></div>
-        <span class="ml-2">Chargement des fiches...</span>
+        <span class="ml-2">Chargement des exposés...</span>
       </div>
       
-      <!-- Message si aucune fiche trouvée -->
+      <!-- Message si aucun exposé trouvé -->
       <div id="empty-state" class="empty-state hidden">
         <i class="fas fa-file-alt"></i>
-        <h3 class="text-lg font-medium mb-2">Aucune fiche trouvée</h3>
+        <h3 class="text-lg font-medium mb-2">Aucun exposé trouvé</h3>
         <p>Essayez de modifier vos critères de recherche ou de filtre.</p>
       </div>
       
-      <!-- Conteneur pour les fiches -->
-      <div id="fiches-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Les fiches seront chargées ici dynamiquement -->
+      <!-- Conteneur pour les exposés -->
+      <div id="exposes-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Les exposés seront chargés ici dynamiquement -->
       </div>
       
       <!-- Pagination -->
@@ -632,17 +886,17 @@
       </div>
     </section>
 
-    <!-- Section demande de fiche personnalisée -->
+    <!-- Section demande d'exposé personnalisé -->
     <section class="mt-12 mb-8">
       <div class="bg-gradient-to-r from-[#6883BA] to-[#3D3B8E] rounded-xl p-6 text-white shadow-lg">
         <div class="flex flex-col md:flex-row items-center">
           <div class="flex-1 mb-4 md:mb-0">
-            <h2 class="text-xl font-bold mb-2">Vous ne trouvez pas la fiche qu'il vous faut ?</h2>
-            <p class="text-white/90">Notre équipe peut créer une fiche de révision personnalisée sur le sujet de votre choix.</p>
+            <h2 class="text-xl font-bold mb-2">Vous ne trouvez pas l'exposé qu'il vous faut ?</h2>
+            <p class="text-white/90">Notre équipe peut créer un exposé personnalisé sur le sujet de votre choix.</p>
           </div>
           <div>
-            <a href="support.html?service=fiche-personnalisee" class="bg-white text-[#3D3B8E] font-semibold py-2 px-6 rounded-lg hover:bg-gray-100 transition-colors inline-block">
-              Demander une fiche
+            <a href="support.html?service=expose-personnalise" class="bg-white text-[#3D3B8E] font-semibold py-2 px-6 rounded-lg hover:bg-gray-100 transition-colors inline-block">
+              Demander un exposé
             </a>
           </div>
         </div>
@@ -661,7 +915,7 @@
   <!-- Modale de paiement -->
   <div id="payment-modal" class="payment-modal">
     <div class="payment-modal-content">
-      <h3>Paiement de la fiche</h3>
+      <h3>Paiement de l'exposé</h3>
       <input type="email" id="payment-email" placeholder="Votre email" value="">
       <div id="payment-amount" class="payment-amount"></div>
       <button id="paystack-btn">💳 Payer maintenant</button>
@@ -698,7 +952,7 @@
     const publicKey = "pk_live_777a7c63bdb21fe5600c3bc048da89da3b756d86";
 
     // Références aux éléments du DOM
-    const fichesContainer = document.getElementById('fiches-container');
+    const exposesContainer = document.getElementById('exposes-container');
     const loadingIndicator = document.getElementById('loading-indicator');
     const emptyState = document.getElementById('empty-state');
     const pagination = document.getElementById('pagination');
@@ -718,28 +972,28 @@
     const closePaymentModal = document.getElementById('close-payment-modal');
 
     // Variables pour la gestion des données
-    let allFiches = [];
-    let filteredFiches = [];
+    let allExposes = [];
+    let filteredExposes = [];
     let currentPage = 1;
-    const fichesPerPage = 6;
-    let currentFicheId = null;
-    let currentFichePrice = 0;
+    const exposesPerPage = 6;
+    let currentExposeId = null;
+    let currentExposePrice = 0;
 
-    // Charger les fiches depuis Firestore (collection "fiches de révision")
-    async function loadFiches() {
+    // Charger les exposés depuis Firestore
+    async function loadExposes() {
       try {
         loadingIndicator.classList.remove('hidden');
-        fichesContainer.innerHTML = '';
+        exposesContainer.innerHTML = '';
         emptyState.classList.add('hidden');
         
-        const q = query(collection(db, "fiches de révision"), orderBy("titre"));
+        const q = query(collection(db, "exposes"), orderBy("titre"));
         const querySnapshot = await getDocs(q);
         
-        allFiches = [];
+        allExposes = [];
         querySnapshot.forEach((doc) => {
-          const ficheData = doc.data();
-          ficheData.id = doc.id;
-          allFiches.push(ficheData);
+          const exposeData = doc.data();
+          exposeData.id = doc.id;
+          allExposes.push(exposeData);
         });
         
         // Appliquer les filtres initiaux
@@ -747,8 +1001,8 @@
         
         loadingIndicator.classList.add('hidden');
       } catch (error) {
-        console.error("Erreur lors du chargement des fiches:", error);
-        loadingIndicator.innerHTML = '<p class="text-red-500">Erreur lors du chargement des fiches</p>';
+        console.error("Erreur lors du chargement des exposés:", error);
+        loadingIndicator.innerHTML = '<p class="text-red-500">Erreur lors du chargement des exposés</p>';
       }
     }
 
@@ -756,38 +1010,36 @@
     function applyFilters() {
       const searchTerm = searchInput.value.toLowerCase();
       const selectedCategory = document.querySelector('.filter-btn.active').dataset.category;
-      const selectedLevel = levelFilter.value;
       
-      filteredFiches = allFiches.filter(fiche => {
-        const matchesSearch = fiche.titre.toLowerCase().includes(searchTerm) || 
-                             (fiche.description && fiche.description.toLowerCase().includes(searchTerm));
-        const matchesCategory = selectedCategory === 'all' || fiche.matiere === selectedCategory;
-        const matchesLevel = selectedLevel === 'all' || fiche.niveau === selectedLevel;
+      filteredExposes = allExposes.filter(expose => {
+        const matchesSearch = expose.titre.toLowerCase().includes(searchTerm) || 
+                             expose.description.toLowerCase().includes(searchTerm);
+        const matchesCategory = selectedCategory === 'all' || expose.matiere === selectedCategory;
         
-        return matchesSearch && matchesCategory && matchesLevel;
+        return matchesSearch && matchesCategory;
       });
       
-      displayFiches();
+      displayExposes();
     }
 
-    // Vérifier si une fiche a été payée
-    function isFichePaid(ficheId) {
-      const paidFiches = JSON.parse(localStorage.getItem('paidFiches')) || {};
-      return paidFiches[ficheId] === true;
+    // Vérifier si un exposé a été payé
+    function isExposePaid(exposeId) {
+      const paidExposes = JSON.parse(localStorage.getItem('paidExposes')) || {};
+      return paidExposes[exposeId] === true;
     }
 
-    // Marquer une fiche comme payée
-    function markFicheAsPaid(ficheId) {
-      const paidFiches = JSON.parse(localStorage.getItem('paidFiches')) || {};
-      paidFiches[ficheId] = true;
-      localStorage.setItem('paidFiches', JSON.stringify(paidFiches));
+    // Marquer un exposé comme payé
+    function markExposeAsPaid(exposeId) {
+      const paidExposes = JSON.parse(localStorage.getItem('paidExposes')) || {};
+      paidExposes[exposeId] = true;
+      localStorage.setItem('paidExposes', JSON.stringify(paidExposes));
     }
 
-    // Afficher les fiches avec pagination
-    function displayFiches() {
-      fichesContainer.innerHTML = '';
+    // Afficher les exposés avec pagination
+    function displayExposes() {
+      exposesContainer.innerHTML = '';
       
-      if (filteredFiches.length === 0) {
+      if (filteredExposes.length === 0) {
         emptyState.classList.remove('hidden');
         pagination.classList.add('hidden');
         return;
@@ -795,67 +1047,68 @@
       
       emptyState.classList.add('hidden');
       
-      // Calculer les fiches à afficher pour la page actuelle
-      const startIndex = (currentPage - 1) * fichesPerPage;
-      const endIndex = startIndex + fichesPerPage;
-      const fichesToShow = filteredFiches.slice(startIndex, endIndex);
+      // Calculer les exposés à afficher pour la page actuelle
+      const startIndex = (currentPage - 1) * exposesPerPage;
+      const endIndex = startIndex + exposesPerPage;
+      const exposesToShow = filteredExposes.slice(startIndex, endIndex);
       
-      // Générer le HTML pour chaque fiche
-      fichesToShow.forEach(fiche => {
-        const ficheCard = document.createElement('div');
-        ficheCard.className = 'fiche-card';
+      // Générer le HTML pour chaque exposé
+      exposesToShow.forEach(expose => {
+        const exposeCard = document.createElement('div');
+        exposeCard.className = 'expose-card';
         
         // Image par défaut si aucune image n'est fournie
-        const imageUrl = fiche.imageUrl || 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80';
+        const imageUrl = expose.imageUrl || 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80';
         
-        // Déterminer si la fiche est gratuite ou payante
-        const isFree = fiche.prix === 0;
-        const isPaid = isFichePaid(fiche.id);
+        // Déterminer si l'exposé est gratuit ou payant
+        const isFree = expose.prix === 0;
+        const isPaid = isExposePaid(expose.id);
         
-        // Déterminer si la fiche est accessible (gratuite ou payée)
+        // Déterminer si l'exposé est accessible (gratuit ou payé)
         const isAccessible = isFree || isPaid;
         
         // Générer le bouton d'action (téléchargement ou paiement)
         let actionButton = '';
         if (isAccessible) {
-          actionButton = `<a href="${fiche.downloadUrl}" target="_blank" class="fiche-download-btn">
+          actionButton = `<a href="${expose.downloadUrl}" target="_blank" class="expose-download">
             <i class="fas fa-download mr-2"></i>Télécharger
           </a>`;
         } else {
-          actionButton = `<button class="payment-btn" onclick="openPaymentModal('${fiche.id}', ${fiche.prix}, '${fiche.titre}')">
-            <i class="fas fa-lock mr-1"></i>Accéder à la fiche
-            <span class="price-tag">${fiche.prix} CFA</span>
+          actionButton = `<button class="payment-btn" onclick="openPaymentModal('${expose.id}', ${expose.prix}, '${expose.titre}')">
+            <i class="fas fa-lock mr-1"></i>Accéder à l'exposé
+            <span class="price-tag">${expose.prix} CFA</span>
           </button>`;
         }
         
-        // Générer le bouton d'aperçu (uniquement pour les fiches accessibles avec previewUrl)
+        // Générer le bouton d'aperçu (uniquement pour les exposés accessibles avec previewUrl)
         let previewButton = '';
-        if (isAccessible && fiche.previewUrl) {
-          previewButton = `<a href="${fiche.previewUrl}" target="_blank" class="preview-btn" title="Voir la fiche">
-            <i class="fas fa-eye"></i> Voir la fiche
+        if (isAccessible && expose.previewUrl) {
+          previewButton = `<a href="${expose.previewUrl}" target="_blank" class="preview-btn" title="Voir l'exposé">
+            <i class="fas fa-eye"></i> Voir l'exposé
           </a>`;
         }
         
-        ficheCard.innerHTML = `
-          <div class="fiche-image" style="background-image: url('${imageUrl}')">
+        exposeCard.innerHTML = `
+          <div class="expose-image" style="background-image: url('${imageUrl}')">
             ${previewButton}
-            <span class="fiche-category">${fiche.matiere}</span>
+            <span class="expose-category">${expose.matiere}</span>
           </div>
-          <div class="fiche-content">
-            <h3 class="fiche-title">${fiche.titre}</h3>
-            <p class="fiche-description">${fiche.description || 'Fiche de révision complète et structurée.'}</p>
-            <div class="fiche-meta">
-              <span><i class="fas fa-file-pdf mr-1"></i> ${fiche.type_document || 'PDF'} - ${fiche.nombre_pages} pages</span>
-              <span><i class="fas fa-graduation-cap mr-1"></i> ${fiche.niveau}</span>
+          <div class="expose-content">
+            <h3 class="expose-title">${expose.titre}</h3>
+            <p class="expose-description">${expose.description}</p>
+            <div class="expose-meta">
+              <span><i class="fas fa-clock mr-1"></i> ${expose.duree ? expose.duree + ' min' : 'Non spécifié'}</span>
+              <span><i class="fas fa-slideshare mr-1"></i> ${expose.nombre_pages} pages</span>
             </div>
-            <div class="fiche-meta">
-              <span><i class="fas fa-money-bill-wave mr-1"></i> ${isFree ? 'Gratuit' : (isPaid ? 'Déjà payé' : fiche.prix + ' CFA')}</span>
+            <div class="expose-meta">
+              <span><i class="fas fa-file-alt mr-1"></i> ${expose.type_document}</span>
+              <span><i class="fas fa-money-bill-wave mr-1"></i> ${isFree ? 'Gratuit' : (isPaid ? 'Déjà payé' : expose.prix + ' CFA')}</span>
             </div>
             ${actionButton}
           </div>
         `;
         
-        fichesContainer.appendChild(ficheCard);
+        exposesContainer.appendChild(exposeCard);
       });
       
       // Mettre à jour la pagination
@@ -863,13 +1116,13 @@
     }
 
     // Ouvrir la modale de paiement
-    window.openPaymentModal = function(ficheId, price, ficheTitle) {
-      currentFicheId = ficheId;
-      currentFichePrice = price;
+    window.openPaymentModal = function(exposeId, price, exposeTitle) {
+      currentExposeId = exposeId;
+      currentExposePrice = price;
       
       // Remplir les informations de la modale
       paymentEmail.value = localStorage.getItem('userEmail') || '';
-      paymentAmount.textContent = `Montant: ${price} CFA - ${ficheTitle}`;
+      paymentAmount.textContent = `Montant: ${price} CFA - ${exposeTitle}`;
       paymentStatus.textContent = '';
       paymentStatus.className = 'payment-status';
       
@@ -880,8 +1133,8 @@
     // Fermer la modale de paiement
     function closeModal() {
       paymentModal.style.display = 'none';
-      currentFicheId = null;
-      currentFichePrice = 0;
+      currentExposeId = null;
+      currentExposePrice = 0;
     }
 
     // Fonction pour initier le processus de paiement
@@ -910,7 +1163,7 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ 
             email, 
-            amount: currentFichePrice 
+            amount: currentExposePrice 
           })
         });
 
@@ -925,7 +1178,7 @@
         const handler = PaystackPop.setup({
           key: publicKey,
           email: email,
-          amount: currentFichePrice * 100, // conversion en kobo
+          amount: currentExposePrice * 100, // conversion en kobo
           currency: "XOF",
           ref: data.data.reference,
           callback: function(response) {
@@ -939,13 +1192,13 @@
                 paymentStatus.textContent = "🎉 Paiement réussi !";
                 paymentStatus.className = "payment-status payment-success";
                 
-                // Marquer la fiche comme payée dans le localStorage
-                markFicheAsPaid(currentFicheId);
+                // Marquer l'exposé comme payé dans le localStorage
+                markExposeAsPaid(currentExposeId);
                 
                 // Mettre à jour l'affichage après un délai
                 setTimeout(() => {
                   closeModal();
-                  displayFiches(); // Recharger les fiches pour mettre à jour les boutons
+                  displayExposes(); // Recharger les exposés pour mettre à jour les boutons
                 }, 2000);
               } else {
                 paymentStatus.textContent = "❌ Paiement non confirmé.";
@@ -978,7 +1231,7 @@
 
     // Mettre à jour la pagination
     function updatePagination() {
-      const totalPages = Math.ceil(filteredFiches.length / fichesPerPage);
+      const totalPages = Math.ceil(filteredExposes.length / exposesPerPage);
       
       if (totalPages > 1) {
         pagination.classList.remove('hidden');
@@ -1011,15 +1264,15 @@
     prevBtn.addEventListener('click', () => {
       if (currentPage > 1) {
         currentPage--;
-        displayFiches();
+        displayExposes();
       }
     });
     
     nextBtn.addEventListener('click', () => {
-      const totalPages = Math.ceil(filteredFiches.length / fichesPerPage);
+      const totalPages = Math.ceil(filteredExposes.length / exposesPerPage);
       if (currentPage < totalPages) {
         currentPage++;
-        displayFiches();
+        displayExposes();
       }
     });
 
@@ -1068,8 +1321,8 @@
         });
       }
 
-      // Charger les fiches au chargement de la page
-      loadFiches();
+      // Charger les exposés au chargement de la page
+      loadExposes();
     });
   </script>
 
