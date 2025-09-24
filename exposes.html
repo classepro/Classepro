@@ -908,7 +908,7 @@
   <footer>
     <div class="footer-content">
       <h3>ClassePro - Votre réussite, notre priorité</h3>
-      <p>&copy; 2023 ClassePro. Tous droits réservés.</p>
+      <p>&copy; 2025 ClassePro. Tous droits réservés.</p>
     </div>
   </footer>
 
@@ -1325,6 +1325,56 @@
       loadExposes();
     });
   </script>
+
+
+<script>
+// Vérifier si Paystack a redirigé avec une référence de paiement
+window.addEventListener("DOMContentLoaded", async () => {
+  const params = new URLSearchParams(window.location.search);
+  const reference = params.get("reference");
+
+  if (reference) {
+    const container = document.createElement("div");
+    container.style.padding = "15px";
+    container.style.margin = "20px auto";
+    container.style.maxWidth = "500px";
+    container.style.textAlign = "center";
+    container.style.borderRadius = "10px";
+
+    try {
+      const res = await fetch(`${backendUrl}/verify-payment`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reference })
+      });
+      const result = await res.json();
+
+      if (result.data && result.data.status === "success") {
+        container.style.background = "#d4edda";
+        container.style.color = "#155724";
+        container.innerHTML = `<h3>✅ Paiement réussi</h3><p>Merci, votre transaction est confirmée.</p>`;
+
+        if (typeof currentExposeId !== "undefined" && currentExposeId) {
+          markExposeAsPaid(currentExposeId);
+          if (typeof displayExposes === "function") {
+            displayExposes();
+          }
+        }
+      } else {
+        container.style.background = "#f8d7da";
+        container.style.color = "#721c24";
+        container.innerHTML = `<h3>❌ Paiement échoué</h3><p>Veuillez réessayer.</p>`;
+      }
+    } catch (err) {
+      container.style.background = "#fff3cd";
+      container.style.color = "#856404";
+      container.innerHTML = `<h3>⚠️ Erreur</h3><p>Impossible de vérifier le paiement.</p>`;
+    }
+
+    document.body.prepend(container);
+  }
+});
+</script>
 
 </body>
 </html>
