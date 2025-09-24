@@ -1,1106 +1,840 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClassePro - Plateforme Éducative</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #FF7E5F;
-            --secondary: #3D3B8E;
-            --accent: #6883BA;
-            --light: #F9F9F9;
-            --dark: #2F2F2F;
-            --success: #4BB543;
-            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
-            --card-shadow: 0 10px 20px rgba(61, 59, 142, 0.15);
-            --hover-shadow: 0 15px 30px rgba(61, 59, 142, 0.25);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
-        }
-        
-        header {
-            background: var(--gradient);
-            color: white;
-            padding: 1rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            z-index: 101;
-        }
-        
-        .logo i {
-            margin-right: 10px;
-            font-size: 1.8rem;
-        }
-        
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 30px;
-            height: 25px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 101;
-        }
-        
-        .menu-toggle span {
-            width: 100%;
-            height: 3px;
-            background-color: white;
-            border-radius: 5px;
-            transition: all 0.3s linear;
-            transform-origin: center;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 1.5rem;
-        }
-        
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 0.5rem;
-            border-radius: 4px;
-            display: block;
-        }
-        
-        .nav-links a:hover, .nav-links a.active {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
-        
-        /* Styles pour le diaporama */
-        .carousel {
-            position: relative;
-            overflow: hidden;
-            border-radius: 16px;
-            height: 400px;
-            margin-bottom: 2rem;
-            box-shadow: var(--card-shadow);
-        }
-        
-        .carousel-inner {
-            display: flex;
-            transition: transform 0.5s ease;
-            height: 100%;
-        }
-        
-        .carousel-item {
-            min-width: 100%;
-            height: 100%;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-            color: white;
-            background-size: cover;
-            background-position: center;
-        }
-        
-        .carousel-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(61, 59, 142, 0.85), rgba(255, 126, 95, 0.85));
-            z-index: 1;
-        }
-        
-        .carousel-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            padding: 0 1rem;
-        }
-        
-        .carousel-item h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        
-        .carousel-item p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-        }
-        
-        .carousel-controls {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            z-index: 10;
-        }
-        
-        .carousel-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.5);
-            margin: 0 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-        
-        .carousel-indicator.active {
-            background-color: white;
-            transform: scale(1.2);
-        }
-        
-        .carousel-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            font-size: 1.2rem;
-        }
-        
-        .carousel-nav:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-50%) scale(1.1);
-        }
-        
-        .carousel-prev {
-            left: 15px;
-        }
-        
-        .carousel-next {
-            right: 15px;
-        }
-        
-        .btn {
-            display: inline-block;
-            background-color: var(--accent);
-            color: white;
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            z-index: 2;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-        
-        .btn:hover::before {
-            left: 100%;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: var(--secondary);
-            font-size: 2rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: var(--gradient);
-            border-radius: 2px;
-        }
-        
-        .exposés {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-        
-        .exposé-card {
-            background-color: white;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-        }
-        
-        .exposé-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--hover-shadow);
-        }
-        
-        .exposé-img {
-            height: 100px; /* Réduit de 130px à 100px */
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem; /* Réduit de 2rem à 1.5rem */
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .exposé-img::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' width='80' height='80'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M14 16H9v-2h5V9.87a4 4 0 1 1 2 0V14h5v2h-5v15.95A10 10 0 0 0 23.66 27l-3.46-2 8.2-2.2-2.9 5a12 12 0 0 1-21 0l-2.89-5 8.2 2.2-3.47 2A10 10 0 0 0 14 31.95V16zm40 0h-5v-2h5V9.87a4 4 0 1 1 2 0V14h5v2h-5v15.95A10 10 0 0 0 63.66 27l-3.47-2 8.2-2.2-2.88 5a12 12 0 0 1-21.02 0l-2.88-5 8.2 2.2-3.47 2A10 10 0 0 0 54 31.95V16z'%3E%3C/path%3E%3C/svg%3E");
-            opacity: 0.1;
-        }
-        
-        .exposé-content {
-            padding: 1.2rem;
-        }
-        
-        .exposé-content h3 {
-            margin-bottom: 0.6rem;
-            color: var(--secondary);
-            font-size: 1.1rem;
-        }
-        
-        .exposé-content p {
-            margin-bottom: 1.2rem;
-            color: #666;
-            font-size: 0.85rem;
-            line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .exposé-actions {
-            display: flex;
-            justify-content: center;
-            gap: 0.8rem;
-        }
-        
-        .action-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            border: none;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .action-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(0);
-            border-radius: 50%;
-            transition: transform 0.3s ease;
-        }
-        
-        .action-btn:hover::before {
-            transform: scale(1.1);
-        }
-        
-        .download-btn {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .download-btn:hover {
-            background-color: var(--secondary);
-            transform: scale(1.1);
-        }
-        
-        .preview-btn {
-            background-color: var(--accent);
-            color: white;
-        }
-        
-        .preview-btn:hover {
-            background-color: var(--secondary);
-            transform: scale(1.1);
-        }
-        
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 1.5rem 1rem;
-            text-align: center;
-            margin-top: 2rem;
-            font-size: 0.9rem;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .footer-content h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.8rem;
-        }
-        
-        .footer-content p {
-            font-size: 0.85rem;
-        }
-        
-        /* Modal de prévisualisation - MODIFICATIONS ICI */
-        .preview-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
-            z-index: 1000;
-            overflow: hidden;
-        }
-        
-        .preview-modal.active {
-            display: block;
-        }
-        
-        .modal-content {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .modal-header {
-            padding: 1rem;
-            background-color: rgba(0, 0, 0, 0.9);
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            /* Ajout pour cacher l'en-tête */
-            display: none;
-        }
-        
-        .modal-title {
-            margin: 0;
-            font-size: 1.2rem;
-        }
-        
-        .close-modal {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            transition: color 0.3s ease;
-        }
-        
-        .close-modal:hover {
-            color: var(--primary);
-        }
-        
-        .modal-iframe-container {
-            flex: 1;
-            overflow: hidden;
-        }
-        
-        .modal-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        
-        /* Media Queries pour la responsivité - MOBILE EN FORMAT PAYSAGE */
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: flex;
-            }
-            
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                height: 100vh;
-                width: 70%;
-                flex-direction: column;
-                background: var(--gradient);
-                padding: 6rem 2rem 2rem;
-                transition: right 0.3s ease-in-out;
-                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.15);
-            }
-            
-            .nav-links.active {
-                right: 0;
-            }
-            
-            .nav-links li {
-                margin: 1.5rem 0;
-            }
-            
-            .nav-links a {
-                padding: 0.8rem;
-                font-size: 1.1rem;
-            }
-            
-            /* Format paysage pour le diaporama sur mobile */
-            .carousel {
-                height: 250px;
-                margin: 1rem 0;
-                width: 100vw;
-                position: relative;
-                left: 50%;
-                right: 50%;
-                margin-left: -50vw;
-                margin-right: -50vw;
-                border-radius: 0;
-            }
-            
-            .carousel-item {
-                padding: 1rem;
-                flex-direction: row;
-                text-align: center;
-                justify-content: center;
-                align-items: center;
-            }
-            
-            .carousel-content {
-                padding: 0 0.5rem;
-                max-width: 90%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-            }
-            
-            .carousel-item h2 {
-                font-size: 1.1rem;
-                margin-bottom: 0.5rem;
-                line-height: 1.3;
-            }
-            
-            .carousel-item p {
-                font-size: 0.8rem;
-                margin-bottom: 1rem;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-                line-height: 1.4;
-            }
-            
-            .carousel-item .btn {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.7rem;
-            }
-            
-            .carousel-nav {
-                width: 35px;
-                height: 35px;
-                font-size: 0.9rem;
-            }
-            
-            .carousel-controls {
-                bottom: 10px;
-            }
-            
-            .carousel-indicator {
-                width: 8px;
-                height: 8px;
-            }
-            
-            .section-title {
-                font-size: 1.6rem;
-            }
-            
-            /* MODIFICATION: Deux cartes par ligne sur mobile */
-            .exposés {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-            
-            .container {
-                padding: 0 0.5rem;
-            }
-            
-            /* Ajustements pour les cartes sur mobile */
-            .exposé-card {
-                margin-bottom: 1rem;
-            }
-            
-            .exposé-img {
-                height: 90px; /* Réduit pour mobile */
-                font-size: 1.5rem; /* Réduit pour mobile */
-            }
-            
-            .exposé-content h3 {
-                font-size: 0.95rem; /* Légèrement réduit */
-            }
-            
-            .exposé-content p {
-                font-size: 0.8rem;
-                -webkit-line-clamp: 2; /* Moins de lignes de texte */
-            }
-            
-            .exposé-actions {
-                gap: 0.5rem;
-            }
-            
-            .action-btn {
-                width: 35px;
-                height: 35px;
-                font-size: 0.9rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .logo {
-                font-size: 1.3rem;
-            }
-            
-            .logo i {
-                font-size: 1.5rem;
-            }
-            
-            /* Ajustements supplémentaires pour très petits écrans */
-            .carousel {
-                height: 220px;
-            }
-            
-            .carousel-item h2 {
-                font-size: 1rem;
-            }
-            
-            .carousel-item p {
-                font-size: 0.75rem;
-                -webkit-line-clamp: 2;
-            }
-            
-            .btn {
-                padding: 0.5rem 0.9rem;
-                font-size: 0.75rem;
-            }
-            
-            .exposé-img {
-                height: 80px; /* Plus réduit pour très petits écrans */
-                font-size: 1.3rem; /* Plus réduit pour très petits écrans */
-            }
-            
-            .carousel-nav {
-                width: 30px;
-                height: 30px;
-            }
-            
-            footer {
-                padding: 1rem;
-                font-size: 0.8rem;
-            }
-            
-            .footer-content h3 {
-                font-size: 1rem;
-            }
-            
-            .footer-content p {
-                font-size: 0.8rem;
-            }
-            
-            /* Pour les écrans très étroits, on revient à une colonne */
-            @media (max-width: 360px) {
-                .exposés {
-                    grid-template-columns: 1fr;
-                }
-            }
-        }
-
-        .loader {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid var(--primary);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 2s linear infinite;
-            margin: 2rem auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .error-message {
-            text-align: center;
-            color: #dc3545;
-            padding: 1rem;
-            background-color: #f8d7da;
-            border-radius: 8px;
-            margin: 1rem 0;
-        }
-        
-        .no-data {
-            text-align: center;
-            color: #6c757d;
-            padding: 2rem;
-            grid-column: 1 / -1;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClassePro - Plateforme Éducative</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary: #FF7E5F;
+      --secondary: #3D3B8E;
+      --accent: #6883BA;
+      --light: #F9F9F9;
+      --dark: #2F2F2F;
+      --success: #4BB543;
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+      --card-shadow: 0 10px 20px rgba(61, 59, 142, 0.15);
+      --hover-shadow: 0 15px 30px rgba(61, 59, 142, 0.25);
+    }
+    
+    body {
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+    }
+    
+    .compact-card {
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+      min-height: 100px;
+    }
+    
+    .compact-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--hover-shadow);
+      border-color: rgba(61, 59, 142, 0.2);
+    }
+    
+    .compact-card:active {
+      transform: scale(0.97);
+    }
+    
+    .search-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(104, 131, 186, 0.3);
+    }
+    
+    /* Style pour la barre de défilement */
+    .scroll-container::-webkit-scrollbar {
+      height: 6px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb {
+      background: #c7d2fe;
+      border-radius: 10px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb:hover {
+      background: #a5b4fc;
+    }
+    
+    /* Style pour la navbar */
+    header {
+      background: var(--gradient);
+      color: white;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      z-index: 101;
+    }
+    
+    .logo i {
+      margin-right: 10px;
+      font-size: 1.8rem;
+    }
+    
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 30px;
+      height: 25px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 101;
+    }
+    
+    .menu-toggle span {
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      border-radius: 5px;
+      transition: all 0.3s linear;
+      transform-origin: center;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin-left: 1.5rem;
+    }
+    
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem;
+      border-radius: 4px;
+      display: block;
+    }
+    
+    .nav-links a:hover, .nav-links a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Style pour le footer */
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .footer-content h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    .footer-content p {
+      font-size: 0.85rem;
+    }
+    
+    /* Styles pour le diaporama */
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0 0 16px 16px;
+      height: 400px;
+      margin-bottom: 2rem;
+      box-shadow: var(--card-shadow);
+      margin-top: -0.5rem; /* Réduction de l'espace avec la navbar */
+    }
+    
+    .carousel-inner {
+      display: flex;
+      transition: transform 0.5s ease;
+      height: 100%;
+    }
+    
+    .carousel-item {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      color: white;
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .carousel-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(61, 59, 142, 0.85), rgba(255, 126, 95, 0.85));
+      z-index: 1;
+    }
+    
+    .carousel-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 0 1rem;
+    }
+    
+    .carousel-item h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    .carousel-item p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    .carousel-controls {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      z-index: 10;
+    }
+    
+    .carousel-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.5);
+      margin: 0 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    
+    .carousel-indicator.active {
+      background-color: white;
+      transform: scale(1.2);
+    }
+    
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      font-size: 1.2rem;
+    }
+    
+    .carousel-nav:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    .carousel-prev {
+      left: 15px;
+    }
+    
+    .carousel-next {
+      right: 15px;
+    }
+    
+    .btn {
+      display: inline-block;
+      background-color: var(--accent);
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      z-index: 2;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn:hover::before {
+      left: 100%;
+    }
+    
+    /* Amélioration des cartes avec les couleurs du thème */
+    .card-icon-container {
+      background: var(--gradient);
+      padding: 0.5rem;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+    
+    .card-icon {
+      color: white;
+      font-size: 1.2rem;
+    }
+    
+    .card-title {
+      color: var(--secondary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    
+    .compact-card {
+      background: linear-gradient(135deg, rgba(255, 126, 95, 0.1), rgba(61, 59, 142, 0.1));
+      border: 1px solid rgba(61, 59, 142, 0.1);
+    }
+    
+    .compact-card:hover {
+      background: linear-gradient(135deg, rgba(255, 126, 95, 0.15), rgba(61, 59, 142, 0.15));
+      border-color: var(--accent);
+    }
+    
+    /* Media Queries pour la responsivité */
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 70%;
+        flex-direction: column;
+        background: var(--gradient);
+        padding: 6rem 2rem 2rem;
+        transition: right 0.3s ease-in-out;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.15);
+      }
+      
+      .nav-links.active {
+        right: 0;
+      }
+      
+      .nav-links li {
+        margin: 1.5rem 0;
+      }
+      
+      .nav-links a {
+        padding: 0.8rem;
+        font-size: 1.1rem;
+      }
+      
+      /* Format paysage pour le diaporama sur mobile */
+      .carousel {
+        height: 250px;
+        margin: -0.5rem 0 1rem 0; /* Ajustement des marges sur mobile - espace réduit */
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        border-radius: 0;
+      }
+      
+      .carousel-item {
+        padding: 1rem;
+        flex-direction: row;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .carousel-content {
+        padding: 0 0.5rem;
+        max-width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .carousel-item h2 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.3;
+      }
+      
+      .carousel-item p {
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 1.4;
+      }
+      
+      .carousel-item .btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.7rem;
+      }
+      
+      .carousel-nav {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+        display: none; /* Cacher les flèches sur mobile pour gagner de l'espace */
+      }
+      
+      .carousel-controls {
+        bottom: 10px;
+      }
+      
+      .carousel-indicator {
+        width: 8px;
+        height: 8px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .carousel {
+        height: 220px;
+      }
+      
+      .carousel-item h2 {
+        font-size: 1rem;
+      }
+      
+      .carousel-item p {
+        font-size: 0.75rem;
+        -webkit-line-clamp: 2;
+      }
+      
+      .btn {
+        padding: 0.5rem 0.9rem;
+        font-size: 0.75rem;
+      }
+      
+      .carousel-nav {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  </style>
 </head>
-<body>
-    <header>
-        <nav class="navbar">
-            <div class="logo">
-                <i class="fas fa-graduation-cap"></i>
-                <span>ClassePro</span>
-            </div>
-            <button class="menu-toggle" aria-label="Toggle navigation menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-links">
-                <li><a href="index.html">Accueil</a></li>
-                <li><a href="#" class="active">Menu</a></li>
-                <li><a href="support.html">Support</a></li>
-            </ul>
-        </nav>
-    </header>
+<body class="min-h-screen flex flex-col">
 
-    <div class="container">
-        <!-- Diaporama remplaçant la section hero -->
-        <div class="carousel">
-            <div class="carousel-inner">
-                <!-- Carte 1: Accueil originale -->
-                <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1522881193457-37ae97c905bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
-                    <div class="carousel-content">
-                        <h2>Bienvenue sur ClassePro</h2>
-                        <p>Votre plateforme éducative pour accéder à des exposés de qualité et obtenir de l'aide pour vos devoirs</p>
-                        <a href="#exposés" class="btn">Explorer les exposés</a>
-                    </div>
-                </div>
-                
-                <!-- Carte 2: Rapports de stage -->
-                <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
-                    <div class="carousel-content">
-                        <h2>Rapports de Stage Professionnels</h2>
-                        <p>ClassePro est également spécialisé dans le traitement des rapports de stage. Obtenez un rapport structuré et professionnel.</p>
-                        <a href="support.html?service=rapport-stage" class="btn">Contacter le support</a>
-                    </div>
-                </div>
-                
-                <!-- Carte 3: Exposés sur mesure -->
-                <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
-                    <div class="carousel-content">
-                        <h2>Exposés Sur Mesure</h2>
-                        <p>Vous souhaitez réaliser un exposé, quel que soit le thème? Notre équipe est à votre disposition pour vous accompagner.</p>
-                        <a href="support.html?service=expose" class="btn">Contacter le support</a>
-                    </div>
-                </div>
-                
-                <!-- Carte 4: Outil éducatif sérieux -->
-                <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1591123120675-133d0a4dc34d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80');">
-                    <div class="carousel-content">
-                        <h2>Outil Éducatif Complet</h2>
-                        <p>ClassePro est un outil éducatif sérieux conçu pour aider les élèves à accroître leurs connaissances et réussir leurs études.</p>
-                        <a href="support.html?service=outil-educatif" class="btn">En savoir plus</a>
-                    </div>
-                </div>
-                
-                <!-- Carte 5: Mise en forme de rapports -->
-                <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1589652717521-10c0d092dea9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
-                    <div class="carousel-content">
-                        <h2>Mise en Forme Professionnelle</h2>
-                        <p>Nous sommes spécialisés dans la mise en forme de rapports de mémoire et de rapports de stage selon les normes académiques.</p>
-                        <a href="support.html?service=mise-en-forme" class="btn">Contacter le support</a>
-                    </div>
-                </div>
-                
-                <!-- Carte 6: Conception de documents professionnels -->
-                <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
-                    <div class="carousel-content">
-                        <h2>Documents Professionnels</h2>
-                        <p>ClassePro vous aide également dans la conception de CV professionnels, lettres de motivation, demandes de stage et rédactions de discours.</p>
-                        <a href="support.html?service=conception-cv" class="btn">Contacter le support</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Contrôles de navigation du diaporama -->
-            <button class="carousel-nav carousel-prev">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="carousel-nav carousel-next">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-            
-            <!-- Indicateurs de diapositive -->
-            <div class="carousel-controls">
-                <div class="carousel-indicator active" data-index="0"></div>
-                <div class="carousel-indicator" data-index="1"></div>
-                <div class="carousel-indicator" data-index="2"></div>
-                <div class="carousel-indicator" data-index="3"></div>
-                <div class="carousel-indicator" data-index="4"></div>
-                <div class="carousel-indicator" data-index="5"></div>
-            </div>
+  <!-- Navigation du deuxième fichier -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <i class="fas fa-graduation-cap"></i>
+        <span>ClassePro</span>
+      </div>
+      <button class="menu-toggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="#" class="active">Menu</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Contenu principal du premier fichier -->
+  <main class="flex-grow container mx-auto px-4 pt-2 pb-6"> <!-- Réduction du padding top -->
+    <!-- Diaporama intégré à la place de la barre de recherche -->
+    <div class="carousel mb-8">
+      <div class="carousel-inner">
+        <!-- Carte 1: Accueil originale -->
+        <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1522881193457-37ae97c905bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+          <div class="carousel-content">
+            <h2>Bienvenue sur ClassePro</h2>
+            <p>Votre plateforme éducative pour accéder à des exposés de qualité et obtenir de l'aide pour vos devoirs</p>
+            <a href="#rubriques" class="btn">Explorer les ressources</a>
+          </div>
         </div>
-
-        <h2 class="section-title" id="exposés">Exposés Disponibles</h2>
         
-        <div class="exposés" id="exposes-container">
-            <div class="loader" id="loader"></div>
-            <!-- Les exposés seront chargés dynamiquement depuis Firestore -->
+        <!-- Carte 2: Rapports de stage -->
+        <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+          <div class="carousel-content">
+            <h2>Rapports de Stage Professionnels</h2>
+            <p>ClassePro est également spécialisé dans le traitement des rapports de stage. Obtenez un rapport structuré et professionnel.</p>
+            <a href="support.html?service=rapport-stage" class="btn">Contacter le support</a>
+          </div>
         </div>
+        
+        <!-- Carte 3: Exposés sur mesure -->
+        <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+          <div class="carousel-content">
+            <h2>Exposés Sur Mesure</h2>
+            <p>Vous souhaitez réaliser un exposé, quel que soit le thème? Notre équipe est à votre disposition pour vous accompagner.</p>
+            <a href="support.html?service=expose" class="btn">Contacter le support</a>
+          </div>
+        </div>
+        
+        <!-- Carte 4: Outil éducatif sérieux -->
+        <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1591123120675-133d0a4dc34d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwa90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80');">
+          <div class="carousel-content">
+            <h2>Outil Éducatif Complet</h2>
+            <p>ClassePro est un outil éducatif sérieux conçu pour aider les élèves à accroître leurs connaissances et réussir leurs études.</p>
+            <a href="support.html?service=outil-educatif" class="btn">En savoir plus</a>
+          </div>
+        </div>
+        
+        <!-- Carte 5: Mise en forme de rapports -->
+        <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1589652717521-10c0d092dea9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+          <div class="carousel-content">
+            <h2>Mise en Forme Professionnelle</h2>
+            <p>Nous sommes spécialisés dans la mise en forme de rapports de mémoire et de rapports de stage selon les normes académiques.</p>
+            <a href="support.html?service=mise-en-forme" class="btn">Contacter le support</a>
+          </div>
+        </div>
+        
+        <!-- Carte 6: Conception de documents professionnels -->
+        <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+          <div class="carousel-content">
+            <h2>Documents Professionnels</h2>
+            <p>ClassePro vous aide également dans la conception de CV professionnels, lettres de motivation, demandes de stage et rédactions de discours.</p>
+            <a href="support.html?service=conception-cv" class="btn">Contacter le support</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Contrôles de navigation du diaporama -->
+      <button class="carousel-nav carousel-prev">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="carousel-nav carousel-next">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+      
+      <!-- Indicateurs de diapositive -->
+      <div class="carousel-controls">
+        <div class="carousel-indicator active" data-index="0"></div>
+        <div class="carousel-indicator" data-index="1"></div>
+        <div class="carousel-indicator" data-index="2"></div>
+        <div class="carousel-indicator" data-index="3"></div>
+        <div class="carousel-indicator" data-index="4"></div>
+        <div class="carousel-indicator" data-index="5"></div>
+      </div>
     </div>
-    
-    <!-- Modal de prévisualisation -->
-    <div class="preview-modal" id="preview-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modal-title">Prévisualisation</h3>
-                <button class="close-modal" id="close-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-iframe-container">
-                <iframe class="modal-iframe" id="preview-iframe" src="about:blank"></iframe>
-            </div>
+
+    <!-- Rubriques scolaires -->
+    <section class="mb-8" id="rubriques">
+      <div class="flex items-center mb-4">
+        <div class="card-icon-container">
+          <i class="fas fa-book card-icon"></i>
         </div>
+        <h2 class="text-lg font-semibold ml-2">Rubriques <span class="text-secondary">scolaires</span></h2>
+      </div>
+      
+      <div class="grid grid-cols-2 gap-3">
+        <a href="cours-exercices.html" class="compact-card rounded-lg shadow p-4 cursor-pointer flex flex-col items-center justify-center">
+          <div class="card-icon-container">
+            <i class="fas fa-graduation-cap card-icon"></i>
+          </div>
+          <h3 class="card-title">Cours & Exercices</h3>
+        </a>
+        
+        <a href="exposes.html" class="compact-card rounded-lg shadow p-4 cursor-pointer flex flex-col items-center justify-center">
+          <div class="card-icon-container">
+            <i class="fas fa-chalkboard-teacher card-icon"></i>
+          </div>
+          <h3 class="card-title">Exposés</h3>
+        </a>
+        
+        <a href="rapports-stage.html" class="compact-card rounded-lg shadow p-4 cursor-pointer flex flex-col items-center justify-center">
+          <div class="card-icon-container">
+            <i class="fas fa-briefcase card-icon"></i>
+          </div>
+          <h3 class="card-title">Rapports de stage</h3>
+        </a>
+        
+        <a href="fiches-revision.html" class="compact-card rounded-lg shadow p-4 cursor-pointer flex flex-col items-center justify-center">
+          <div class="card-icon-container">
+            <i class="fas fa-file-alt card-icon"></i>
+          </div>
+          <h3 class="card-title">Fiches de révision</h3>
+        </a>
+      </div>
+    </section>
+
+    <!-- Rubriques professionnelles -->
+    <section class="mb-8">
+      <div class="flex items-center mb-4">
+        <div class="card-icon-container">
+          <i class="fas fa-briefcase card-icon"></i>
+        </div>
+        <h2 class="text-lg font-semibold ml-2">Rubriques <span class="text-secondary">professionnelles</span></h2>
+      </div>
+      
+      <div class="grid grid-cols-2 gap-3">
+        <a href="cv.html" class="compact-card rounded-lg shadow p-4 cursor-pointer flex flex-col items-center justify-center">
+          <div class="card-icon-container">
+            <i class="fas fa-id-card card-icon"></i>
+          </div>
+          <h3 class="card-title">CV</h3>
+        </a>
+        
+        <a href="demande-emploi.html" class="compact-card rounded-lg shadow p-4 cursor-pointer flex flex-col items-center justify-center">
+          <div class="card-icon-container">
+            <i class="fas fa-envelope-open-text card-icon"></i>
+          </div>
+          <h3 class="card-title">Demande d'emploi</h3>
+        </a>
+        
+        <a href="demande-stage.html" class="compact-card rounded-lg shadow p-4 cursor-pointer flex flex-col items-center justify-center">
+          <div class="card-icon-container">
+            <i class="fas fa-building card-icon"></i>
+          </div>
+          <h3 class="card-title">Demande de stage</h3>
+        </a>
+        
+        <a href="lettre-motivation.html" class="compact-card rounded-lg shadow p-4 cursor-pointer flex flex-col items-center justify-center">
+          <div class="card-icon-container">
+            <i class="fas fa-pen-fancy card-icon"></i>
+          </div>
+          <h3 class="card-title">Lettre de motivation</h3>
+        </a>
+      </div>
+    </section>
+
+    <!-- Section documents récents -->
+    <section class="mb-8">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-semibold">Documents récents</h2>
+        <a href="documents.html" class="text-xs text-secondary font-medium">Voir tout</a>
+      </div>
+      
+      <div class="scroll-container overflow-x-auto pb-2">
+        <div class="flex space-x-3">
+          <a href="guide-cv.html" class="bg-white rounded-lg shadow p-3 min-w-[160px] hover:shadow-md transition-shadow">
+            <div class="flex items-center mb-2">
+              <div class="bg-indigo-100 p-1 rounded mr-2">
+                <i class="fas fa-file-pdf text-secondary text-xs"></i>
+              </div>
+              <span class="text-xs font-medium">Guide CV moderne</span>
+            </div>
+            <p class="text-[10px] text-gray-500">Ajouté aujourd'hui</p>
+          </a>
+          
+          <a href="modele-lettre.html" class="bg-white rounded-lg shadow p-3 min-w-[160px] hover:shadow-md transition-shadow">
+            <div class="flex items-center mb-2">
+              <div class="bg-indigo-100 p-1 rounded mr-2">
+                <i class="fas fa-file-word text-secondary text-xs"></i>
+              </div>
+              <span class="text-xs font-medium">Modèle lettre</span>
+            </div>
+            <p class="text-[10px] text-gray-500">Ajouté hier</p>
+          </a>
+          
+          <a href="tableau-competences.html" class="bg-white rounded-lg shadow p-3 min-w-[160px] hover:shadow-md transition-shadow">
+            <div class="flex items-center mb-2">
+              <div class="bg-indigo-100 p-1 rounded mr-2">
+                <i class="fas fa-file-excel text-secondary text-xs"></i>
+              </div>
+              <span class="text-xs font-medium">Tableau compétences</span>
+            </div>
+            <p class="text-[10px] text-gray-500">Ajouté il y a 2 jours</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer du deuxième fichier -->
+  <footer>
+    <div class="footer-content">
+      <h3>ClassePro - Votre réussite, notre priorité</h3>
+      <p>&copy; 2023 ClassePro. Tous droits réservés.</p>
     </div>
-    
-    <footer>
-        <div class="footer-content">
-            <h3>ClassePro - Votre réussite, notre priorité</h3>
-            <p>&copy; 2023 ClassePro. Tous droits réservés.</p>
-        </div>
-    </footer>
+  </footer>
 
-    <!-- Firebase App (core Firebase SDK) -->
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBEhwO0hRiQYhvCUMctr1gavhg6IkVDD68",
-            authDomain: "classepro-daa95.firebaseapp.com",
-            projectId: "classepro-daa95",
-            storageBucket: "classepro-daa95.firebasestorage.app",
-            messagingSenderId: "1004954454940",
-            appId: "1:1004954454940:web:5722ed2991deb45b835659",
-            measurementId: "G-5JHX50ETYL"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        // Gestion du menu hamburger pour mobile
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.menu-toggle').forEach(toggle => {
-                toggle.addEventListener('click', function() {
-                    // Trouver le menu associé à ce toggle
-                    const navLinks = this.closest('.navbar').querySelector('.nav-links');
-                    navLinks.classList.toggle('active');
-                    
-                    // Animation des lignes du hamburger
-                    const spans = this.querySelectorAll('span');
-                    if (navLinks.classList.contains('active')) {
-                        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                        spans[1].style.opacity = '0';
-                        spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
-                    } else {
-                        spans[0].style.transform = 'none';
-                        spans[1].style.opacity = '1';
-                        spans[2].style.transform = 'none';
-                    }
-                });
-            });
-            
-            // Fermer le menu en cliquant à l'extérieur
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.navbar')) {
-                    document.querySelectorAll('.nav-links').forEach(menu => {
-                        menu.classList.remove('active');
-                    });
-                    document.querySelectorAll('.menu-toggle span').forEach(span => {
-                        span.style.transform = 'none';
-                        span.style.opacity = '1';
-                    });
-                }
-            });
-
-            // Charger les exposés depuis Firestore
-            const exposesContainer = document.getElementById('exposes-container');
-            const loader = document.getElementById('loader');
-            
-            // Éléments pour la modale de prévisualisation
-            const previewModal = document.getElementById('preview-modal');
-            const previewIframe = document.getElementById('preview-iframe');
-            const modalTitle = document.getElementById('modal-title');
-            const closeModalBtn = document.getElementById('close-modal');
-            
-            // Fonction pour ouvrir la modale de prévisualisation
-            function openPreviewModal(title, previewUrl) {
-                modalTitle.textContent = `Prévisualisation: ${title}`;
-                previewIframe.src = previewUrl;
-                previewModal.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Empêcher le défilement de la page
-            }
-            
-            // Fonction pour fermer la modale de prévisualisation
-            function closePreviewModal() {
-                previewModal.classList.remove('active');
-                previewIframe.src = 'about:blank';
-                document.body.style.overflow = ''; // Réactiver le défilement
-            }
-            
-            // Événement pour fermer la modale (gardé pour la compatibilité mais non visible)
-            closeModalBtn.addEventListener('click', closePreviewModal);
-            
-            // Fermer la modale en cliquant à l'extérieur du contenu
-            previewModal.addEventListener('click', function(e) {
-                if (e.target === previewModal) {
-                    closePreviewModal();
-                }
-            });
-            
-            // Fermer la modale avec la touche Échap
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && previewModal.classList.contains('active')) {
-                    closePreviewModal();
-                }
-            });
-            
-            // Fonction pour charger les exposés
-            async function loadExposes() {
-                try {
-                    const querySnapshot = await getDocs(collection(db, "exposes"));
-                    exposesContainer.innerHTML = '';
-                    
-                    if (!querySnapshot.empty) {
-                        querySnapshot.forEach((doc) => {
-                            const expose = doc.data();
-                            const card = document.createElement('div');
-                            card.className = 'exposé-card';
-                            
-                            // Vérifier si une prévisualisation est disponible
-                            const hasPreview = expose.preview && expose.preview !== '';
-                            
-                            card.innerHTML = `
-                                <div class="exposé-img">
-                                    <i class="fas ${expose.icone || 'fa-file'}"></i>
-                                </div>
-                                <div class="exposé-content">
-                                    <h3>${expose.titre}</h3>
-                                    <p>${expose.description}</p>
-                                    <div class="exposé-actions">
-                                        <a href="${expose.fichier}" class="action-btn download-btn" target="_blank" title="Télécharger">
-                                            <i class="fas fa-download"></i>
-                                        </a>
-                                        ${hasPreview ? 
-                                            `<button class="action-btn preview-btn" title="Prévisualiser" data-preview="${expose.preview}" data-title="${expose.titre}">
-                                                <i class="fas fa-eye"></i>
-                                            </button>` : 
-                                            ''
-                                        }
-                                    </div>
-                                </div>
-                            `;
-                            exposesContainer.appendChild(card);
-                        });
-                        
-                        // Ajouter les événements pour les boutons de prévisualisation
-                        document.querySelectorAll('.preview-btn').forEach(btn => {
-                            btn.addEventListener('click', function() {
-                                const previewUrl = this.getAttribute('data-preview');
-                                const title = this.getAttribute('data-title');
-                                openPreviewModal(title, previewUrl);
-                            });
-                        });
-                    } else {
-                        exposesContainer.innerHTML = '<p class="no-data">Aucun exposé disponible pour le moment.</p>';
-                    }
-                } catch (error) {
-                    console.error('Erreur lors du chargement des exposés:', error);
-                    exposesContainer.innerHTML = '<p class="error-message">Impossible de charger les exposés. Veuillez réessayer plus tard.</p>';
-                }
-            }
-            
-            // Charger les exposés au démarrage
-            loadExposes();
-
-            // Gestion du diaporama
-            const carousel = document.querySelector('.carousel');
-            const inner = document.querySelector('.carousel-inner');
-            const items = document.querySelectorAll('.carousel-item');
-            const indicators = document.querySelectorAll('.carousel-indicator');
-            const prevBtn = document.querySelector('.carousel-prev');
-            const nextBtn = document.querySelector('.carousel-next');
-            
-            let currentIndex = 0;
-            let intervalId = null;
-            const intervalTime = 5000; // 5 secondes
-            
-            // Fonction pour mettre à jour le diaporama
-            function updateCarousel() {
-                inner.style.transform = `translateX(-${currentIndex * 100}%)`;
-                
-                // Mettre à jour les indicateurs
-                indicators.forEach((indicator, index) => {
-                    if (index === currentIndex) {
-                        indicator.classList.add('active');
-                    } else {
-                        indicator.classList.remove('active');
-                    }
-                });
-            }
-            
-            // Fonction pour passer à la diapositive suivante
-            function nextSlide() {
-                currentIndex = (currentIndex + 1) % items.length;
-                updateCarousel();
-            }
-            
-            // Fonction pour passer à la diapositive précédente
-            function prevSlide() {
-                currentIndex = (currentIndex - 1 + items.length) % items.length;
-                updateCarousel();
-            }
-            
-            // Démarrer le défilement automatique
-            function startAutoSlide() {
-                intervalId = setInterval(nextSlide, intervalTime);
-            }
-            
-            // Arrêter le défilement automatique
-            function stopAutoSlide() {
-                clearInterval(intervalId);
-            }
-            
-            // Événements pour les boutons de navigation
-            nextBtn.addEventListener('click', () => {
-                stopAutoSlide();
-                nextSlide();
-                startAutoSlide();
-            });
-            
-            prevBtn.addEventListener('click', () => {
-                stopAutoSlide();
-                prevSlide();
-                startAutoSlide();
-            });
-            
-            // Événements pour les indicateurs
-            indicators.forEach(indicator => {
-                indicator.addEventListener('click', () => {
-                    stopAutoSlide();
-                    currentIndex = parseInt(indicator.getAttribute('data-index'));
-                    updateCarousel();
-                    startAutoSlide();
-                });
-            });
-            
-            // Arrêter le défilement automatique quand la souris est sur le diaporama
-            carousel.addEventListener('mouseenter', stopAutoSlide);
-            
-            // Redémarrer le défilement automatique quand la souris quitte le diaporama
-            carousel.addEventListener('mouseleave', startAutoSlide);
-            
-            // Démarrer le diaporama
-            startAutoSlide();
+  <script>
+    // Gestion du menu hamburger pour mobile
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navLinks = document.querySelector('.nav-links');
+      
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', function() {
+          navLinks.classList.toggle('active');
+          
+          // Animation des lignes du hamburger
+          const spans = this.querySelectorAll('span');
+          if (navLinks.classList.contains('active')) {
+            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+            spans[1].style.opacity = '0';
+            spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+          } else {
+            spans[0].style.transform = 'none';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = 'none';
+          }
         });
-    </script>
+        
+        // Fermer le menu en cliquant à l'extérieur
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.navbar')) {
+            navLinks.classList.remove('active');
+            document.querySelectorAll('.menu-toggle span').forEach(span => {
+              span.style.transform = 'none';
+              span.style.opacity = '1';
+            });
+          }
+        });
+      }
+
+      // Gestion du diaporama
+      const carousel = document.querySelector('.carousel');
+      const inner = document.querySelector('.carousel-inner');
+      const items = document.querySelectorAll('.carousel-item');
+      const indicators = document.querySelectorAll('.carousel-indicator');
+      const prevBtn = document.querySelector('.carousel-prev');
+      const nextBtn = document.querySelector('.carousel-next');
+      
+      let currentIndex = 0;
+      let intervalId = null;
+      const intervalTime = 5000; // 5 secondes
+      
+      // Fonction pour mettre à jour le diaporama
+      function updateCarousel() {
+        inner.style.transform = `translateX(-${currentIndex * 100}%)`;
+        
+        // Mettre à jour les indicateurs
+        indicators.forEach((indicator, index) => {
+          if (index === currentIndex) {
+            indicator.classList.add('active');
+          } else {
+            indicator.classList.remove('active');
+          }
+        });
+      }
+      
+      // Fonction pour passer à la diapositive suivante
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % items.length;
+        updateCarousel();
+      }
+      
+      // Fonction pour passer à la diapositive précédente
+      function prevSlide() {
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        updateCarousel();
+      }
+      
+      // Démarrer le défilement automatique
+      function startAutoSlide() {
+        intervalId = setInterval(nextSlide, intervalTime);
+      }
+      
+      // Arrêter le défilement automatique
+      function stopAutoSlide() {
+        clearInterval(intervalId);
+      }
+      
+      // Événements pour les boutons de navigation
+      nextBtn.addEventListener('click', () => {
+        stopAutoSlide();
+        nextSlide();
+        startAutoSlide();
+      });
+      
+      prevBtn.addEventListener('click', () => {
+        stopAutoSlide();
+        prevSlide();
+        startAutoSlide();
+      });
+      
+      // Événements pour les indicateurs
+      indicators.forEach(indicator => {
+        indicator.addEventListener('click', () => {
+          stopAutoSlide();
+          currentIndex = parseInt(indicator.getAttribute('data-index'));
+          updateCarousel();
+          startAutoSlide();
+        });
+      });
+      
+      // Arrêter le défilement automatique quand la souris est sur le diaporama
+      carousel.addEventListener('mouseenter', stopAutoSlide);
+      
+      // Redémarrer le défilement automatique quand la souris quitte le diaporama
+      carousel.addEventListener('mouseleave', startAutoSlide);
+      
+      // Démarrer le diaporama
+      startAutoSlide();
+    });
+  </script>
+
 </body>
 </html>
