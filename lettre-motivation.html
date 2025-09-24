@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lettre de Motivation - ClassePro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary: #FF7E5F;
+      --secondary: #3D3B8E;
+      --accent: #6883BA;
+      --light: #F9F9F9;
+      --dark: #2F2F2F;
+      --success: #4BB543;
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+      --card-shadow: 0 10px 20px rgba(61, 59, 142, 0.15);
+      --hover-shadow: 0 15px 30px rgba(61, 59, 142, 0.25);
+    }
+    
+    body {
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+    }
+    
+    .compact-card {
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+      min-height: 100px;
+    }
+    
+    .compact-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--hover-shadow);
+      border-color: rgba(61, 59, 142, 0.2);
+    }
+    
+    .compact-card:active {
+      transform: scale(0.97);
+    }
+    
+    .search-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(104, 131, 186, 0.3);
+    }
+    
+    /* Style pour la barre de défilement */
+    .scroll-container::-webkit-scrollbar {
+      height: 6px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb {
+      background: #c7d2fe;
+      border-radius: 10px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb:hover {
+      background: #a5b4fc;
+    }
+    
+    /* Style pour la navbar */
+    header {
+      background: var(--gradient);
+      color: white;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      z-index: 101;
+    }
+    
+    .logo i {
+      margin-right: 10px;
+      font-size: 1.8rem;
+    }
+    
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 30px;
+      height: 25px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 101;
+    }
+    
+    .menu-toggle span {
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      border-radius: 5px;
+      transition: all 0.3s linear;
+      transform-origin: center;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin-left: 1.5rem;
+    }
+    
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem;
+      border-radius: 4px;
+      display: block;
+    }
+    
+    .nav-links a:hover, .nav-links a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Style pour le footer */
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .footer-content h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    .footer-content p {
+      font-size: 0.85rem;
+    }
+    
+    /* Amélioration des cartes avec les couleurs du thème */
+    .card-icon-container {
+      background: var(--gradient);
+      padding: 0.5rem;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+    
+    .card-icon {
+      color: white;
+      font-size: 1.2rem;
+    }
+    
+    .card-title {
+      color: var(--secondary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    
+    .compact-card {
+      background: linear-gradient(135deg, rgba(255, 126, 95, 0.1), rgba(61, 59, 142, 0.1));
+      border: 1px solid rgba(61, 59, 142, 0.1);
+    }
+    
+    .compact-card:hover {
+      background: linear-gradient(135deg, rgba(255, 126, 95, 0.15), rgba(61, 59, 142, 0.15));
+      border-color: var(--accent);
+    }
+    
+    /* Style spécifique pour la page lettre de motivation */
+    .hero-section {
+      background: var(--gradient);
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      border-radius: 0 0 16px 16px;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .content-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .content-card:hover {
+      box-shadow: var(--hover-shadow);
+    }
+    
+    .template-card {
+      border-left: 4px solid var(--accent);
+    }
+    
+    .btn {
+      display: inline-block;
+      background-color: var(--accent);
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      z-index: 2;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn:hover::before {
+      left: 100%;
+    }
+    
+    .btn-secondary {
+      background-color: var(--secondary);
+    }
+    
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      background: var(--gradient);
+      color: white;
+      border-radius: 50%;
+      margin-right: 10px;
+      font-weight: bold;
+    }
+    
+    .letter-example {
+      background: linear-gradient(135deg, rgba(255, 126, 95, 0.05), rgba(61, 59, 142, 0.05));
+      border-left: 4px solid var(--primary);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    
+    /* Nouvelles animations pour la section personnalisée */
+    @keyframes pulse-glow {
+      0% { box-shadow: 0 0 0 0 rgba(104, 131, 186, 0.7); }
+      70% { box-shadow: 0 0 0 15px rgba(104, 131, 186, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(104, 131, 186, 0); }
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .pulse-animation {
+      animation: pulse-glow 2s infinite;
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .highlight-price {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+    
+    .special-offer-card {
+      background: linear-gradient(135deg, rgba(255, 126, 95, 0.1), rgba(61, 59, 142, 0.1));
+      border: 2px dashed var(--accent);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .special-offer-card::before {
+      content: "OFFRE SPÉCIALE";
+      position: absolute;
+      top: 10px;
+      right: -30px;
+      background: var(--primary);
+      color: white;
+      padding: 5px 30px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      transform: rotate(45deg);
+    }
+    
+    /* Media Queries pour la responsivité */
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 70%;
+        flex-direction: column;
+        background: var(--gradient);
+        padding: 6rem 2rem 2rem;
+        transition: right 0.3s ease-in-out;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.15);
+      }
+      
+      .nav-links.active {
+        right: 0;
+      }
+      
+      .nav-links li {
+        margin: 1.5rem 0;
+      }
+      
+      .nav-links a {
+        padding: 0.8rem;
+        font-size: 1.1rem;
+      }
+      
+      .special-offer-card::before {
+        right: -35px;
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Navigation -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <i class="fas fa-graduation-cap"></i>
+        <span>ClassePro</span>
+      </div>
+      <button class="menu-toggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="flex-grow container mx-auto px-4 pt-2 pb-6">
+    <!-- Section héro -->
+    <section class="hero-section">
+      <div class="max-w-3xl mx-auto">
+        <h1 class="text-2xl md:text-3xl font-bold mb-4">Lettre de Motivation</h1>
+        <p class="text-lg">Rédigez une lettre de motivation percutante qui vous distinguera des autres candidats</p>
+      </div>
+    </section>
+
+    <!-- Introduction -->
+    <section class="mb-8">
+      <div class="content-card">
+        <h2 class="text-xl font-semibold mb-4 text-secondary">L'importance d'une lettre de motivation efficace</h2>
+        <p class="mb-4">La lettre de motivation est un élément crucial de votre candidature. Elle complète votre CV en mettant en avant votre personnalité, votre motivation et votre adéquation avec le poste et l'entreprise.</p>
+        <p>Une lettre de motivation bien rédigée peut faire la différence entre une candidature retenue et une candidature ignorée. Elle démontre votre capacité à communiquer et à vous vendre, deux compétences essentielles dans le monde professionnel.</p>
+      </div>
+    </section>
+
+    <!-- Structure d'une lettre de motivation -->
+    <section class="mb-8">
+      <div class="content-card">
+        <h2 class="text-xl font-semibold mb-4 text-secondary">Structure d'une lettre de motivation</h2>
+        
+        <div class="mb-4">
+          <h3 class="font-semibold mb-2"><span class="step-number">1</span>En-tête</h3>
+          <p>Vos coordonnées complètes (nom, prénom, adresse, téléphone, email) et celles de l'entreprise.</p>
+        </div>
+        
+        <div class="mb-4">
+          <h3 class="font-semibold mb-2"><span class="step-number">2</span>Objet</h3>
+          <p>Précisez clairement le poste visé et la référence de l'annonce si applicable.</p>
+        </div>
+        
+        <div class="mb-4">
+          <h3 class="font-semibold mb-2"><span class="step-number">3</span>Formule d'appel</h3>
+          <p>"Madame, Monsieur," ou le nom du recruteur si vous le connaissez.</p>
+        </div>
+        
+        <div class="mb-4">
+          <h3 class="font-semibold mb-2"><span class="step-number">4</span>Introduction</h3>
+          <p>Présentez-vous brièvement et expliquez pourquoi vous écrivez.</p>
+        </div>
+        
+        <div class="mb-4">
+          <h3 class="font-semibold mb-2"><span class="step-number">5</span>Développement</h3>
+          <p>Mettez en avant vos compétences et expériences en lien avec le poste. Expliquez pourquoi vous êtes le candidat idéal.</p>
+        </div>
+        
+        <div class="mb-4">
+          <h3 class="font-semibold mb-2"><span class="step-number">6</span>Conclusion</h3>
+          <p>Résumez votre motivation et proposez un entretien.</p>
+        </div>
+        
+        <div>
+          <h3 class="font-semibold mb-2"><span class="step-number">7</span>Formule de politesse</h3>
+          <p>Terminez par une formule de politesse adaptée au contexte.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conseils de rédaction -->
+    <section class="mb-8">
+      <div class="content-card">
+        <h2 class="text-xl font-semibold mb-4 text-secondary">Conseils pour une lettre de motivation efficace</h2>
+        
+        <div class="mb-4">
+          <h3 class="font-semibold mb-2"><i class="fas fa-search text-accent mr-2"></i>Personnalisez chaque lettre</h3>
+          <p>Adaptez votre lettre à chaque entreprise et poste. Mentionnez des éléments spécifiques qui vous intéressent dans l'entreprise.</p>
+        </div>
+        
+        <div class="mb-4">
+          <h3 class="font-semibold mb-2"><i class="fas fa-bullseye text-accent mr-2"></i>Soyez précis et concret</h3>
+          <p>Donnez des exemples concrets de vos réalisations et compétences. Utilisez des chiffres quand c'est possible.</p>
+        </div>
+        
+        <div class="mb-4">
+          <h3 class="font-semibold mb-2"><i class="fas fa-file-alt text-accent mr-2"></i>Respectez la longueur</h3>
+          <p>Une lettre de motivation ne doit pas dépasser une page. Soyez concis tout en étant complet.</p>
+        </div>
+        
+        <div class="mb-4">
+          <h3 class="font-semibold mb-2"><i class="fas fa-spell-check text-accent mr-2"></i>Vérifiez l'orthographe</h3>
+          <p>Relisez attentivement votre lettre et faites-la relire par une autre personne. Les fautes d'orthographe sont rédhibitoires.</p>
+        </div>
+        
+        <div>
+          <h3 class="font-semibold mb-2"><i class="fas fa-pen-fancy text-accent mr-2"></i>Soignez la présentation</h3>
+          <p>Utilisez une police professionnelle (Arial, Times New Roman, Calibri) et une mise en page aérée.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exemple de lettre de motivation -->
+    <section class="mb-8">
+      <div class="content-card">
+        <h2 class="text-xl font-semibold mb-4 text-secondary">Exemple de lettre de motivation</h2>
+        
+        <div class="letter-example">
+          <div class="flex justify-between mb-4">
+            <div>
+              <p class="font-semibold">Prénom NOM</p>
+              <p class="text-sm">Adresse</p>
+              <p class="text-sm">Téléphone • Email</p>
+            </div>
+            <div class="text-right">
+              <p class="text-sm">[Ville], le [Date]</p>
+            </div>
+          </div>
+          
+          <div class="mb-4">
+            <p class="font-semibold">[Nom du destinataire]</p>
+            <p class="text-sm">[Fonction]</p>
+            <p class="text-sm">[Nom de l'entreprise]</p>
+            <p class="text-sm">[Adresse de l'entreprise]</p>
+          </div>
+          
+          <p class="mb-2 font-semibold">Objet : Candidature au poste de [Intitulé du poste]</p>
+          
+          <p class="mb-2">Madame, Monsieur,</p>
+          
+          <p class="mb-2">Actuellement [votre situation], je me permets de vous adresser ma candidature pour le poste de [intitulé du poste] que vous proposez au sein de votre entreprise.</p>
+          
+          <p class="mb-2">Votre annonce a particulièrement retenu mon attention car [raison spécifique liée à l'entreprise ou au poste]. Fort de mon expérience dans [domaine], je suis convaincu que mon profil correspond aux attentes que vous avez exprimées.</p>
+          
+          <p class="mb-2">Au cours de mes précédentes expériences, j'ai eu l'occasion de [compétence 1] et de [compétence 2]. Ces compétences, associées à ma capacité à [qualité], me permettront de contribuer efficacement à [objectif de l'entreprise].</p>
+          
+          <p class="mb-2">Je suis disponible pour un entretien afin de vous exposer plus en détail ma motivation et mes compétences. Je reste à votre disposition pour toute information complémentaire.</p>
+          
+          <p class="mb-2">Dans l'attente de votre réponse, je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.</p>
+          
+          <p class="font-semibold">Prénom NOM</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Erreurs à éviter -->
+    <section class="mb-8">
+      <div class="content-card">
+        <h2 class="text-xl font-semibold mb-4 text-secondary">Erreurs courantes à éviter</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
+            <h3 class="font-semibold text-red-700 mb-2"><i class="fas fa-times-circle mr-2"></i>Lettre générique</h3>
+            <p class="text-sm">Envoyer la même lettre à toutes les entreprises sans personnalisation.</p>
+          </div>
+          
+          <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
+            <h3 class="font-semibold text-red-700 mb-2"><i class="fas fa-times-circle mr-2"></i>Trop longue</h3>
+            <p class="text-sm">Rédiger une lettre de plus d'une page qui ne sera pas lue en entier.</p>
+          </div>
+          
+          <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
+            <h3 class="font-semibold text-red-700 mb-2"><i class="fas fa-times-circle mr-2"></i>Fautes d'orthographe</h3>
+            <p class="text-sm">Négliger la relecture et envoyer une lettre contenant des erreurs.</p>
+          </div>
+          
+          <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
+            <h3 class="font-semibold text-red-700 mb-2"><i class="fas fa-times-circle mr-2"></i>Manque de concret</h3>
+            <p class="text-sm">Utiliser des phrases vagues sans exemples précis de réalisations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section contact améliorée -->
+    <section class="mb-8">
+      <div class="content-card text-center special-offer-card">
+        <div class="card-icon-container mx-auto mb-4 float-animation">
+          <i class="fas fa-bolt card-icon"></i>
+        </div>
+        <h2 class="text-xl font-semibold mb-4 text-secondary">Ne laissez pas passer votre opportunité idéale !</h2>
+        <p class="mb-4 text-lg font-medium">Obtenez une lettre de motivation <span class="text-accent font-bold">professionnelle et percutante</span> qui captivera les recruteurs et maximisera vos chances d'entretien.</p>
+        
+        <div class="bg-gradient-to-r from-accent/10 to-primary/10 p-4 rounded-lg mb-4">
+          <h3 class="text-lg font-bold mb-2">Offre exceptionnelle :</h3>
+          <p class="text-2xl font-bold highlight-price">Seulement 500 FCFA</p>
+          <p class="text-sm text-gray-600 mt-1">Une lettre de motivation personnalisée et livrée en moins d'une heure !</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div class="bg-white p-3 rounded-lg shadow-sm">
+            <i class="fas fa-star text-yellow-500 text-xl mb-2"></i>
+            <h4 class="font-semibold">Professionnelle</h4>
+            <p class="text-sm">Rédigée par des experts</p>
+          </div>
+          <div class="bg-white p-3 rounded-lg shadow-sm">
+            <i class="fas fa-bolt text-primary text-xl mb-2"></i>
+            <h4 class="font-semibold">Express</h4>
+            <p class="text-sm">Livraison en moins d'1h</p>
+          </div>
+          <div class="bg-white p-3 rounded-lg shadow-sm">
+            <i class="fas fa-gem text-secondary text-xl mb-2"></i>
+            <h4 class="font-semibold">Personnalisée</h4>
+            <p class="text-sm">Adaptée à votre profil</p>
+          </div>
+        </div>
+        
+        <p class="mb-4">Avec seulement <span class="font-bold text-accent">500 FCFA</span>, offrez-vous une lettre de motivation qui fera la différence et vous ouvrira les portes de l'emploi. Ne laissez pas une simple lettre faire obstacle à votre réussite professionnelle !</p>
+        
+        <a href="support.html?service=lettre-motivation" class="btn pulse-animation">
+          <i class="fas fa-paper-plane mr-2"></i>Commandez maintenant pour seulement 500 FCFA
+        </a>
+        
+        <p class="text-xs text-gray-500 mt-3">Offre limitée dans le temps - Ne tardez pas !</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <h3>ClassePro - Votre réussite, notre priorité</h3>
+      <p>&copy; 2023 ClassePro. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Gestion du menu hamburger pour mobile
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navLinks = document.querySelector('.nav-links');
+      
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', function() {
+          navLinks.classList.toggle('active');
+          
+          // Animation des lignes du hamburger
+          const spans = this.querySelectorAll('span');
+          if (navLinks.classList.contains('active')) {
+            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+            spans[1].style.opacity = '0';
+            spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+          } else {
+            spans[0].style.transform = 'none';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = 'none';
+          }
+        });
+        
+        // Fermer le menu en cliquant à l'extérieur
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.navbar')) {
+            navLinks.classList.remove('active');
+            document.querySelectorAll('.menu-toggle span').forEach(span => {
+              span.style.transform = 'none';
+              span.style.opacity = '1';
+            });
+          }
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

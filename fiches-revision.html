@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fiches de Révision - ClassePro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- SDK Paystack -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary: #FF7E5F;
+      --secondary: #3D3B8E;
+      --accent: #6883BA;
+      --light: #F9F9F9;
+      --dark: #2F2F2F;
+      --success: #4BB543;
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+      --card-shadow: 0 10px 20px rgba(61, 59, 142, 0.15);
+      --hover-shadow: 0 15px 30px rgba(61, 59, 142, 0.25);
+    }
+    
+    body {
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+    }
+    
+    .compact-card {
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+      min-height: 100px;
+    }
+    
+    .compact-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--hover-shadow);
+      border-color: rgba(61, 59, 142, 0.2);
+    }
+    
+    .compact-card:active {
+      transform: scale(0.97);
+    }
+    
+    .search-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(104, 131, 186, 0.3);
+    }
+    
+    /* Style pour la barre de défilement */
+    .scroll-container::-webkit-scrollbar {
+      height: 6px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb {
+      background: #c7d2fe;
+      border-radius: 10px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb:hover {
+      background: #a5b4fc;
+    }
+    
+    /* Style pour la navbar */
+    header {
+      background: var(--gradient);
+      color: white;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      z-index: 101;
+    }
+    
+    .logo i {
+      margin-right: 10px;
+      font-size: 1.8rem;
+    }
+    
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 30px;
+      height: 25px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 101;
+    }
+    
+    .menu-toggle span {
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      border-radius: 5px;
+      transition: all 0.3s linear;
+      transform-origin: center;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin-left: 1.5rem;
+    }
+    
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem;
+      border-radius: 4px;
+      display: block;
+    }
+    
+    .nav-links a:hover, .nav-links a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Style pour le footer */
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .footer-content h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    .footer-content p {
+      font-size: 0.85rem;
+    }
+    
+    /* Amélioration des cartes avec les couleurs du thème */
+    .card-icon-container {
+      background: var(--gradient);
+      padding: 0.5rem;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+    
+    .card-icon {
+      color: white;
+      font-size: 1.2rem;
+    }
+    
+    .card-title {
+      color: var(--secondary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    
+    .compact-card {
+      background: linear-gradient(135deg, rgba(255, 126, 95, 0.1), rgba(61, 59, 142, 0.1));
+      border: 1px solid rgba(61, 59, 142, 0.1);
+    }
+    
+    .compact-card:hover {
+      background: linear-gradient(135deg, rgba(255, 126, 95, 0.15), rgba(61, 59, 142, 0.15));
+      border-color: var(--accent);
+    }
+    
+    /* Styles pour les filtres */
+    .filter-btn {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+      color: var(--dark);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--gradient);
+      color: white;
+      border-color: transparent;
+    }
+    
+    /* Styles pour les cartes de fiches */
+    .fiche-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .fiche-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--hover-shadow);
+    }
+    
+    .fiche-image {
+      height: 150px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    
+    .fiche-category {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--gradient);
+      color: white;
+      padding: 0.3rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+    
+    /* Nouveau style pour le bouton d'aperçu */
+    .preview-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--secondary);
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      border: none;
+    }
+    
+    .preview-btn:hover {
+      background: white;
+      transform: scale(1.05);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    
+    .fiche-content {
+      padding: 1rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .fiche-title {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+    }
+    
+    .fiche-description {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+    
+    .fiche-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #94a3b8;
+      margin-bottom: 0.5rem;
+    }
+    
+    .fiche-download-btn {
+      background: var(--gradient);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.5rem;
+      text-decoration: none;
+    }
+    
+    .fiche-download-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(104, 131, 186, 0.3);
+    }
+    
+    .fiche-download-btn i {
+      margin-right: 5px;
+    }
+    
+    /* Nouveau style pour le bouton de paiement */
+    .payment-btn {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      border: none;
+      padding: 0.7rem 1rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 6px rgba(76, 175, 80, 0.3);
+      margin-top: 0.5rem;
+    }
+    
+    .payment-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(76, 175, 80, 0.4);
+      background: linear-gradient(135deg, #45a049, #3d8b40);
+    }
+    
+    .price-tag {
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      color: #333;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      margin-left: 5px;
+      display: inline-block;
+    }
+    
+    /* Indicateur de chargement */
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+    
+    .spinner {
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-left-color: var(--secondary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #666;
+    }
+    
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #ccc;
+    }
+    
+    /* Styles pour la modale de paiement */
+    .payment-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .payment-modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+    
+    .payment-modal h3 {
+      margin-bottom: 20px;
+      color: var(--secondary);
+    }
+    
+    .payment-modal input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+    
+    .payment-modal button {
+      margin-top: 15px;
+      padding: 12px;
+      width: 100%;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(135deg, #4cafef, #0072ff);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    
+    .payment-modal button:hover {
+      background: linear-gradient(135deg, #3a9bdc, #005ed6);
+    }
+    
+    .payment-status {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    
+    .payment-success {
+      color: #28a745;
+    }
+    
+    .payment-error {
+      color: #dc3545;
+    }
+    
+    /* Media Queries pour la responsivité */
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 70%;
+        flex-direction: column;
+        background: var(--gradient);
+        padding: 6rem 2rem 2rem;
+        transition: right 0.3s ease-in-out;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.15);
+      }
+      
+      .nav-links.active {
+        right: 0;
+      }
+      
+      .nav-links li {
+        margin: 1.5rem 0;
+      }
+      
+      .nav-links a {
+        padding: 0.8rem;
+        font-size: 1.1rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .btn {
+        padding: 0.5rem 0.9rem;
+        font-size: 0.75rem;
+      }
+      
+      .payment-btn, .fiche-download-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Navigation -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <i class="fas fa-graduation-cap"></i>
+        <span>ClassePro</span>
+      </div>
+      <button class="menu-toggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="support.html">Support</a></li>
+        <li><a href="operateur.html" class="bg-white/20 px-3 py-1 rounded-md">Opérateur</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="flex-grow container mx-auto px-4 pt-6 pb-6">
+    <!-- En-tête de page -->
+    <div class="mb-8">
+      <div class="flex items-center mb-4">
+        <div class="card-icon-container">
+          <i class="fas fa-file-alt card-icon"></i>
+        </div>
+        <h1 class="text-2xl font-bold ml-2">Fiches de <span class="text-secondary">révision</span></h1>
+      </div>
+      <p class="text-gray-600">Retrouvez ici toutes nos fiches de révision pour préparer efficacement vos examens et contrôles.</p>
+    </div>
+
+    <!-- Barre de recherche et filtres -->
+    <section class="mb-8">
+      <div class="bg-white rounded-xl shadow p-4">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+          <div class="relative w-full md:w-1/2 mb-4 md:mb-0">
+            <input type="text" id="search-input" placeholder="Rechercher une fiche de révision..." class="search-input w-full p-3 pl-10 rounded-lg border border-gray-300 focus:border-[#6883BA]">
+            <i class="fas fa-search absolute left-3 top-3.5 text-gray-400"></i>
+          </div>
+          <div class="flex items-center">
+            <span class="text-sm font-medium mr-2">Filtrer par :</span>
+            <select id="level-filter" class="p-2 rounded-lg border border-gray-300 text-sm">
+              <option value="all">Tous les niveaux</option>
+              <option value="primaire">Primaire</option>
+              <option value="college">Collège</option>
+              <option value="lycee">Lycée</option>
+              <option value="universite">Université</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="filter-tags">
+          <button class="filter-btn active" data-category="all">Toutes</button>
+          <button class="filter-btn" data-category="mathematiques">Mathématiques</button>
+          <button class="filter-btn" data-category="francais">Français</button>
+          <button class="filter-btn" data-category="histoire">Histoire</button>
+          <button class="filter-btn" data-category="sciences">Sciences</button>
+          <button class="filter-btn" data-category="langues">Langues</button>
+          <button class="filter-btn" data-category="philosophie">Philosophie</button>
+          <button class="filter-btn" data-category="economie">Économie</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Liste des fiches de révision -->
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold mb-4">Fiches disponibles</h2>
+      
+      <!-- Indicateur de chargement -->
+      <div id="loading-indicator" class="loading">
+        <div class="spinner"></div>
+        <span class="ml-2">Chargement des fiches...</span>
+      </div>
+      
+      <!-- Message si aucune fiche trouvée -->
+      <div id="empty-state" class="empty-state hidden">
+        <i class="fas fa-file-alt"></i>
+        <h3 class="text-lg font-medium mb-2">Aucune fiche trouvée</h3>
+        <p>Essayez de modifier vos critères de recherche ou de filtre.</p>
+      </div>
+      
+      <!-- Conteneur pour les fiches -->
+      <div id="fiches-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Les fiches seront chargées ici dynamiquement -->
+      </div>
+      
+      <!-- Pagination -->
+      <div id="pagination" class="flex justify-center mt-8 hidden">
+        <div class="flex space-x-2">
+          <button id="prev-btn" class="bg-white border border-gray-300 rounded-lg px-3 py-1 text-sm font-medium hover:bg-gray-50">Précédent</button>
+          <span id="page-info" class="px-3 py-1 text-sm">Page 1 sur 1</span>
+          <button id="next-btn" class="bg-white border border-gray-300 rounded-lg px-3 py-1 text-sm font-medium hover:bg-gray-50">Suivant</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section demande de fiche personnalisée -->
+    <section class="mt-12 mb-8">
+      <div class="bg-gradient-to-r from-[#6883BA] to-[#3D3B8E] rounded-xl p-6 text-white shadow-lg">
+        <div class="flex flex-col md:flex-row items-center">
+          <div class="flex-1 mb-4 md:mb-0">
+            <h2 class="text-xl font-bold mb-2">Vous ne trouvez pas la fiche qu'il vous faut ?</h2>
+            <p class="text-white/90">Notre équipe peut créer une fiche de révision personnalisée sur le sujet de votre choix.</p>
+          </div>
+          <div>
+            <a href="support.html?service=fiche-personnalisee" class="bg-white text-[#3D3B8E] font-semibold py-2 px-6 rounded-lg hover:bg-gray-100 transition-colors inline-block">
+              Demander une fiche
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <h3>ClassePro - Votre réussite, notre priorité</h3>
+      <p>&copy; 2023 ClassePro. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <!-- Modale de paiement -->
+  <div id="payment-modal" class="payment-modal">
+    <div class="payment-modal-content">
+      <h3>Paiement de la fiche</h3>
+      <input type="email" id="payment-email" placeholder="Votre email" value="">
+      <div id="payment-amount" class="payment-amount"></div>
+      <button id="paystack-btn">💳 Payer maintenant</button>
+      <div id="payment-status" class="payment-status"></div>
+      <button id="close-payment-modal" style="margin-top: 10px; background: #6c757d;">Annuler</button>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-analytics.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCQTr4HGsOl-UWxb7WTYWkqxCiLYnGtT4Y",
+      authDomain: "classepro-9bc37.firebaseapp.com",
+      projectId: "classepro-9bc37",
+      storageBucket: "classepro-9bc37.firebasestorage.app",
+      messagingSenderId: "262239552918",
+      appId: "1:262239552918:web:9030760c731b844c76c9b7",
+      measurementId: "G-YCSFJY3R9J"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore(app);
+
+    // Configuration Paystack
+    const backendUrl = "https://backend2-rcqi.onrender.com";
+    const publicKey = "pk_test_7b8c7b4c175d2a76f17dc3d449ff410d88dd5d89";
+
+    // Références aux éléments du DOM
+    const fichesContainer = document.getElementById('fiches-container');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const emptyState = document.getElementById('empty-state');
+    const pagination = document.getElementById('pagination');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const pageInfo = document.getElementById('page-info');
+    const searchInput = document.getElementById('search-input');
+    const levelFilter = document.getElementById('level-filter');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    // Éléments de la modale de paiement
+    const paymentModal = document.getElementById('payment-modal');
+    const paymentEmail = document.getElementById('payment-email');
+    const paymentAmount = document.getElementById('payment-amount');
+    const paystackBtn = document.getElementById('paystack-btn');
+    const paymentStatus = document.getElementById('payment-status');
+    const closePaymentModal = document.getElementById('close-payment-modal');
+
+    // Variables pour la gestion des données
+    let allFiches = [];
+    let filteredFiches = [];
+    let currentPage = 1;
+    const fichesPerPage = 6;
+    let currentFicheId = null;
+    let currentFichePrice = 0;
+
+    // Charger les fiches depuis Firestore (collection "fiches de révision")
+    async function loadFiches() {
+      try {
+        loadingIndicator.classList.remove('hidden');
+        fichesContainer.innerHTML = '';
+        emptyState.classList.add('hidden');
+        
+        const q = query(collection(db, "fiches de révision"), orderBy("titre"));
+        const querySnapshot = await getDocs(q);
+        
+        allFiches = [];
+        querySnapshot.forEach((doc) => {
+          const ficheData = doc.data();
+          ficheData.id = doc.id;
+          allFiches.push(ficheData);
+        });
+        
+        // Appliquer les filtres initiaux
+        applyFilters();
+        
+        loadingIndicator.classList.add('hidden');
+      } catch (error) {
+        console.error("Erreur lors du chargement des fiches:", error);
+        loadingIndicator.innerHTML = '<p class="text-red-500">Erreur lors du chargement des fiches</p>';
+      }
+    }
+
+    // Appliquer les filtres et la recherche
+    function applyFilters() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const selectedCategory = document.querySelector('.filter-btn.active').dataset.category;
+      const selectedLevel = levelFilter.value;
+      
+      filteredFiches = allFiches.filter(fiche => {
+        const matchesSearch = fiche.titre.toLowerCase().includes(searchTerm) || 
+                             (fiche.description && fiche.description.toLowerCase().includes(searchTerm));
+        const matchesCategory = selectedCategory === 'all' || fiche.matiere === selectedCategory;
+        const matchesLevel = selectedLevel === 'all' || fiche.niveau === selectedLevel;
+        
+        return matchesSearch && matchesCategory && matchesLevel;
+      });
+      
+      displayFiches();
+    }
+
+    // Vérifier si une fiche a été payée
+    function isFichePaid(ficheId) {
+      const paidFiches = JSON.parse(localStorage.getItem('paidFiches')) || {};
+      return paidFiches[ficheId] === true;
+    }
+
+    // Marquer une fiche comme payée
+    function markFicheAsPaid(ficheId) {
+      const paidFiches = JSON.parse(localStorage.getItem('paidFiches')) || {};
+      paidFiches[ficheId] = true;
+      localStorage.setItem('paidFiches', JSON.stringify(paidFiches));
+    }
+
+    // Afficher les fiches avec pagination
+    function displayFiches() {
+      fichesContainer.innerHTML = '';
+      
+      if (filteredFiches.length === 0) {
+        emptyState.classList.remove('hidden');
+        pagination.classList.add('hidden');
+        return;
+      }
+      
+      emptyState.classList.add('hidden');
+      
+      // Calculer les fiches à afficher pour la page actuelle
+      const startIndex = (currentPage - 1) * fichesPerPage;
+      const endIndex = startIndex + fichesPerPage;
+      const fichesToShow = filteredFiches.slice(startIndex, endIndex);
+      
+      // Générer le HTML pour chaque fiche
+      fichesToShow.forEach(fiche => {
+        const ficheCard = document.createElement('div');
+        ficheCard.className = 'fiche-card';
+        
+        // Image par défaut si aucune image n'est fournie
+        const imageUrl = fiche.imageUrl || 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80';
+        
+        // Déterminer si la fiche est gratuite ou payante
+        const isFree = fiche.prix === 0;
+        const isPaid = isFichePaid(fiche.id);
+        
+        // Déterminer si la fiche est accessible (gratuite ou payée)
+        const isAccessible = isFree || isPaid;
+        
+        // Générer le bouton d'action (téléchargement ou paiement)
+        let actionButton = '';
+        if (isAccessible) {
+          actionButton = `<a href="${fiche.downloadUrl}" target="_blank" class="fiche-download-btn">
+            <i class="fas fa-download mr-2"></i>Télécharger
+          </a>`;
+        } else {
+          actionButton = `<button class="payment-btn" onclick="openPaymentModal('${fiche.id}', ${fiche.prix}, '${fiche.titre}')">
+            <i class="fas fa-lock mr-1"></i>Accéder à la fiche
+            <span class="price-tag">${fiche.prix} CFA</span>
+          </button>`;
+        }
+        
+        // Générer le bouton d'aperçu (uniquement pour les fiches accessibles avec previewUrl)
+        let previewButton = '';
+        if (isAccessible && fiche.previewUrl) {
+          previewButton = `<a href="${fiche.previewUrl}" target="_blank" class="preview-btn" title="Voir la fiche">
+            <i class="fas fa-eye"></i> Voir la fiche
+          </a>`;
+        }
+        
+        ficheCard.innerHTML = `
+          <div class="fiche-image" style="background-image: url('${imageUrl}')">
+            ${previewButton}
+            <span class="fiche-category">${fiche.matiere}</span>
+          </div>
+          <div class="fiche-content">
+            <h3 class="fiche-title">${fiche.titre}</h3>
+            <p class="fiche-description">${fiche.description || 'Fiche de révision complète et structurée.'}</p>
+            <div class="fiche-meta">
+              <span><i class="fas fa-file-pdf mr-1"></i> ${fiche.type_document || 'PDF'} - ${fiche.nombre_pages} pages</span>
+              <span><i class="fas fa-graduation-cap mr-1"></i> ${fiche.niveau}</span>
+            </div>
+            <div class="fiche-meta">
+              <span><i class="fas fa-money-bill-wave mr-1"></i> ${isFree ? 'Gratuit' : (isPaid ? 'Déjà payé' : fiche.prix + ' CFA')}</span>
+            </div>
+            ${actionButton}
+          </div>
+        `;
+        
+        fichesContainer.appendChild(ficheCard);
+      });
+      
+      // Mettre à jour la pagination
+      updatePagination();
+    }
+
+    // Ouvrir la modale de paiement
+    window.openPaymentModal = function(ficheId, price, ficheTitle) {
+      currentFicheId = ficheId;
+      currentFichePrice = price;
+      
+      // Remplir les informations de la modale
+      paymentEmail.value = localStorage.getItem('userEmail') || '';
+      paymentAmount.textContent = `Montant: ${price} CFA - ${ficheTitle}`;
+      paymentStatus.textContent = '';
+      paymentStatus.className = 'payment-status';
+      
+      // Afficher la modale
+      paymentModal.style.display = 'flex';
+    };
+
+    // Fermer la modale de paiement
+    function closeModal() {
+      paymentModal.style.display = 'none';
+      currentFicheId = null;
+      currentFichePrice = 0;
+    }
+
+    // Fonction pour initier le processus de paiement
+    async function initiatePayment() {
+      const email = paymentEmail.value.trim();
+      
+      // Validation
+      if (!email) {
+        paymentStatus.textContent = "⚠️ Veuillez entrer un email valide.";
+        paymentStatus.className = "payment-status payment-error";
+        return;
+      }
+
+      // Sauvegarder l'email dans le localStorage
+      localStorage.setItem('userEmail', email);
+
+      // Animation bouton
+      paystackBtn.innerHTML = '⏳ Initialisation <span class="spinner"></span>';
+      paystackBtn.disabled = true;
+      paymentStatus.textContent = "";
+      
+      try {
+        // Appel au backend pour initialiser le paiement
+        const response = await fetch(`${backendUrl}/create-payment`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ 
+            email, 
+            amount: currentFichePrice 
+          })
+        });
+
+        const data = await response.json();
+
+        // Vérifier si la réponse contient la référence nécessaire
+        if (!data.data || !data.data.reference) {
+          throw new Error("Référence de paiement introuvable");
+        }
+
+        // Ouvrir l'iframe / popup Paystack
+        const handler = PaystackPop.setup({
+          key: publicKey,
+          email: email,
+          amount: currentFichePrice * 100, // conversion en kobo
+          currency: "XOF",
+          ref: data.data.reference,
+          callback: function(response) {
+            // Après le paiement, vérifier le statut côté backend
+            paymentStatus.textContent = "🔍 Vérification en cours...";
+            
+            fetch(`${backendUrl}/verify-payment/${response.reference}`)
+            .then(res => res.json())
+            .then(result => {
+              if (result.data && result.data.status === "success") {
+                paymentStatus.textContent = "🎉 Paiement réussi !";
+                paymentStatus.className = "payment-status payment-success";
+                
+                // Marquer la fiche comme payée dans le localStorage
+                markFicheAsPaid(currentFicheId);
+                
+                // Mettre à jour l'affichage après un délai
+                setTimeout(() => {
+                  closeModal();
+                  displayFiches(); // Recharger les fiches pour mettre à jour les boutons
+                }, 2000);
+              } else {
+                paymentStatus.textContent = "❌ Paiement non confirmé.";
+                paymentStatus.className = "payment-status payment-error";
+              }
+            })
+            .catch(err => {
+              console.error("Erreur vérification:", err);
+              paymentStatus.textContent = "❌ Erreur lors de la vérification.";
+              paymentStatus.className = "payment-status payment-error";
+            });
+          },
+          onClose: function() {
+            paymentStatus.textContent = "❌ Paiement annulé.";
+            paymentStatus.className = "payment-status payment-error";
+          }
+        });
+
+        handler.openIframe();
+
+      } catch (error) {
+        paymentStatus.textContent = "❌ Erreur : " + error.message;
+        paymentStatus.className = "payment-status payment-error";
+      } finally {
+        // Réinitialiser bouton initial
+        paystackBtn.innerHTML = "💳 Payer maintenant";
+        paystackBtn.disabled = false;
+      }
+    }
+
+    // Mettre à jour la pagination
+    function updatePagination() {
+      const totalPages = Math.ceil(filteredFiches.length / fichesPerPage);
+      
+      if (totalPages > 1) {
+        pagination.classList.remove('hidden');
+        pageInfo.textContent = `Page ${currentPage} sur ${totalPages}`;
+        
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === totalPages;
+      } else {
+        pagination.classList.add('hidden');
+      }
+    }
+
+    // Gestion des événements
+    searchInput.addEventListener('input', () => {
+      currentPage = 1;
+      applyFilters();
+    });
+    
+    levelFilter.addEventListener('change', applyFilters);
+    
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentPage = 1;
+        applyFilters();
+      });
+    });
+    
+    prevBtn.addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        displayFiches();
+      }
+    });
+    
+    nextBtn.addEventListener('click', () => {
+      const totalPages = Math.ceil(filteredFiches.length / fichesPerPage);
+      if (currentPage < totalPages) {
+        currentPage++;
+        displayFiches();
+      }
+    });
+
+    // Gestion des événements de la modale de paiement
+    paystackBtn.addEventListener('click', initiatePayment);
+    closePaymentModal.addEventListener('click', closeModal);
+    
+    // Fermer la modale en cliquant à l'extérieur
+    paymentModal.addEventListener('click', (e) => {
+      if (e.target === paymentModal) {
+        closeModal();
+      }
+    });
+
+    // Gestion du menu hamburger pour mobile
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navLinks = document.querySelector('.nav-links');
+      
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', function() {
+          navLinks.classList.toggle('active');
+          
+          // Animation des lignes du hamburger
+          const spans = this.querySelectorAll('span');
+          if (navLinks.classList.contains('active')) {
+            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+            spans[1].style.opacity = '0';
+            spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+          } else {
+            spans[0].style.transform = 'none';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = 'none';
+          }
+        });
+        
+        // Fermer le menu en cliquant à l'extérieur
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.navbar')) {
+            navLinks.classList.remove('active');
+            document.querySelectorAll('.menu-toggle span').forEach(span => {
+              span.style.transform = 'none';
+              span.style.opacity = '1';
+            });
+          }
+        });
+      }
+
+      // Charger les fiches au chargement de la page
+      loadFiches();
+    });
+  </script>
+
+</body>
+</html>

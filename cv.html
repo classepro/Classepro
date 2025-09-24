@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV - ClassePro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary: #FF7E5F;
+      --secondary: #3D3B8E;
+      --accent: #6883BA;
+      --light: #F9F9F9;
+      --dark: #2F2F2F;
+      --success: #4BB543;
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+      --card-shadow: 0 10px 20px rgba(61, 59, 142, 0.15);
+      --hover-shadow: 0 15px 30px rgba(61, 59, 142, 0.25);
+    }
+    
+    body {
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+    }
+    
+    .compact-card {
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+      min-height: 100px;
+    }
+    
+    .compact-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--hover-shadow);
+      border-color: rgba(61, 59, 142, 0.2);
+    }
+    
+    .compact-card:active {
+      transform: scale(0.97);
+    }
+    
+    .search-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(104, 131, 186, 0.3);
+    }
+    
+    /* Style pour la barre de défilement */
+    .scroll-container::-webkit-scrollbar {
+      height: 6px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb {
+      background: #c7d2fe;
+      border-radius: 10px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb:hover {
+      background: #a5b4fc;
+    }
+    
+    /* Style pour la navbar */
+    header {
+      background: var(--gradient);
+      color: white;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      z-index: 101;
+    }
+    
+    .logo i {
+      margin-right: 10px;
+      font-size: 1.8rem;
+    }
+    
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 30px;
+      height: 25px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 101;
+    }
+    
+    .menu-toggle span {
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      border-radius: 5px;
+      transition: all 0.3s linear;
+      transform-origin: center;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin-left: 1.5rem;
+    }
+    
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem;
+      border-radius: 4px;
+      display: block;
+    }
+    
+    .nav-links a:hover, .nav-links a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Style pour le footer */
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .footer-content h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    .footer-content p {
+      font-size: 0.85rem;
+    }
+    
+    /* Styles pour le diaporama */
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0 0 16px 16px;
+      height: 400px;
+      margin-bottom: 2rem;
+      box-shadow: var(--card-shadow);
+      margin-top: -0.5rem; /* Réduction de l'espace avec la navbar */
+    }
+    
+    .carousel-inner {
+      display: flex;
+      transition: transform 0.5s ease;
+      height: 100%;
+    }
+    
+    .carousel-item {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      color: white;
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .carousel-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(61, 59, 142, 0.85), rgba(255, 126, 95, 0.85));
+      z-index: 1;
+    }
+    
+    .carousel-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 0 1rem;
+    }
+    
+    .carousel-item h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    .carousel-item p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    .carousel-controls {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      z-index: 10;
+    }
+    
+    .carousel-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.5);
+      margin: 0 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    
+    .carousel-indicator.active {
+      background-color: white;
+      transform: scale(1.2);
+    }
+    
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      font-size: 1.2rem;
+    }
+    
+    .carousel-nav:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    .carousel-prev {
+      left: 15px;
+    }
+    
+    .carousel-next {
+      right: 15px;
+    }
+    
+    .btn {
+      display: inline-block;
+      background-color: var(--accent);
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      z-index: 2;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn:hover::before {
+      left: 100%;
+    }
+    
+    /* Amélioration des cartes avec les couleurs du thème */
+    .card-icon-container {
+      background: var(--gradient);
+      padding: 0.5rem;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+    
+    .card-icon {
+      color: white;
+      font-size: 1.2rem;
+    }
+    
+    .card-title {
+      color: var(--secondary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    
+    .compact-card {
+      background: linear-gradient(135deg, rgba(255, 126, 95, 0.1), rgba(61, 59, 142, 0.1));
+      border: 1px solid rgba(61, 59, 142, 0.1);
+    }
+    
+    .compact-card:hover {
+      background: linear-gradient(135deg, rgba(255, 126, 95, 0.15), rgba(61, 59, 142, 0.15));
+      border-color: var(--accent);
+    }
+    
+    /* Styles spécifiques pour la page CV */
+    .cv-preview {
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: var(--card-shadow);
+      position: relative;
+    }
+    
+    .cv-preview:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--hover-shadow);
+    }
+    
+    .cv-image-container {
+      position: relative;
+      overflow: hidden;
+      height: 300px;
+    }
+    
+    .cv-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .cv-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .cv-preview:hover .cv-overlay {
+      opacity: 1;
+    }
+    
+    .cv-preview:hover .cv-image {
+      transform: scale(1.05);
+    }
+    
+    .view-btn {
+      background-color: white;
+      color: var(--secondary);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .view-btn:hover {
+      background-color: var(--secondary);
+      color: white;
+      transform: scale(1.05);
+    }
+    
+    .section-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(104, 131, 186, 0.2);
+    }
+    
+    .section-icon {
+      background: var(--gradient);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+    }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      overflow: auto;
+    }
+    
+    .modal-content {
+      margin: 5% auto;
+      display: block;
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    
+    .close-modal:hover {
+      color: var(--primary);
+    }
+    
+    /* NOUVEAUX STYLES POUR LA SECTION SERVICE PROFESSIONNEL */
+    .service-section {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #4A47A3, #FF7E5F);
+      color: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(74, 71, 163, 0.3);
+      transition: all 0.5s ease;
+      animation: sectionPulse 4s infinite;
+    }
+    
+    .service-section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(74, 71, 163, 0.4);
+      animation-play-state: paused;
+    }
+    
+    @keyframes sectionPulse {
+      0% {
+        box-shadow: 0 10px 30px rgba(74, 71, 163, 0.3);
+      }
+      50% {
+        box-shadow: 0 10px 30px rgba(74, 71, 163, 0.5);
+      }
+      100% {
+        box-shadow: 0 10px 30px rgba(74, 71, 163, 0.3);
+      }
+    }
+    
+    .price-highlight {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-weight: bold;
+      margin: 0 5px;
+      animation: priceGlow 2s infinite alternate;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    @keyframes priceGlow {
+      0% {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        transform: scale(1);
+      }
+      100% {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        transform: scale(1.05);
+      }
+    }
+    
+    .service-btn {
+      background: white;
+      color: #4A47A3;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    .service-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(74, 71, 163, 0.1), transparent);
+      transition: 0.5s;
+      z-index: -1;
+    }
+    
+    .service-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .service-btn:hover::before {
+      left: 100%;
+    }
+    
+    .service-icon {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      display: inline-block;
+      animation: iconFloat 3s ease-in-out infinite;
+    }
+    
+    @keyframes iconFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+    
+    /* Media Queries pour la responsivité */
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 70%;
+        flex-direction: column;
+        background: var(--gradient);
+        padding: 6rem 2rem 2rem;
+        transition: right 0.3s ease-in-out;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.15);
+      }
+      
+      .nav-links.active {
+        right: 0;
+      }
+      
+      .nav-links li {
+        margin: 1.5rem 0;
+      }
+      
+      .nav-links a {
+        padding: 0.8rem;
+        font-size: 1.1rem;
+      }
+      
+      /* Format paysage pour le diaporama sur mobile */
+      .carousel {
+        height: 250px;
+        margin: -0.5rem 0 1rem 0;
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        border-radius: 0;
+      }
+      
+      .carousel-item {
+        padding: 1rem;
+        flex-direction: row;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .carousel-content {
+        padding: 0 0.5rem;
+        max-width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .carousel-item h2 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.3;
+      }
+      
+      .carousel-item p {
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 1.4;
+      }
+      
+      .carousel-item .btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.7rem;
+      }
+      
+      .carousel-nav {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+        display: none;
+      }
+      
+      .carousel-controls {
+        bottom: 10px;
+      }
+      
+      .carousel-indicator {
+        width: 8px;
+        height: 8px;
+      }
+      
+      .cv-image-container {
+        height: 200px;
+      }
+      
+      .service-section {
+        padding: 1.5rem;
+      }
+      
+      .price-highlight {
+        font-size: 1.3rem;
+        padding: 6px 12px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .carousel {
+        height: 220px;
+      }
+      
+      .carousel-item h2 {
+        font-size: 1rem;
+      }
+      
+      .carousel-item p {
+        font-size: 0.75rem;
+        -webkit-line-clamp: 2;
+      }
+      
+      .btn {
+        padding: 0.5rem 0.9rem;
+        font-size: 0.75rem;
+      }
+      
+      .carousel-nav {
+        width: 30px;
+        height: 30px;
+      }
+      
+      .cv-image-container {
+        height: 180px;
+      }
+      
+      .service-section {
+        padding: 1rem;
+      }
+      
+      .service-icon {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Navigation -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <i class="fas fa-graduation-cap"></i>
+        <span>ClassePro</span>
+      </div>
+      <button class="menu-toggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="flex-grow container mx-auto px-4 pt-2 pb-6">
+    <!-- Titre de la page -->
+    <div class="mb-6 mt-4">
+      <h1 class="text-2xl font-bold text-secondary">Modèles de CV</h1>
+      <p class="text-gray-600">Choisissez parmi nos modèles professionnels pour créer un CV qui vous démarquera</p>
+    </div>
+
+    <!-- Modèles de CV -->
+    <section class="mb-8">
+      <div class="section-title">
+        <div class="section-icon">
+          <i class="fas fa-file-alt"></i>
+        </div>
+        <h2 class="text-xl font-semibold">Modèles populaires</h2>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Modèle 1 -->
+        <div class="cv-preview bg-white rounded-lg overflow-hidden">
+          <div class="cv-image-container">
+            <img src="https://www.modeles-de-cv.com/wp-content/uploads/2025/03/cv-job-etudiant-exemple-349.jpg" alt="CV Étudiant" class="cv-image">
+            <div class="cv-overlay">
+              <button class="view-btn" onclick="openModal('https://www.modeles-de-cv.com/wp-content/uploads/2025/03/cv-job-etudiant-exemple-349.jpg')">
+                <i class="fas fa-eye"></i> Voir le CV
+              </button>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold text-lg mb-2">CV Étudiant Moderne</h3>
+            <p class="text-gray-600 text-sm">Parfait pour les étudiants et jeunes diplômés. Design épuré mettant en valeur la formation.</p>
+          </div>
+        </div>
+        
+        <!-- Modèle 2 -->
+        <div class="cv-preview bg-white rounded-lg overflow-hidden">
+          <div class="cv-image-container">
+            <img src="https://www.modeles-de-cv.com/wp-content/uploads/2023/03/cv-luxe-exemple.jpg" alt="CV Luxe" class="cv-image">
+            <div class="cv-overlay">
+              <button class="view-btn" onclick="openModal('https://www.modeles-de-cv.com/wp-content/uploads/2023/03/cv-luxe-exemple.jpg')">
+                <i class="fas fa-eye"></i> Voir le CV
+              </button>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold text-lg mb-2">CV Élégant et Professionnel</h3>
+            <p class="text-gray-600 text-sm">Design luxueux pour les postes à responsabilités. Impressionne les recruteurs.</p>
+          </div>
+        </div>
+        
+        <!-- Modèle 3 -->
+        <div class="cv-preview bg-white rounded-lg overflow-hidden">
+          <div class="cv-image-container">
+            <img src="https://marketplace.canva.com/EAGVmgTQIQg/1/0/1131w/canva-cv-fran%C3%A7ais-simple-moderne-bleu-BTtYVoHIo2E.jpg" alt="CV Moderne Bleu" class="cv-image">
+            <div class="cv-overlay">
+              <button class="view-btn" onclick="openModal('https://marketplace.canva.com/EAGVmgTQIQg/1/0/1131w/canva-cv-fran%C3%A7ais-simple-moderne-bleu-BTtYVoHIo2E.jpg')">
+                <i class="fas fa-eye"></i> Voir le CV
+              </button>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold text-lg mb-2">CV Moderne Bleu</h3>
+            <p class="text-gray-600 text-sm">Design contemporain avec une touche de couleur. Idéal pour les métiers créatifs.</p>
+          </div>
+        </div>
+        
+        <!-- Modèle 4 -->
+        <div class="cv-preview bg-white rounded-lg overflow-hidden">
+          <div class="cv-image-container">
+            <img src="https://www.modeles-de-cv.com/wp-content/uploads/2022/02/232-modele-cv-francais.jpg" alt="CV Français Classique" class="cv-image">
+            <div class="cv-overlay">
+              <button class="view-btn" onclick="openModal('https://www.modeles-de-cv.com/wp-content/uploads/2022/02/232-modele-cv-francais.jpg')">
+                <i class="fas fa-eye"></i> Voir le CV
+              </button>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold text-lg mb-2">CV Français Classique</h3>
+            <p class="text-gray-600 text-sm">Structure traditionnelle appréciée dans les secteurs conservateurs. Professionnel et sobre.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conseils pour rédiger un CV -->
+    <section class="mb-8">
+      <div class="section-title">
+        <div class="section-icon">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+        <h2 class="text-xl font-semibold">Conseils pour un CV efficace</h2>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Conseils de base -->
+        <div class="bg-white rounded-lg shadow p-6">
+          <h3 class="font-semibold text-lg mb-4 text-secondary">Les bases d'un bon CV</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start">
+              <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+              <span>Limitez votre CV à une ou deux pages maximum</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+              <span>Utilisez une police professionnelle (Arial, Calibri, Times New Roman)</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+              <span>Structurez clairement votre CV avec des titres distincts</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+              <span>Adaptez votre CV à chaque offre d'emploi</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+              <span>Vérifiez l'orthographe et la grammaire</span>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Sections importantes -->
+        <div class="bg-white rounded-lg shadow p-6">
+          <h3 class="font-semibold text-lg mb-4 text-secondary">Sections indispensables</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start">
+              <i class="fas fa-user text-accent mt-1 mr-2"></i>
+              <span><strong>Informations personnelles</strong> : Nom, prénom, coordonnées</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-briefcase text-accent mt-1 mr-2"></i>
+              <span><strong>Expérience professionnelle</strong> : Postes occupés avec dates</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-graduation-cap text-accent mt-1 mr-2"></i>
+              <span><strong>Formation</strong> : Diplômes obtenus avec années</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-star text-accent mt-1 mr-2"></i>
+              <span><strong>Compétences</strong> : Langues, logiciels, savoir-faire</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-heart text-accent mt-1 mr-2"></i>
+              <span><strong>Centres d'intérêt</strong> : Optionnel mais valorisant</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Service professionnel de création de CV -->
+    <section class="mb-8">
+      <div class="section-title">
+        <div class="section-icon">
+          <i class="fas fa-magic"></i>
+        </div>
+        <h2 class="text-xl font-semibold">Service Professionnel de CV</h2>
+      </div>
+      
+      <div class="service-section p-6 text-center">
+        <i class="fas fa-crown service-icon"></i>
+        <h3 class="text-xl font-bold mb-3">Un CV professionnel et attrayant à seulement <span class="price-highlight">500 FCFA</span> !</h3>
+        <p class="mb-4 text-white">Ne perdez plus de temps à créer votre CV. Laissez nos experts créer pour vous un CV personnalisé qui vous démarquera auprès des recruteurs.</p>
+        <p class="mb-4 font-semibold text-white">Obtenez un CV professionnel en moins de 24h !</p>
+        <a href="support.html?service=cv-professionnel" class="service-btn">Contacter le support</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal pour afficher les CV en grand -->
+  <div id="cvModal" class="modal">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImage">
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <h3>ClassePro - Votre réussite, notre priorité</h3>
+      <p>&copy; 2023 ClassePro. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Gestion du menu hamburger pour mobile
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navLinks = document.querySelector('.nav-links');
+      
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', function() {
+          navLinks.classList.toggle('active');
+          
+          // Animation des lignes du hamburger
+          const spans = this.querySelectorAll('span');
+          if (navLinks.classList.contains('active')) {
+            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+            spans[1].style.opacity = '0';
+            spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+          } else {
+            spans[0].style.transform = 'none';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = 'none';
+          }
+        });
+        
+        // Fermer le menu en cliquant à l'extérieur
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.navbar')) {
+            navLinks.classList.remove('active');
+            document.querySelectorAll('.menu-toggle span').forEach(span => {
+              span.style.transform = 'none';
+              span.style.opacity = '1';
+            });
+          }
+        });
+      }
+    });
+
+    // Fonctions pour la modal d'affichage des CV
+    function openModal(imageSrc) {
+      const modal = document.getElementById('cvModal');
+      const modalImg = document.getElementById('modalImage');
+      modal.style.display = 'block';
+      modalImg.src = imageSrc;
+    }
+
+    function closeModal() {
+      document.getElementById('cvModal').style.display = 'none';
+    }
+
+    // Fermer la modal en cliquant en dehors de l'image
+    window.onclick = function(event) {
+      const modal = document.getElementById('cvModal');
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
+  </script>
+
+</body>
+</html>

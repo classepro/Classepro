@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cours & Exercices - ClassePro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary: #FF7E5F;
+      --secondary: #3D3B8E;
+      --accent: #6883BA;
+      --light: #F9F9F9;
+      --dark: #2F2F2F;
+      --success: #4BB543;
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+      --card-shadow: 0 10px 20px rgba(61, 59, 142, 0.15);
+      --hover-shadow: 0 15px 30px rgba(61, 59, 142, 0.25);
+    }
+    
+    body {
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+    }
+    
+    .compact-card {
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+      min-height: 100px;
+    }
+    
+    .compact-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--hover-shadow);
+      border-color: rgba(61, 59, 142, 0.2);
+    }
+    
+    .compact-card:active {
+      transform: scale(0.97);
+    }
+    
+    /* Style pour la navbar */
+    header {
+      background: var(--gradient);
+      color: white;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      z-index: 101;
+    }
+    
+    .logo i {
+      margin-right: 10px;
+      font-size: 1.8rem;
+    }
+    
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 30px;
+      height: 25px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 101;
+    }
+    
+    .menu-toggle span {
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      border-radius: 5px;
+      transition: all 0.3s linear;
+      transform-origin: center;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin-left: 1.5rem;
+    }
+    
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem;
+      border-radius: 4px;
+      display: block;
+    }
+    
+    .nav-links a:hover, .nav-links a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Style pour le footer */
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .footer-content h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    .footer-content p {
+      font-size: 0.85rem;
+    }
+    
+    /* Styles spécifiques à la page Cours & Exercices */
+    .hero-section {
+      background: var(--gradient);
+      color: white;
+      padding: 3rem 1rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .hero-content h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    .feature-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--hover-shadow);
+    }
+    
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+    
+    .feature-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+    
+    .feature-card p {
+      color: #666;
+      line-height: 1.6;
+    }
+    
+    .student-benefits {
+      background: linear-gradient(135deg, rgba(104, 131, 186, 0.1), rgba(61, 59, 142, 0.1));
+      padding: 3rem 1rem;
+      border-radius: 12px;
+      margin-bottom: 3rem;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--secondary);
+    }
+    
+    .section-title h2 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .section-title p {
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .benefit-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: var(--card-shadow);
+      text-align: center;
+    }
+    
+    .benefit-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    
+    .benefit-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+    
+    .benefit-card p {
+      color: #666;
+      line-height: 1.6;
+    }
+    
+    .official-resources {
+      text-align: center;
+      padding: 3rem 1rem;
+      margin-bottom: 3rem;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .official-resources-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      color: var(--secondary);
+    }
+    
+    .official-resources h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+    
+    .official-resources p {
+      color: #666;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto 1rem;
+    }
+    
+    .official-link {
+      display: inline-block;
+      background: var(--gradient);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+      margin-top: 1.5rem;
+    }
+    
+    .official-link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(61, 59, 142, 0.3);
+    }
+    
+    /* Media Queries pour la responsivité */
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 70%;
+        flex-direction: column;
+        background: var(--gradient);
+        padding: 6rem 2rem 2rem;
+        transition: right 0.3s ease-in-out;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.15);
+      }
+      
+      .nav-links.active {
+        right: 0;
+      }
+      
+      .nav-links li {
+        margin: 1.5rem 0;
+      }
+      
+      .nav-links a {
+        padding: 0.8rem;
+        font-size: 1.1rem;
+      }
+      
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      
+      .hero-content p {
+        font-size: 1rem;
+      }
+      
+      .features-grid,
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .official-resources {
+        padding: 2rem 1rem;
+      }
+      
+      .official-resources-icon {
+        font-size: 3rem;
+      }
+      
+      .official-resources h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Navigation -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <i class="fas fa-graduation-cap"></i>
+        <span>ClassePro</span>
+      </div>
+      <button class="menu-toggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="cours-exercices.html" class="active">Cours & Exercices</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="flex-grow">
+    <!-- Section Hero -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <h1>Cours & Exercices</h1>
+        <p>ClassePro - Votre passerelle vers les ressources pédagogiques officielles du Ministère de l'Éducation Nationale de Côte d'Ivoire.</p>
+      </div>
+    </section>
+
+    <div class="container mx-auto px-4 py-6">
+      <!-- Avantages de la plateforme -->
+      <section class="mb-12">
+        <div class="section-title">
+          <h2>Avantages de notre plateforme</h2>
+          <p>Découvrez pourquoi ClassePro est le choix idéal pour votre réussite académique</p>
+        </div>
+        
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <h3>Accès aux Ressources Officielles</h3>
+            <p>ClassePro vous donne un accès direct aux cours et exercices officiels du Ministère de l'Éducation Nationale, couvrant tous les niveaux du préscolaire à la terminale.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <h3>Apprentissage à Son Rythme</h3>
+            <p>Accédez aux contenus pédagogiques 24h/24 et 7j/7 selon votre disponibilité. Apprenez où vous voulez, quand vous voulez, sans contrainte horaire.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pour les Élèves -->
+      <section class="student-benefits mb-12">
+        <div class="section-title">
+          <h2>Pour les Élèves</h2>
+          <p>Des ressources adaptées à vos besoins pour exceller dans vos études</p>
+        </div>
+        
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <i class="fas fa-tachometer-alt"></i>
+            </div>
+            <h3>Prenez de l'Avance</h3>
+            <p>Accédez aux contenus des chapitres à venir et préparez-vous à l'avance pour les cours. Arrivez en classe avec une meilleure compréhension des concepts qui seront abordés.</p>
+          </div>
+          
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <h3>Approfondissez Vos Connaissances</h3>
+            <p>Complétez vos apprentissages scolaires avec des ressources supplémentaires, des exercices interactifs et des explications détaillées pour chaque notion au programme.</p>
+          </div>
+          
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3>Préparez Vos Examens</h3>
+            <p>Bénéficiez de ressources spécifiques pour vous préparer efficacement au BAC et autres examens. Tests blancs, annales corrigées et conseils méthodologiques à votre disposition.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ressources officielles -->
+      <section class="official-resources mb-12">
+        <div class="official-resources-icon">
+          <i class="fas fa-school"></i>
+        </div>
+        <h2>Ressources Pédagogiques Officielles</h2>
+        <p>ClassePro met à votre disposition un accès direct aux cours et exercices publiés par le Ministère de l'Éducation Nationale de Côte d'Ivoire.</p>
+        <p>Ces ressources couvrent tous les niveaux, du préscolaire à la terminale, et sont disponibles sur le portail officiel.</p>
+        <a href="https://ecole-ci.org" target="_blank" class="official-link">
+          Accéder aux ressources sur ecole-ci.org
+        </a>
+      </section>
+
+      <!-- Section documents récents -->
+      <section class="mb-8">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-semibold">Documents récents</h2>
+          <a href="documents.html" class="text-xs text-secondary font-medium">Voir tout</a>
+        </div>
+        
+        <div class="scroll-container overflow-x-auto pb-2">
+          <div class="flex space-x-3">
+            <div class="bg-white rounded-lg shadow p-3 min-w-[160px]">
+              <div class="flex items-center mb-2">
+                <div class="bg-indigo-100 p-1 rounded mr-2">
+                  <i class="fas fa-file-pdf text-secondary text-xs"></i>
+                </div>
+                <span class="text-xs font-medium">Cours d'algèbre</span>
+              </div>
+              <p class="text-[10px] text-gray-500">Terminale C</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-3 min-w-[160px]">
+              <div class="flex items-center mb-2">
+                <div class="bg-indigo-100 p-1 rounded mr-2">
+                  <i class="fas fa-file-word text-secondary text-xs"></i>
+                </div>
+                <span class="text-xs font-medium">Exercices physique</span>
+              </div>
+              <p class="text-[10px] text-gray-500">1ère D</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-3 min-w-[160px]">
+              <div class="flex items-center mb-2">
+                <div class="bg-indigo-100 p-1 rounded mr-2">
+                  <i class="fas fa-file-excel text-secondary text-xs"></i>
+                </div>
+                <span class="text-xs font-medium">Fiche révision</span>
+              </div>
+              <p class="text-[10px] text-gray-500">Philosophie</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <h3>ClassePro - Votre réussite, notre priorité</h3>
+      <p>En partenariat avec le Ministère de l'Éducation Nationale de Côte d'Ivoire</p>
+      <p>&copy; 2023 ClassePro. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Gestion du menu hamburger pour mobile
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navLinks = document.querySelector('.nav-links');
+      
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', function() {
+          navLinks.classList.toggle('active');
+          
+          // Animation des lignes du hamburger
+          const spans = this.querySelectorAll('span');
+          if (navLinks.classList.contains('active')) {
+            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+            spans[1].style.opacity = '0';
+            spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+          } else {
+            spans[0].style.transform = 'none';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = 'none';
+          }
+        });
+        
+        // Fermer le menu en cliquant à l'extérieur
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.navbar')) {
+            navLinks.classList.remove('active');
+            document.querySelectorAll('.menu-toggle span').forEach(span => {
+              span.style.transform = 'none';
+              span.style.opacity = '1';
+            });
+          }
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

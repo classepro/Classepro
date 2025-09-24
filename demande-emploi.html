@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demande d'Emploi - ClassePro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary: #FF7E5F;
+      --secondary: #3D3B8E;
+      --accent: #6883BA;
+      --light: #F9F9F9;
+      --dark: #2F2F2F;
+      --success: #4BB543;
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+      --card-shadow: 0 10px 20px rgba(61, 59, 142, 0.15);
+      --hover-shadow: 0 15px 30px rgba(61, 59, 142, 0.25);
+    }
+    
+    body {
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+    }
+    
+    .compact-card {
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+      min-height: 100px;
+    }
+    
+    .compact-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--hover-shadow);
+      border-color: rgba(61, 59, 142, 0.2);
+    }
+    
+    .compact-card:active {
+      transform: scale(0.97);
+    }
+    
+    .search-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(104, 131, 186, 0.3);
+    }
+    
+    /* Style pour la barre de défilement */
+    .scroll-container::-webkit-scrollbar {
+      height: 6px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb {
+      background: #c7d2fe;
+      border-radius: 10px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb:hover {
+      background: #a5b4fc;
+    }
+    
+    /* Style pour la navbar */
+    header {
+      background: var(--gradient);
+      color: white;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      z-index: 101;
+    }
+    
+    .logo i {
+      margin-right: 10px;
+      font-size: 1.8rem;
+    }
+    
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 30px;
+      height: 25px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 101;
+    }
+    
+    .menu-toggle span {
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      border-radius: 5px;
+      transition: all 0.3s linear;
+      transform-origin: center;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin-left: 1.5rem;
+    }
+    
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem;
+      border-radius: 4px;
+      display: block;
+    }
+    
+    .nav-links a:hover, .nav-links a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Style pour le footer */
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .footer-content h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    .footer-content p {
+      font-size: 0.85rem;
+    }
+    
+    /* Styles pour le contenu spécifique à la page demande d'emploi */
+    .section-title {
+      color: var(--secondary);
+      font-weight: 600;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .section-title i {
+      margin-right: 10px;
+      background: var(--gradient);
+      padding: 0.5rem;
+      border-radius: 50%;
+      color: white;
+      font-size: 1.2rem;
+    }
+    
+    .template-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+    
+    .template-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--hover-shadow);
+    }
+    
+    .template-header {
+      background: var(--gradient);
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    
+    .template-body {
+      padding: 1.5rem;
+    }
+    
+    .template-features {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+    
+    .template-features li {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .template-features li i {
+      color: var(--success);
+      margin-right: 0.5rem;
+    }
+    
+    .template-preview {
+      background-color: #f5f5f5;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .tip-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--primary);
+    }
+    
+    .tip-card h3 {
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .tip-card h3 i {
+      margin-right: 0.5rem;
+      color: var(--primary);
+    }
+    
+    /* Nouveaux styles pour la section personnalisée */
+    .custom-section {
+      background: linear-gradient(135deg, #e0f7fa 0%, #f3e5f5 100%);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .custom-section::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+      animation: pulse 4s infinite ease-in-out;
+      z-index: 0;
+    }
+    
+    .custom-section > * {
+      position: relative;
+      z-index: 1;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(0.8); opacity: 0.5; }
+      50% { transform: scale(1.2); opacity: 0.8; }
+      100% { transform: scale(0.8); opacity: 0.5; }
+    }
+    
+    .price-tag {
+      background: linear-gradient(135deg, #FF7E5F, #3D3B8E);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 1.5rem;
+      display: inline-block;
+      margin: 1rem 0;
+      box-shadow: 0 5px 15px rgba(61, 59, 142, 0.3);
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .highlight-text {
+      color: #3D3B8E;
+      font-weight: 600;
+      background-color: rgba(255, 255, 255, 0.7);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
+    
+    .delivery-badge {
+      background-color: #4BB543;
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      margin: 0.5rem 0;
+      animation: blink 2s infinite;
+    }
+    
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0.8; }
+    }
+    
+    /* Media Queries pour la responsivité */
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 70%;
+        flex-direction: column;
+        background: var(--gradient);
+        padding: 6rem 2rem 2rem;
+        transition: right 0.3s ease-in-out;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.15);
+      }
+      
+      .nav-links.active {
+        right: 0;
+      }
+      
+      .nav-links li {
+        margin: 1.5rem 0;
+      }
+      
+      .nav-links a {
+        padding: 0.8rem;
+        font-size: 1.1rem;
+      }
+      
+      .section-title {
+        font-size: 1.3rem;
+      }
+      
+      .custom-section {
+        padding: 1.5rem;
+      }
+      
+      .price-tag {
+        font-size: 1.3rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .section-title {
+        font-size: 1.2rem;
+      }
+      
+      .template-body {
+        padding: 1rem;
+      }
+      
+      .tip-card {
+        padding: 1rem;
+      }
+      
+      .price-tag {
+        font-size: 1.2rem;
+        padding: 0.4rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Navigation -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <i class="fas fa-graduation-cap"></i>
+        <span>ClassePro</span>
+      </div>
+      <button class="menu-toggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="flex-grow container mx-auto px-4 py-6">
+    <!-- En-tête de la page -->
+    <div class="mb-8">
+      <h1 class="text-2xl font-bold text-center mb-4">Demande d'Emploi</h1>
+      <p class="text-center max-w-2xl mx-auto text-gray-600">
+        Trouvez le modèle parfait pour votre demande d'emploi. Nos modèles sont conçus par des professionnels pour maximiser vos chances de décrocher un entretien.
+      </p>
+    </div>
+
+    <!-- Section modèles de demande d'emploi -->
+    <section class="mb-10">
+      <h2 class="section-title">
+        <i class="fas fa-file-alt"></i> Modèles de Demande d'Emploi
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Modèle 1 -->
+        <div class="template-card">
+          <div class="template-header">
+            <h3 class="font-bold">Modèle Classique</h3>
+            <p class="text-sm opacity-90">Professionnel et épuré</p>
+          </div>
+          <div class="template-body">
+            <ul class="template-features">
+              <li><i class="fas fa-check-circle"></i> Format standard A4</li>
+              <li><i class="fas fa-check-circle"></i> Structure éprouvée</li>
+              <li><i class="fas fa-check-circle"></i> Adaptable à tous secteurs</li>
+            </ul>
+            <div class="template-preview">
+              <p><strong>Objet :</strong> Candidature spontanée</p>
+              <p><strong>Madame, Monsieur,</strong></p>
+              <p>Par la présente, je me permets de vous soumettre ma candidature...</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Modèle 2 -->
+        <div class="template-card">
+          <div class="template-header">
+            <h3 class="font-bold">Modèle Moderne</h3>
+            <p class="text-sm opacity-90">Design contemporain</p>
+          </div>
+          <div class="template-body">
+            <ul class="template-features">
+              <li><i class="fas fa-check-circle"></i> Design épuré et moderne</li>
+              <li><i class="fas fa-check-circle"></i> Mise en page créative</li>
+              <li><i class="fas fa-check-circle"></i> Idéal pour les secteurs créatifs</li>
+            </ul>
+            <div class="template-preview">
+              <p><strong>Objet :</strong> Candidature pour un poste de [Métier]</p>
+              <p><strong>Chère équipe de recrutement,</strong></p>
+              <p>Je me permets de vous adresser ma candidature pour le poste de...</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Modèle 3 -->
+        <div class="template-card">
+          <div class="template-header">
+            <h3 class="font-bold">Modèle Spécial Cadre</h3>
+            <p class="text-sm opacity-90">Pour postes à responsabilités</p>
+          </div>
+          <div class="template-body">
+            <ul class="template-features">
+              <li><i class="fas fa-check-circle"></i> Ton professionnel et affirmé</li>
+              <li><i class="fas fa-check-circle"></i> Mise en avant des réalisations</li>
+              <li><i class="fas fa-check-circle"></i> Adapté aux postes de direction</li>
+            </ul>
+            <div class="template-preview">
+              <p><strong>Objet :</strong> Candidature au poste de [Poste à responsabilité]</p>
+              <p><strong>Monsieur le Directeur,</strong></p>
+              <p>Fort de mon expérience de [X] années dans le secteur de...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section conseils -->
+    <section class="mb-10">
+      <h2 class="section-title">
+        <i class="fas fa-lightbulb"></i> Conseils pour Rédiger une Demande d'Emploi Efficace
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="tip-card">
+          <h3><i class="fas fa-edit"></i> Personnalisez votre lettre</h3>
+          <p>Adaptez chaque demande d'emploi à l'entreprise et au poste visé. Mentionnez des éléments spécifiques qui montrent votre intérêt pour cette organisation en particulier.</p>
+        </div>
+        
+        <div class="tip-card">
+          <h3><i class="fas fa-bullseye"></i> Soyez concis et précis</h3>
+          <p>Une demande d'emploi efficace ne dépasse pas une page. Allez droit au but en mettant en avant vos compétences les plus pertinentes pour le poste.</p>
+        </div>
+        
+        <div class="tip-card">
+          <h3><i class="fas fa-chart-line"></i> Mettez en valeur vos réalisations</h3>
+          <p>Utilisez des chiffres et des exemples concrets pour démontrer votre valeur ajoutée. Par exemple : "J'ai augmenté les ventes de 15% en 6 mois".</p>
+        </div>
+        
+        <div class="tip-card">
+          <h3><i class="fas fa-search"></i> Relisez attentivement</h3>
+          <p>Une seule faute d'orthographe peut discréditer votre candidature. Faites relire votre lettre par une autre personne si possible.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section demande personnalisée -->
+    <section class="custom-section">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">Besoin d'une demande d'emploi personnalisée ?</h2>
+        
+        <div class="price-tag">
+          <i class="fas fa-tag mr-2"></i>Seulement 500 fr
+        </div>
+        
+        <div class="delivery-badge">
+          <i class="fas fa-bolt mr-2"></i>Livraison en moins d'une heure !
+        </div>
+        
+        <p class="mb-4 text-gray-700 text-lg">
+          Avec seulement <span class="highlight-text">500 fr</span>, obtenez une demande d'emploi <span class="highlight-text">professionnelle et captivante</span> qui vous distinguera des autres candidats.
+        </p>
+        
+        <p class="mb-6 text-gray-700">
+          Notre équipe de professionnels peut rédiger une demande d'emploi sur mesure qui mettra en valeur votre profil unique et maximisera vos chances d'obtenir un entretien.
+        </p>
+        
+        <a href="support.html?service=demande-emploi" class="inline-block bg-gradient-to-r from-[#3D3B8E] to-[#FF7E5F] text-white px-8 py-3 rounded-lg font-semibold hover:from-[#4a47a3] hover:to-[#ff8e6f] transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+          <i class="fas fa-pen-fancy mr-2"></i>Demander une aide personnalisée
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <h3>ClassePro - Votre réussite, notre priorité</h3>
+      <p>&copy; 2023 ClassePro. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Gestion du menu hamburger pour mobile
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navLinks = document.querySelector('.nav-links');
+      
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', function() {
+          navLinks.classList.toggle('active');
+          
+          // Animation des lignes du hamburger
+          const spans = this.querySelectorAll('span');
+          if (navLinks.classList.contains('active')) {
+            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+            spans[1].style.opacity = '0';
+            spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+          } else {
+            spans[0].style.transform = 'none';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = 'none';
+          }
+        });
+        
+        // Fermer le menu en cliquant à l'extérieur
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.navbar')) {
+            navLinks.classList.remove('active');
+            document.querySelectorAll('.menu-toggle span').forEach(span => {
+              span.style.transform = 'none';
+              span.style.opacity = '1';
+            });
+          }
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
