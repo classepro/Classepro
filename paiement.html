@@ -227,7 +227,7 @@
       }
     });
 
-    // 2. Vérifier le paiement après redirection Paystack
+    // 2. Vérifier le paiement après redirection Paystack (SECTION CORRIGÉE)
     window.addEventListener("DOMContentLoaded", async () => {
       const reference = params.get("reference");
       if (reference) {
@@ -240,15 +240,17 @@
           if (result.data && result.data.status === "success") {
             showStatus("✅ Paiement réussi ! Redirection...", "success");
             
-            // Redirection vers la page des exposés avec l'ID payé
+            // CORRECTION : Sauvegarder l'exposé comme payé dans le localStorage AVANT la redirection
+            const paidExposes = JSON.parse(localStorage.getItem('classepro_paidExposes')) || {};
+            paidExposes[id] = true;
+            localStorage.setItem('classepro_paidExposes', JSON.stringify(paidExposes));
+            
+            console.log(`✅ Exposé ${id} marqué comme payé dans le localStorage`);
+            
+            // Redirection vers la page des exposés
             setTimeout(() => {
-  // Sauvegarder dans localStorage avant redirection
-  const paidExposes = JSON.parse(localStorage.getItem('classepro_paidExposes')) || {};
-  paidExposes[id] = true;
-  localStorage.setItem('classepro_paidExposes', JSON.stringify(paidExposes));
-
-  window.location.href = `exposes.html?paid=${id}`;
-}, 2000);
+              window.location.href = `exposes.html?paid=${id}`;
+            }, 2000);
 
           } else {
             showStatus("❌ Paiement échoué ou non confirmé.", "error");
