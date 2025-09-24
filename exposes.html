@@ -564,6 +564,26 @@
       color: #ccc;
     }
     
+    /* Style pour le badge "Acheté" */
+    .expose-card .bg-green-500 {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      font-weight: 600;
+      z-index: 3;
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+    
+    /* Style pour le message toast */
+    .fixed {
+      position: fixed;
+    }
+    
+    .z-50 {
+      z-index: 50;
+    }
+    
     /* Media Queries pour la responsivité */
     @media (max-width: 768px) {
       .menu-toggle {
@@ -882,6 +902,67 @@
     let currentPage = 1;
     const exposesPerPage = 6;
 
+    // Vérifier si un exposé a été payé
+    function isExposePaid(exposeId) {
+      const paidExposes = JSON.parse(localStorage.getItem('classepro_paidExposes')) || {};
+      return paidExposes[exposeId] === true;
+    }
+
+    // Marquer un exposé comme payé
+    function markExposeAsPaid(exposeId) {
+      const paidExposes = JSON.parse(localStorage.getItem('classepro_paidExposes')) || {};
+      paidExposes[exposeId] = true;
+      localStorage.setItem('classepro_paidExposes', JSON.stringify(paidExposes));
+      console.log(`Exposé ${exposeId} marqué comme payé`);
+    }
+
+    // Vérifier et traiter le paramètre de paiement dans l'URL
+    function checkPaymentStatus() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const paidExposeId = urlParams.get('paid');
+      
+      if (paidExposeId) {
+        console.log(`Paiement détecté pour l'exposé: ${paidExposeId}`);
+        markExposeAsPaid(paidExposeId);
+        
+        // Afficher un message de succès
+        showPaymentSuccessMessage(paidExposeId);
+        
+        // Retirer le paramètre de l'URL sans recharger la page
+        const newUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
+        
+        // Recharger l'affichage des exposés
+        if (allExposes.length > 0) {
+          applyFilters();
+        }
+      }
+    }
+
+    // Afficher un message de succès de paiement
+    function showPaymentSuccessMessage(exposeId) {
+      // Trouver le titre de l'exposé payé
+      const paidExpose = allExposes.find(expose => expose.id === exposeId);
+      const exposeTitle = paidExpose ? paidExpose.titre : "l'exposé";
+      
+      // Créer un message toast
+      const toast = document.createElement('div');
+      toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+      toast.innerHTML = `
+        <div class="flex items-center">
+          <i class="fas fa-check-circle mr-2"></i>
+          <span>Paiement réussi ! "${exposeTitle}" est maintenant débloqué.</span>
+        </div>
+      `;
+      
+      document.body.appendChild(toast);
+      
+      // Supprimer le message après 5 secondes
+      setTimeout(() => {
+        toast.remove();
+      }, 5000);
+    }
+
     // Charger les exposés depuis Firestore
     async function loadExposes() {
       try {
@@ -899,14 +980,8 @@
           allExposes.push(exposeData);
         });
         
-        // Vérifier si un exposé vient d'être payé via l'URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const paidExposeId = urlParams.get('paid');
-        if (paidExposeId) {
-          markExposeAsPaid(paidExposeId);
-          // Retirer le paramètre de l'URL sans recharger la page
-          window.history.replaceState({}, document.title, window.location.pathname);
-        }
+        // Vérifier le statut de paiement après le chargement des données
+        checkPaymentStatus();
         
         // Appliquer les filtres initiaux
         applyFilters();
@@ -922,29 +997,18 @@
     function applyFilters() {
       const searchTerm = searchInput.value.toLowerCase();
       const selectedCategory = document.querySelector('.filter-btn.active').dataset.category;
+      const selectedLevel = levelFilter.value;
       
       filteredExposes = allExposes.filter(expose => {
         const matchesSearch = expose.titre.toLowerCase().includes(searchTerm) || 
                              expose.description.toLowerCase().includes(searchTerm);
         const matchesCategory = selectedCategory === 'all' || expose.matiere === selectedCategory;
+        const matchesLevel = selectedLevel === 'all' || (expose.niveau && expose.niveau.toLowerCase() === selectedLevel);
         
-        return matchesSearch && matchesCategory;
+        return matchesSearch && matchesCategory && matchesLevel;
       });
       
       displayExposes();
-    }
-
-    // Vérifier si un exposé a été payé
-    function isExposePaid(exposeId) {
-      const paidExposes = JSON.parse(localStorage.getItem('paidExposes')) || {};
-      return paidExposes[exposeId] === true;
-    }
-
-    // Marquer un exposé comme payé
-    function markExposeAsPaid(exposeId) {
-      const paidExposes = JSON.parse(localStorage.getItem('paidExposes')) || {};
-      paidExposes[exposeId] = true;
-      localStorage.setItem('paidExposes', JSON.stringify(paidExposes));
     }
 
     // Rediriger vers la page de paiement
@@ -992,7 +1056,7 @@
             <i class="fas fa-download mr-2"></i>Télécharger
           </a>`;
         } else {
-          actionButton = `<button class="payment-btn" onclick="redirectToPayment('${expose.id}', ${expose.prix}, '${expose.titre}')">
+          actionButton = `<button class="payment-btn" onclick="redirectToPayment('${expose.id}', ${expose.prix}, '${expose.titre.replace(/'/g, "\\'")}')">
             <i class="fas fa-lock mr-1"></i>Accéder à l'exposé
             <span class="price-tag">${expose.prix} CFA</span>
           </button>`;
@@ -1006,9 +1070,13 @@
           </a>`;
         }
         
+        // Ajouter un badge "Déjà acheté" pour les exposés payés
+        const paidBadge = isPaid && !isFree ? `<span class="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded">Acheté</span>` : '';
+        
         exposeCard.innerHTML = `
           <div class="expose-image" style="background-image: url('${imageUrl}')">
             ${previewButton}
+            ${paidBadge}
             <span class="expose-category">${expose.matiere}</span>
           </div>
           <div class="expose-content">
