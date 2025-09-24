@@ -242,8 +242,13 @@
             
             // Redirection vers la page des exposés avec l'ID payé
             setTimeout(() => {
-              window.location.href = `exposes.html?paid=${id}`;
-            }, 2000);
+  // Sauvegarder dans localStorage avant redirection
+  const paidExposes = JSON.parse(localStorage.getItem('classepro_paidExposes')) || {};
+  paidExposes[id] = true;
+  localStorage.setItem('classepro_paidExposes', JSON.stringify(paidExposes));
+
+  window.location.href = `exposes.html?paid=${id}`;
+}, 2000);
 
           } else {
             showStatus("❌ Paiement échoué ou non confirmé.", "error");
