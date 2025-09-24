@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paiement - ClassePro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- SDK Paystack -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary: #FF7E5F;
+      --secondary: #3D3B8E;
+      --accent: #6883BA;
+      --light: #F9F9F9;
+      --dark: #2F2F2F;
+      --success: #4BB543;
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+    
+    body {
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card {
+      background: white;
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    input, button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    
+    button {
+      background: var(--gradient);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(61, 59, 142, 0.3);
+    }
+    
+    button:disabled {
+      background: #999;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .status {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      font-weight: bold;
+      text-align: center;
+    }
+    
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    
+    .loading {
+      background-color: #d1ecf1;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+    }
+    
+    .spinner {
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid var(--secondary);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      margin-right: 10px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .back-btn {
+      background: transparent;
+      color: var(--secondary);
+      border: 1px solid var(--secondary);
+      margin-top: 10px;
+    }
+    
+    .back-btn:hover {
+      background: var(--secondary);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <header>
+    <nav class="navbar" style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 1rem;">
+      <div class="logo" style="font-size: 1.5rem; font-weight: 700; display: flex; align-items: center;">
+        <i class="fas fa-graduation-cap" style="margin-right: 10px;"></i>
+        <span>ClassePro</span>
+      </div>
+      <a href="exposes.html" style="color: white; text-decoration: none;">
+        <i class="fas fa-arrow-left"></i> Retour aux exposés
+      </a>
+    </nav>
+  </header>
+
+  <div class="card">
+    <h2 id="title" style="text-align: center; color: var(--secondary); margin-bottom: 10px;">Chargement...</h2>
+    <p id="price" style="text-align: center; font-size: 1.2rem; font-weight: 600; color: var(--primary); margin-bottom: 30px;"></p>
+
+    <div style="margin-bottom: 20px;">
+      <label for="email" style="display: block; margin-bottom: 5px; font-weight: 500;">Votre email</label>
+      <input type="email" id="email" placeholder="exemple@email.com" required>
+    </div>
+
+    <button id="payBtn">
+      <i class="fas fa-credit-card"></i> Payer maintenant
+    </button>
+
+    <button id="backBtn" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Retour aux exposés
+    </button>
+
+    <div id="status" class="status"></div>
+  </div>
+
+  <script>
+    const backendUrl = "https://backend2-rcqi.onrender.com";
+    const publicKey = "pk_test_7b8c7b4c175d2a76f17dc3d449ff410d88dd5d89";
+
+    // Récupérer les paramètres de l'URL
+    const params = new URLSearchParams(window.location.search);
+    const type = params.get("type");
+    const id = params.get("id");
+    const prix = params.get("prix");
+    const title = params.get("title") || "Paiement";
+
+    // Éléments du DOM
+    const titleElement = document.getElementById("title");
+    const priceElement = document.getElementById("price");
+    const emailInput = document.getElementById("email");
+    const payBtn = document.getElementById("payBtn");
+    const backBtn = document.getElementById("backBtn");
+    const statusDiv = document.getElementById("status");
+
+    // Afficher les informations de l'exposé
+    titleElement.textContent = title;
+    priceElement.textContent = `${prix} F CFA`;
+
+    // Charger l'email sauvegardé s'il existe
+    const savedEmail = localStorage.getItem('userEmail');
+    if (savedEmail) {
+      emailInput.value = savedEmail;
+    }
+
+    // 1. Initier le paiement
+    payBtn.addEventListener("click", async () => {
+      const email = emailInput.value.trim();
+      if (!email) {
+        showStatus("⚠️ Veuillez entrer un email valide.", "error");
+        return;
+      }
+
+      // Sauvegarder l'email
+      localStorage.setItem('userEmail', email);
+
+      payBtn.disabled = true;
+      payBtn.innerHTML = '<span class="spinner"></span> Initialisation du paiement...';
+      showStatus("⏳ Initialisation du paiement...", "loading");
+
+      try {
+        const response = await fetch(`${backendUrl}/create-payment`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            amount: prix
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.status && data.data.authorization_url) {
+          showStatus("✅ Redirection vers Paystack...", "loading");
+          window.location.href = data.data.authorization_url;
+        } else {
+          throw new Error("Erreur d'initialisation du paiement");
+        }
+      } catch (err) {
+        showStatus("❌ Erreur : " + err.message, "error");
+        resetPayButton();
+      }
+    });
+
+    // 2. Vérifier le paiement après redirection Paystack
+    window.addEventListener("DOMContentLoaded", async () => {
+      const reference = params.get("reference");
+      if (reference) {
+        showStatus("⏳ Vérification du paiement...", "loading");
+
+        try {
+          const res = await fetch(`${backendUrl}/verify-payment/${reference}`);
+          const result = await res.json();
+
+          if (result.data && result.data.status === "success") {
+            showStatus("✅ Paiement réussi ! Redirection...", "success");
+            
+            // Redirection vers la page des exposés avec l'ID payé
+            setTimeout(() => {
+              window.location.href = `exposes.html?paid=${id}`;
+            }, 2000);
+
+          } else {
+            showStatus("❌ Paiement échoué ou non confirmé.", "error");
+          }
+        } catch (err) {
+          showStatus("⚠️ Erreur lors de la vérification du paiement.", "error");
+        }
+      }
+    });
+
+    // Bouton de retour
+    backBtn.addEventListener("click", () => {
+      window.location.href = "exposes.html";
+    });
+
+    // Fonction pour afficher le statut
+    function showStatus(message, type) {
+      statusDiv.textContent = message;
+      statusDiv.className = "status";
+      if (type) {
+        statusDiv.classList.add(type);
+      }
+    }
+
+    // Fonction pour réinitialiser le bouton de paiement
+    function resetPayButton() {
+      payBtn.disabled = false;
+      payBtn.innerHTML = '<i class="fas fa-credit-card"></i> Payer maintenant';
+    }
+
+    // Entrée pour déclencher le paiement
+    emailInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        payBtn.click();
+      }
+    });
+  </script>
+</body>
+</html>
