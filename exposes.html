@@ -916,19 +916,27 @@
       console.log(`Exposé ${exposeId} marqué comme payé`);
     }
 
-    // Vérifier et traiter le paramètre de paiement dans l'URL
+    // CORRECTION : Vérifier et traiter le paramètre de paiement dans l'URL
     function checkPaymentStatus() {
       const urlParams = new URLSearchParams(window.location.search);
       const paidExposeId = urlParams.get('paid');
+      const paidExposeTitle = urlParams.get('title');
       
       if (paidExposeId) {
         console.log(`Paiement détecté pour l'exposé: ${paidExposeId}`);
         markExposeAsPaid(paidExposeId);
         
-        // Afficher un message de succès
-        showPaymentSuccessMessage(paidExposeId);
+        // CORRECTION : Utiliser le titre de l'URL ou chercher dans la liste
+        let exposeTitle = paidExposeTitle;
+        if (!exposeTitle) {
+          const paidExpose = allExposes.find(expose => expose.id === paidExposeId);
+          exposeTitle = paidExpose ? paidExpose.titre : "l'exposé";
+        }
         
-        // Retirer le paramètre de l'URL sans recharger la page
+        // Afficher un message de succès avec le titre correct
+        showPaymentSuccessMessage(paidExposeId, exposeTitle);
+        
+        // Retirer les paramètres de l'URL sans recharger la page
         const newUrl = window.location.pathname;
         window.history.replaceState({}, document.title, newUrl);
         
@@ -939,11 +947,10 @@
       }
     }
 
-    // Afficher un message de succès de paiement
-    function showPaymentSuccessMessage(exposeId) {
-      // Trouver le titre de l'exposé payé
-      const paidExpose = allExposes.find(expose => expose.id === exposeId);
-      const exposeTitle = paidExpose ? paidExpose.titre : "l'exposé";
+    // CORRECTION : Afficher un message de succès de paiement avec titre
+    function showPaymentSuccessMessage(exposeId, exposeTitle) {
+      // Utiliser le titre passé en paramètre
+      const displayTitle = exposeTitle || "l'exposé";
       
       // Créer un message toast
       const toast = document.createElement('div');
@@ -951,7 +958,7 @@
       toast.innerHTML = `
         <div class="flex items-center">
           <i class="fas fa-check-circle mr-2"></i>
-          <span>Paiement réussi ! "${exposeTitle}" est maintenant débloqué.</span>
+          <span>Paiement réussi ! "${displayTitle}" est maintenant débloqué.</span>
         </div>
       `;
       
@@ -1189,51 +1196,6 @@
       loadExposes();
     });
   </script>
-
-
-<script>
-  // Débloquer un exposé déjà payé
-  function markExposeAsPaid(exposeId) {
-    const paidExposes = JSON.parse(localStorage.getItem('classepro_paidExposes')) || {};
-    paidExposes[exposeId] = true;
-    localStorage.setItem('classepro_paidExposes', JSON.stringify(paidExposes));
-  }
-
-  // Vérifier si un exposé est déjà payé
-  function isExposePaid(exposeId) {
-    const paidExposes = JSON.parse(localStorage.getItem('classepro_paidExposes')) || {};
-    return paidExposes[exposeId] === true;
-  }
-
-  // Vérifier l’URL (paiement en cours)
-  function checkPaymentStatus() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const paidExposeId = urlParams.get('paid');
-    
-    if (paidExposeId) {
-      markExposeAsPaid(paidExposeId); // ✅ Sauvegarde dans localStorage
-      alert("✅ Paiement confirmé pour l’exposé " + paidExposeId);
-    }
-  }
-
-  // Appliquer l’état payé lors du rendu des cartes exposés
-  function applyPaidState() {
-    document.querySelectorAll(".expose").forEach(card => {
-      const exposeId = card.dataset.id;
-      if (isExposePaid(exposeId)) {
-        const downloadBtn = card.querySelector(".download-btn");
-        const payBtn = card.querySelector(".pay-btn");
-        if (downloadBtn) downloadBtn.style.display = "inline-block";
-        if (payBtn) payBtn.style.display = "none";
-      }
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    checkPaymentStatus();
-    applyPaidState();
-  });
-</script>
 
 </body>
 </html>

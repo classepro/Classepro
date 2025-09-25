@@ -247,9 +247,9 @@
             
             console.log(`✅ Exposé ${id} marqué comme payé dans le localStorage`);
             
-            // Redirection vers la page des exposés
+            // CORRECTION : Redirection avec l'ID ET le titre de l'exposé
             setTimeout(() => {
-              window.location.href = `exposes.html?paid=${id}`;
+              window.location.href = `exposes.html?paid=${id}&title=${encodeURIComponent(title)}`;
             }, 2000);
 
           } else {
