@@ -730,6 +730,15 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
+<script>
+// ===== ClassePro payment localStorage utilities =====
+const CLASSEPRO_PAID_KEY = 'classepro_paidExposes';
+function getPaidMap(){ try { return JSON.parse(localStorage.getItem(CLASSEPRO_PAID_KEY) || '{}'); } catch(e){ return {}; } }
+function markPaidExpose(id){ if(!id) return; const m = getPaidMap(); m[id]=true; localStorage.setItem(CLASSEPRO_PAID_KEY, JSON.stringify(m)); console.log('[localStorage] markPaidExpose', id); }
+function isPaid(id){ const m = getPaidMap(); return !!m[id]; }
+</script>
+
+
   <!-- Navigation -->
   <header>
     <nav class="navbar">
@@ -1196,6 +1205,97 @@
       loadExposes();
     });
   </script>
+
+
+<script>
+console.log('[exposes] script start. URL params:', window.location.search);
+// localStorage utilities (redefined)
+const CLASSEPRO_PAID_KEY = 'classepro_paidExposes';
+function getPaidMap(){ try { return JSON.parse(localStorage.getItem(CLASSEPRO_PAID_KEY) || '{}'); } catch(e){ return {}; } }
+function markPaidExpose(id){ if(!id) return; const m = getPaidMap(); m[id]=true; localStorage.setItem(CLASSEPRO_PAID_KEY, JSON.stringify(m)); console.log('[exposes] markPaidExpose', id); }
+function isPaid(id){ const m = getPaidMap(); return !!m[id]; }
+
+// Read query param 'paid' and mark paid, then clean URL
+function checkPaymentStatus() {
+  const params = new URLSearchParams(window.location.search);
+  const paidId = params.get('paid');
+  if (paidId) {
+    markPaidExpose(paidId);
+    try { alert('✅ Paiement confirmé pour l\'exposé ' + (params.get('title') || paidId)); } catch(e){ console.log('toast', paidId); }
+    // remove paid param from URL to prevent repeat
+    params.delete('paid'); params.delete('title');
+    const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+    window.history.replaceState({}, document.title, newUrl);
+  }
+  console.log('[exposes] checkPaymentStatus done. paidId:', paidId);
+}
+
+// Expose a safe render function that uses isPaid()
+function renderExposesFromData(exposesData, containerSelector) {
+  const container = document.querySelector(containerSelector || '#exposes-container') || document.body;
+  if(!container) return;
+  container.innerHTML = '';
+  exposesData.forEach(exp => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    const paid = (parseInt(exp.prix) === 0) || isPaid(exp.id);
+    card.innerHTML = `
+      <h3>${exp.titre}</h3>
+      <p>${exp.description || ''}</p>
+      <p><strong>Prix:</strong> ${exp.prix === 0 ? 'Gratuit' : exp.prix + ' FCFA'}</p>
+      ${ paid ?
+         ('<a href="'+ (exp.downloadUrl || '#') +'" class="btn btn-download">📥 Télécharger</a> <a href="'+ (exp.previewUrl || '#') +'" target="_blank" class="btn btn-download">👁️ Lire</a>')
+         :
+         ('<button class="btn btn-pay" data-id="'+exp.id+'" data-title="'+(exp.titre||'')+'" data-prix="'+(exp.prix||0)+'">💳 Payer</button>')
+      }
+    `;
+    container.appendChild(card);
+  });
+  // attach handlers for pay buttons
+  container.querySelectorAll('.btn-pay').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
+      const titre = btn.dataset.title;
+      const prix = btn.dataset.prix;
+      // store pending payment
+      localStorage.setItem('pendingPayment', JSON.stringify({ id, titre, prix, origin: window.location.pathname }));
+      // redirect to paiement.html with params
+      const url = `paiement.html?type=expose&id=${encodeURIComponent(id)}&title=${encodeURIComponent(titre)}&prix=${encodeURIComponent(prix)}&origin=${encodeURIComponent(window.location.pathname)}`;
+      console.log('[exposes] redirecting to payment page', url);
+      window.location.href = url;
+    });
+  });
+}
+
+// Auto-init: if existing global loadExposes or displayExposes, we'll try to call them after checkPaymentStatus, else use a fallback demo render
+document.addEventListener('DOMContentLoaded', async () => {
+  checkPaymentStatus();
+  // Attempt to call user-defined loadExposes() if exists and returns data to render
+  try {
+    if (typeof loadExposes === 'function') {
+      console.log('[exposes] calling existing loadExposes()');
+      await loadExposes();
+      if (window.allExposes && Array.isArray(window.allExposes)) {
+        renderExposesFromData(window.allExposes, '#exposesContainer');
+        return;
+      }
+      if (typeof applyFilters === 'function') {
+        applyFilters();
+        return;
+      }
+    }
+  } catch(e) {
+    console.warn('[exposes] existing loaders failed', e);
+  }
+
+  // Fallback: if a global "exposes" array exists in script, use it, else do nothing
+  if (window.exposes && Array.isArray(window.exposes)) {
+    renderExposesFromData(window.exposes, '#exposes-container');
+  } else {
+    console.log('[exposes] no exposes data found to render automatically.');
+  }
+});
+</script>
 
 </body>
 </html>

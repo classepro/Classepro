@@ -159,134 +159,70 @@
     <div id="status" class="status"></div>
   </div>
 
-  <script>
-    const backendUrl = "https://backend2-rcqi.onrender.com";
-    const publicKey = "pk_test_7b8c7b4c175d2a76f17dc3d449ff410d88dd5d89";
+  
 
-    // Récupérer les paramètres de l'URL
-    const params = new URLSearchParams(window.location.search);
-    const type = params.get("type");
-    const id = params.get("id");
-    const prix = params.get("prix");
-    const title = params.get("title") || "Paiement";
+<script>
+// ===== ClassePro payment localStorage utilities =====
+const CLASSEPRO_PAID_KEY = 'classepro_paidExposes';
+function getPaidMap(){ try { return JSON.parse(localStorage.getItem(CLASSEPRO_PAID_KEY) || '{}'); } catch(e){ return {}; } }
+function markPaidExpose(id){ if(!id) return; const m = getPaidMap(); m[id]=true; localStorage.setItem(CLASSEPRO_PAID_KEY, JSON.stringify(m)); console.log('[localStorage] markPaidExpose', id); }
+function isPaid(id){ const m = getPaidMap(); return !!m[id]; }
+</script>
 
-    // Éléments du DOM
-    const titleElement = document.getElementById("title");
-    const priceElement = document.getElementById("price");
-    const emailInput = document.getElementById("email");
-    const payBtn = document.getElementById("payBtn");
-    const backBtn = document.getElementById("backBtn");
-    const statusDiv = document.getElementById("status");
+<script>
+console.log('[paiement] script loaded. URL params:', window.location.search);
+const backendUrl = (typeof backendUrl !== 'undefined') ? backendUrl : 'https://backend2-rcqi.onrender.com';
 
-    // Afficher les informations de l'exposé
-    titleElement.textContent = title;
-    priceElement.textContent = `${prix} F CFA`;
+async function handlePaymentReturn() {
+  const params = new URLSearchParams(window.location.search);
+  const reference = params.get('reference');
+  const id = params.get('id') || (JSON.parse(localStorage.getItem('pendingPayment') || 'null') || {}).id;
+  const title = params.get('title') || (JSON.parse(localStorage.getItem('pendingPayment') || 'null') || {}).titre || '';
+  console.log('[paiement] params:', { reference, id, title });
 
-    // Charger l'email sauvegardé s'il existe
-    const savedEmail = localStorage.getItem('userEmail');
-    if (savedEmail) {
-      emailInput.value = savedEmail;
+  if (!reference) {
+    console.log('[paiement] no reference in URL; waiting for user to click pay');
+    return;
+  }
+
+  // Verify with backend
+  try {
+    const res = await fetch(`${backendUrl}/verify-payment`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ reference })
+    });
+    const json = await res.json();
+    console.log('[paiement] verify response', json);
+    if (json && json.data && json.data.status === 'success') {
+      // mark paid locally BEFORE redirection
+      if (id) {
+        markPaidExpose(id);
+      } else {
+        console.warn('[paiement] no expose id to mark as paid');
+      }
+      // cleanup pendingPayment
+      localStorage.removeItem('pendingPayment');
+
+      // redirect back to origin page with paid id + title
+      const origin = params.get('origin') || 'exposes.html';
+      const redirectUrl = `${origin}?paid=${encodeURIComponent(id || '')}&title=${encodeURIComponent(title || '')}`;
+      console.log('[paiement] redirecting to', redirectUrl);
+      window.location.href = redirectUrl;
+    } else {
+      console.warn('[paiement] payment not successful', json);
+      const el = document.getElementById('status');
+      if (el) el.textContent = '❌ Paiement échoué ou non confirmé.';
     }
+  } catch (err) {
+    console.error('[paiement] verify error', err);
+    const el = document.getElementById('status');
+    if (el) el.textContent = '⚠️ Erreur de vérification.';
+  }
+}
 
-    // 1. Initier le paiement
-    payBtn.addEventListener("click", async () => {
-      const email = emailInput.value.trim();
-      if (!email) {
-        showStatus("⚠️ Veuillez entrer un email valide.", "error");
-        return;
-      }
+document.addEventListener('DOMContentLoaded', handlePaymentReturn);
+</script>
 
-      // Sauvegarder l'email
-      localStorage.setItem('userEmail', email);
-
-      payBtn.disabled = true;
-      payBtn.innerHTML = '<span class="spinner"></span> Initialisation du paiement...';
-      showStatus("⏳ Initialisation du paiement...", "loading");
-
-      try {
-        const response = await fetch(`${backendUrl}/create-payment`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email,
-            amount: prix
-          })
-        });
-
-        const data = await response.json();
-
-        if (data.status && data.data.authorization_url) {
-          showStatus("✅ Redirection vers Paystack...", "loading");
-          window.location.href = data.data.authorization_url;
-        } else {
-          throw new Error("Erreur d'initialisation du paiement");
-        }
-      } catch (err) {
-        showStatus("❌ Erreur : " + err.message, "error");
-        resetPayButton();
-      }
-    });
-
-    // 2. Vérifier le paiement après redirection Paystack (SECTION CORRIGÉE)
-    window.addEventListener("DOMContentLoaded", async () => {
-      const reference = params.get("reference");
-      if (reference) {
-        showStatus("⏳ Vérification du paiement...", "loading");
-
-        try {
-          const res = await fetch(`${backendUrl}/verify-payment/${reference}`);
-          const result = await res.json();
-
-          if (result.data && result.data.status === "success") {
-            showStatus("✅ Paiement réussi ! Redirection...", "success");
-            
-            // CORRECTION : Sauvegarder l'exposé comme payé dans le localStorage AVANT la redirection
-            const paidExposes = JSON.parse(localStorage.getItem('classepro_paidExposes')) || {};
-            paidExposes[id] = true;
-            localStorage.setItem('classepro_paidExposes', JSON.stringify(paidExposes));
-            
-            console.log(`✅ Exposé ${id} marqué comme payé dans le localStorage`);
-            
-            // CORRECTION : Redirection avec l'ID ET le titre de l'exposé
-            setTimeout(() => {
-              window.location.href = `exposes.html?paid=${id}&title=${encodeURIComponent(title)}`;
-            }, 2000);
-
-          } else {
-            showStatus("❌ Paiement échoué ou non confirmé.", "error");
-          }
-        } catch (err) {
-          showStatus("⚠️ Erreur lors de la vérification du paiement.", "error");
-        }
-      }
-    });
-
-    // Bouton de retour
-    backBtn.addEventListener("click", () => {
-      window.location.href = "exposes.html";
-    });
-
-    // Fonction pour afficher le statut
-    function showStatus(message, type) {
-      statusDiv.textContent = message;
-      statusDiv.className = "status";
-      if (type) {
-        statusDiv.classList.add(type);
-      }
-    }
-
-    // Fonction pour réinitialiser le bouton de paiement
-    function resetPayButton() {
-      payBtn.disabled = false;
-      payBtn.innerHTML = '<i class="fas fa-credit-card"></i> Payer maintenant';
-    }
-
-    // Entrée pour déclencher le paiement
-    emailInput.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        payBtn.click();
-      }
-    });
-  </script>
 </body>
 </html>
