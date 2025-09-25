@@ -983,8 +983,17 @@
       const paid = urlParams.get('paid');
       
       if (paid === 'true') {
-        // Afficher un message de succès
-        showSuccessMessage('🎉 Paiement réussi ! Votre contenu est maintenant disponible.');
+        // 🔥 CORRECTION : Récupérer l'exposé payé et le marquer comme débloqué
+        const lastPaidExposeId = localStorage.getItem("lastPaidExposeId");
+        if (lastPaidExposeId) {
+          markExposeAsPaid(lastPaidExposeId);
+          localStorage.removeItem("lastPaidExposeId"); // Nettoyer après utilisation
+          
+          // Afficher un message de succès avec le déblocage
+          showSuccessMessage('🎉 Paiement réussi ! L\'exposé est maintenant débloqué.');
+        } else {
+          showSuccessMessage('🎉 Paiement réussi !');
+        }
         
         // Optionnel: retirer le paramètre de l'URL sans recharger la page
         window.history.replaceState({}, document.title, window.location.pathname);
@@ -1209,6 +1218,9 @@
       }
 
       localStorage.setItem('userEmail', email);
+      
+      // 🔥 CORRECTION : Sauvegarder l'ID de l'exposé payé avant redirection
+      localStorage.setItem("lastPaidExposeId", currentExposeId);
       
       // Déterminer la page source (pour exposes.html, c'est "exposes")
       const sourcePage = "exposes";
