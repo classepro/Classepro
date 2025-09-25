@@ -6,6 +6,8 @@
   <title>Exposés - ClassePro</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- SDK Paystack -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
     
@@ -564,24 +566,76 @@
       color: #ccc;
     }
     
-    /* Style pour le badge "Acheté" */
-    .expose-card .bg-green-500 {
-      background: linear-gradient(135deg, #4CAF50, #45a049);
-      color: white;
-      font-weight: 600;
-      z-index: 3;
-      font-size: 0.7rem;
-      padding: 3px 8px;
-      border-radius: 12px;
-    }
-    
-    /* Style pour le message toast */
-    .fixed {
+    /* Styles améliorés pour la modale de paiement */
+    .payment-modal {
+      display: none;
       position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
     }
     
-    .z-50 {
-      z-index: 50;
+    .payment-modal-content {
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      width: 90%;
+      max-width: 450px;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: slideUp 0.4s ease;
+      position: relative;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+      from { 
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .payment-modal input {
+      transition: all 0.3s ease;
+    }
+    
+    .payment-modal input:focus {
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    /* Styles pour le statut de paiement */
+    .payment-success {
+      background-color: #f0fff4;
+      border: 1px solid #9ae6b4;
+      color: #2d774a;
+    }
+    
+    .payment-error {
+      background-color: #fed7d7;
+      border: 1px solid #feb2b2;
+      color: #c53030;
+    }
+    
+    .payment-processing {
+      background-color: #ebf8ff;
+      border: 1px solid #90cdf4;
+      color: #2c5aa0;
     }
     
     /* Media Queries pour la responsivité */
@@ -691,6 +745,13 @@
         padding: 4px 8px;
         font-size: 0.6rem;
       }
+      
+      /* Responsive pour la modale de paiement */
+      .payment-modal-content {
+        padding: 20px;
+        margin: 20px;
+        width: calc(100% - 40px);
+      }
     }
     
     @media (max-width: 480px) {
@@ -729,15 +790,6 @@
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
-
-<script>
-// ===== ClassePro payment localStorage utilities =====
-const CLASSEPRO_PAID_KEY = 'classepro_paidExposes';
-function getPaidMap(){ try { return JSON.parse(localStorage.getItem(CLASSEPRO_PAID_KEY) || '{}'); } catch(e){ return {}; } }
-function markPaidExpose(id){ if(!id) return; const m = getPaidMap(); m[id]=true; localStorage.setItem(CLASSEPRO_PAID_KEY, JSON.stringify(m)); console.log('[localStorage] markPaidExpose', id); }
-function isPaid(id){ const m = getPaidMap(); return !!m[id]; }
-</script>
-
 
   <!-- Navigation -->
   <header>
@@ -870,6 +922,88 @@ function isPaid(id){ const m = getPaidMap(); return !!m[id]; }
     </div>
   </footer>
 
+  <!-- Modale de paiement améliorée -->
+  <div id="payment-modal" class="payment-modal">
+    <div class="payment-modal-content">
+      <!-- En-tête de la modale -->
+      <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
+        <div class="flex items-center">
+          <div class="bg-gradient-to-r from-[#3D3B8E] to-[#FF7E5F] p-2 rounded-full mr-3">
+            <i class="fas fa-lock text-white text-sm"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-gray-800">Accéder à l'exposé</h3>
+            <p class="text-xs text-gray-600">Paiement sécurisé via Paystack</p>
+          </div>
+        </div>
+        <button id="close-payment-modal" class="text-gray-400 hover:text-gray-600 text-xl">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Informations sur l'achat -->
+      <div class="bg-blue-50 rounded-lg p-4 mb-4">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-sm font-medium text-gray-700">Exposé sélectionné:</span>
+          <span id="expose-title" class="text-sm font-semibold text-blue-800 text-right"></span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-sm font-medium text-gray-700">Montant à payer:</span>
+          <span id="payment-amount" class="text-lg font-bold text-blue-800"></span>
+        </div>
+      </div>
+
+      <!-- Formulaire de paiement -->
+      <div class="mb-4">
+        <label for="payment-email" class="block text-sm font-medium text-gray-700 mb-1">
+          <i class="fas fa-envelope mr-1 text-blue-500"></i>Adresse email
+        </label>
+        <input type="email" id="payment-email" placeholder="votre@email.com" 
+               class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+        <p class="text-xs text-gray-500 mt-1">Vous recevrez votre reçu à cette adresse</p>
+      </div>
+
+      <!-- Message d'alerte important -->
+      <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4 rounded">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+          </div>
+          <div class="ml-3">
+            <h4 class="text-sm font-medium text-yellow-800">Important</h4>
+            <div class="mt-1 text-sm text-yellow-700">
+              <p>• Ne quittez pas la page de paiement Paystack avant confirmation</p>
+              <p>• La confirmation peut prendre jusqu'à 2 minutes dans certains cas</p>
+              <p>• Restez sur cette page jusqu'à ce que le statut s'affiche</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bouton de paiement -->
+      <button id="paystack-btn" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center">
+        <i class="fas fa-credit-card mr-2"></i>
+        <span>Payer maintenant</span>
+      </button>
+
+      <!-- Sécurité et garanties -->
+      <div class="mt-4 text-center">
+        <div class="flex justify-center space-x-4 text-xs text-gray-500 mb-2">
+          <span class="flex items-center">
+            <i class="fas fa-shield-alt mr-1 text-green-500"></i> Paiement sécurisé
+          </span>
+          <span class="flex items-center">
+            <i class="fas fa-lock mr-1 text-blue-500"></i> SSL encrypté
+          </span>
+        </div>
+        <p class="text-xs text-gray-400">ClassePro - Votre réussite, notre priorité</p>
+      </div>
+
+      <!-- Statut du paiement -->
+      <div id="payment-status" class="mt-4 p-3 rounded-lg text-center hidden"></div>
+    </div>
+  </div>
+
   <!-- Firebase SDK -->
   <script type="module">
     // Import the functions you need from the SDKs you need
@@ -893,6 +1027,9 @@ function isPaid(id){ const m = getPaidMap(); return !!m[id]; }
     const analytics = getAnalytics(app);
     const db = getFirestore(app);
 
+    // Configuration Paystack
+    const publicKey = "pk_live_777a7c63bdb21fe5600c3bc048da89da3b756d86";
+
     // Références aux éléments du DOM
     const exposesContainer = document.getElementById('exposes-container');
     const loadingIndicator = document.getElementById('loading-indicator');
@@ -905,79 +1042,23 @@ function isPaid(id){ const m = getPaidMap(); return !!m[id]; }
     const levelFilter = document.getElementById('level-filter');
     const filterBtns = document.querySelectorAll('.filter-btn');
 
+    // Éléments de la modale de paiement
+    const paymentModal = document.getElementById('payment-modal');
+    const paymentEmail = document.getElementById('payment-email');
+    const exposeTitleElement = document.getElementById('expose-title');
+    const paymentAmount = document.getElementById('payment-amount');
+    const paystackBtn = document.getElementById('paystack-btn');
+    const paymentStatus = document.getElementById('payment-status');
+    const closePaymentModal = document.getElementById('close-payment-modal');
+
     // Variables pour la gestion des données
     let allExposes = [];
     let filteredExposes = [];
     let currentPage = 1;
     const exposesPerPage = 6;
-
-    // Vérifier si un exposé a été payé
-    function isExposePaid(exposeId) {
-      const paidExposes = JSON.parse(localStorage.getItem('classepro_paidExposes')) || {};
-      return paidExposes[exposeId] === true;
-    }
-
-    // Marquer un exposé comme payé
-    function markExposeAsPaid(exposeId) {
-      const paidExposes = JSON.parse(localStorage.getItem('classepro_paidExposes')) || {};
-      paidExposes[exposeId] = true;
-      localStorage.setItem('classepro_paidExposes', JSON.stringify(paidExposes));
-      console.log(`Exposé ${exposeId} marqué comme payé`);
-    }
-
-    // CORRECTION : Vérifier et traiter le paramètre de paiement dans l'URL
-    function checkPaymentStatus() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const paidExposeId = urlParams.get('paid');
-      const paidExposeTitle = urlParams.get('title');
-      
-      if (paidExposeId) {
-        console.log(`Paiement détecté pour l'exposé: ${paidExposeId}`);
-        markExposeAsPaid(paidExposeId);
-        
-        // CORRECTION : Utiliser le titre de l'URL ou chercher dans la liste
-        let exposeTitle = paidExposeTitle;
-        if (!exposeTitle) {
-          const paidExpose = allExposes.find(expose => expose.id === paidExposeId);
-          exposeTitle = paidExpose ? paidExpose.titre : "l'exposé";
-        }
-        
-        // Afficher un message de succès avec le titre correct
-        showPaymentSuccessMessage(paidExposeId, exposeTitle);
-        
-        // Retirer les paramètres de l'URL sans recharger la page
-        const newUrl = window.location.pathname;
-        window.history.replaceState({}, document.title, newUrl);
-        
-        // Recharger l'affichage des exposés
-        if (allExposes.length > 0) {
-          applyFilters();
-        }
-      }
-    }
-
-    // CORRECTION : Afficher un message de succès de paiement avec titre
-    function showPaymentSuccessMessage(exposeId, exposeTitle) {
-      // Utiliser le titre passé en paramètre
-      const displayTitle = exposeTitle || "l'exposé";
-      
-      // Créer un message toast
-      const toast = document.createElement('div');
-      toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-      toast.innerHTML = `
-        <div class="flex items-center">
-          <i class="fas fa-check-circle mr-2"></i>
-          <span>Paiement réussi ! "${displayTitle}" est maintenant débloqué.</span>
-        </div>
-      `;
-      
-      document.body.appendChild(toast);
-      
-      // Supprimer le message après 5 secondes
-      setTimeout(() => {
-        toast.remove();
-      }, 5000);
-    }
+    let currentExposeId = null;
+    let currentExposePrice = 0;
+    let currentExposeTitle = '';
 
     // Charger les exposés depuis Firestore
     async function loadExposes() {
@@ -996,9 +1077,6 @@ function isPaid(id){ const m = getPaidMap(); return !!m[id]; }
           allExposes.push(exposeData);
         });
         
-        // Vérifier le statut de paiement après le chargement des données
-        checkPaymentStatus();
-        
         // Appliquer les filtres initiaux
         applyFilters();
         
@@ -1013,24 +1091,29 @@ function isPaid(id){ const m = getPaidMap(); return !!m[id]; }
     function applyFilters() {
       const searchTerm = searchInput.value.toLowerCase();
       const selectedCategory = document.querySelector('.filter-btn.active').dataset.category;
-      const selectedLevel = levelFilter.value;
       
       filteredExposes = allExposes.filter(expose => {
         const matchesSearch = expose.titre.toLowerCase().includes(searchTerm) || 
                              expose.description.toLowerCase().includes(searchTerm);
         const matchesCategory = selectedCategory === 'all' || expose.matiere === selectedCategory;
-        const matchesLevel = selectedLevel === 'all' || (expose.niveau && expose.niveau.toLowerCase() === selectedLevel);
         
-        return matchesSearch && matchesCategory && matchesLevel;
+        return matchesSearch && matchesCategory;
       });
       
       displayExposes();
     }
 
-    // Rediriger vers la page de paiement
-    function redirectToPayment(exposeId, price, exposeTitle) {
-      const paymentUrl = `paiement.html?type=expose&id=${exposeId}&prix=${price}&title=${encodeURIComponent(exposeTitle)}`;
-      window.location.href = paymentUrl;
+    // Vérifier si un exposé a été payé
+    function isExposePaid(exposeId) {
+      const paidExposes = JSON.parse(localStorage.getItem('paidExposes')) || {};
+      return paidExposes[exposeId] === true;
+    }
+
+    // Marquer un exposé comme payé
+    function markExposeAsPaid(exposeId) {
+      const paidExposes = JSON.parse(localStorage.getItem('paidExposes')) || {};
+      paidExposes[exposeId] = true;
+      localStorage.setItem('paidExposes', JSON.stringify(paidExposes));
     }
 
     // Afficher les exposés avec pagination
@@ -1072,7 +1155,7 @@ function isPaid(id){ const m = getPaidMap(); return !!m[id]; }
             <i class="fas fa-download mr-2"></i>Télécharger
           </a>`;
         } else {
-          actionButton = `<button class="payment-btn" onclick="redirectToPayment('${expose.id}', ${expose.prix}, '${expose.titre.replace(/'/g, "\\'")}')">
+          actionButton = `<button class="payment-btn" onclick="openPaymentModal('${expose.id}', ${expose.prix}, '${expose.titre.replace(/'/g, "\\'")}')">
             <i class="fas fa-lock mr-1"></i>Accéder à l'exposé
             <span class="price-tag">${expose.prix} CFA</span>
           </button>`;
@@ -1086,13 +1169,9 @@ function isPaid(id){ const m = getPaidMap(); return !!m[id]; }
           </a>`;
         }
         
-        // Ajouter un badge "Déjà acheté" pour les exposés payés
-        const paidBadge = isPaid && !isFree ? `<span class="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded">Acheté</span>` : '';
-        
         exposeCard.innerHTML = `
           <div class="expose-image" style="background-image: url('${imageUrl}')">
             ${previewButton}
-            ${paidBadge}
             <span class="expose-category">${expose.matiere}</span>
           </div>
           <div class="expose-content">
@@ -1117,6 +1196,105 @@ function isPaid(id){ const m = getPaidMap(); return !!m[id]; }
       updatePagination();
     }
 
+    // Ouvrir la modale de paiement (version améliorée)
+    window.openPaymentModal = function(exposeId, price, exposeTitle) {
+      currentExposeId = exposeId;
+      currentExposePrice = price;
+      currentExposeTitle = exposeTitle;
+      
+      // Remplir les informations de la modale
+      paymentEmail.value = localStorage.getItem('userEmail') || '';
+      exposeTitleElement.textContent = exposeTitle;
+      paymentAmount.textContent = price + ' CFA';
+      paymentStatus.textContent = '';
+      paymentStatus.className = 'payment-status hidden';
+      
+      // Afficher la modale
+      paymentModal.style.display = 'flex';
+      
+      // Focus sur le champ email
+      setTimeout(() => {
+        paymentEmail.focus();
+      }, 300);
+    };
+
+    // Fermer la modale de paiement
+    function closeModal() {
+      paymentModal.style.display = 'none';
+      currentExposeId = null;
+      currentExposePrice = 0;
+      currentExposeTitle = '';
+    }
+
+    // Fonction pour initier le paiement directement avec Paystack Inline
+    async function initiatePayment() {
+      const email = paymentEmail.value.trim();
+
+      if (!email) {
+        paymentStatus.textContent = "⚠️ Veuillez entrer un email valide.";
+        paymentStatus.className = "payment-status payment-error";
+        paymentStatus.classList.remove('hidden');
+        return;
+      }
+
+      if (!email.includes('@')) {
+        paymentStatus.textContent = "⚠️ Format d'email invalide.";
+        paymentStatus.className = "payment-status payment-error";
+        paymentStatus.classList.remove('hidden');
+        return;
+      }
+
+      localStorage.setItem('userEmail', email);
+      paymentStatus.textContent = "⏳ Ouverture du portail de paiement...";
+      paymentStatus.className = "payment-status payment-processing";
+      paymentStatus.classList.remove('hidden');
+      
+      try {
+        const handler = PaystackPop.setup({
+          key: publicKey,
+          email: email,
+          amount: currentExposePrice * 100, // conversion en kobo
+          currency: "XOF",
+          ref: 'CLASSEPRO_' + Math.floor((Math.random() * 1000000000) + 1),
+          metadata: {
+            custom_fields: [
+              {
+                display_name: "Exposé",
+                variable_name: "expose",
+                value: currentExposeTitle
+              }
+            ]
+          },
+          callback: function(response) {
+            // Ici, le paiement est validé par Paystack
+            paymentStatus.textContent = "🎉 Paiement réussi ! Redirection...";
+            paymentStatus.className = "payment-status payment-success";
+            paymentStatus.classList.remove('hidden');
+
+            // Marquer l'exposé comme payé
+            markExposeAsPaid(currentExposeId);
+
+            setTimeout(() => {
+              closeModal();
+              displayExposes(); // rafraîchir la liste
+            }, 2000);
+          },
+          onClose: function() {
+            paymentStatus.textContent = "❌ Paiement annulé. Vous pouvez réessayer.";
+            paymentStatus.className = "payment-status payment-error";
+            paymentStatus.classList.remove('hidden');
+          }
+        });
+
+        handler.openIframe();
+
+      } catch (error) {
+        paymentStatus.textContent = "❌ Erreur : " + error.message;
+        paymentStatus.className = "payment-status payment-error";
+        paymentStatus.classList.remove('hidden');
+      }
+    }
+
     // Mettre à jour la pagination
     function updatePagination() {
       const totalPages = Math.ceil(filteredExposes.length / exposesPerPage);
@@ -1127,13 +1305,23 @@ function isPaid(id){ const m = getPaidMap(); return !!m[id]; }
         
         prevBtn.disabled = currentPage === 1;
         nextBtn.disabled = currentPage === totalPages;
+        
+        // Appliquer des styles pour les boutons désactivés
+        if (currentPage === 1) {
+          prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        } else {
+          prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+        
+        if (currentPage === totalPages) {
+          nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        } else {
+          nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
       } else {
         pagination.classList.add('hidden');
       }
     }
-
-    // Rendre la fonction accessible globalement
-    window.redirectToPayment = redirectToPayment;
 
     // Gestion des événements
     searchInput.addEventListener('input', () => {
@@ -1164,6 +1352,24 @@ function isPaid(id){ const m = getPaidMap(); return !!m[id]; }
       if (currentPage < totalPages) {
         currentPage++;
         displayExposes();
+      }
+    });
+
+    // Gestion des événements de la modale de paiement
+    paystackBtn.addEventListener('click', initiatePayment);
+    closePaymentModal.addEventListener('click', closeModal);
+    
+    // Fermer la modale en cliquant à l'extérieur
+    paymentModal.addEventListener('click', (e) => {
+      if (e.target === paymentModal) {
+        closeModal();
+      }
+    });
+
+    // Fermer la modale avec la touche Échap
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && paymentModal.style.display === 'flex') {
+        closeModal();
       }
     });
 
@@ -1205,97 +1411,6 @@ function isPaid(id){ const m = getPaidMap(); return !!m[id]; }
       loadExposes();
     });
   </script>
-
-
-<script>
-console.log('[exposes] script start. URL params:', window.location.search);
-// localStorage utilities (redefined)
-const CLASSEPRO_PAID_KEY = 'classepro_paidExposes';
-function getPaidMap(){ try { return JSON.parse(localStorage.getItem(CLASSEPRO_PAID_KEY) || '{}'); } catch(e){ return {}; } }
-function markPaidExpose(id){ if(!id) return; const m = getPaidMap(); m[id]=true; localStorage.setItem(CLASSEPRO_PAID_KEY, JSON.stringify(m)); console.log('[exposes] markPaidExpose', id); }
-function isPaid(id){ const m = getPaidMap(); return !!m[id]; }
-
-// Read query param 'paid' and mark paid, then clean URL
-function checkPaymentStatus() {
-  const params = new URLSearchParams(window.location.search);
-  const paidId = params.get('paid');
-  if (paidId) {
-    markPaidExpose(paidId);
-    try { alert('✅ Paiement confirmé pour l\'exposé ' + (params.get('title') || paidId)); } catch(e){ console.log('toast', paidId); }
-    // remove paid param from URL to prevent repeat
-    params.delete('paid'); params.delete('title');
-    const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
-    window.history.replaceState({}, document.title, newUrl);
-  }
-  console.log('[exposes] checkPaymentStatus done. paidId:', paidId);
-}
-
-// Expose a safe render function that uses isPaid()
-function renderExposesFromData(exposesData, containerSelector) {
-  const container = document.querySelector(containerSelector || '#exposes-container') || document.body;
-  if(!container) return;
-  container.innerHTML = '';
-  exposesData.forEach(exp => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    const paid = (parseInt(exp.prix) === 0) || isPaid(exp.id);
-    card.innerHTML = `
-      <h3>${exp.titre}</h3>
-      <p>${exp.description || ''}</p>
-      <p><strong>Prix:</strong> ${exp.prix === 0 ? 'Gratuit' : exp.prix + ' FCFA'}</p>
-      ${ paid ?
-         ('<a href="'+ (exp.downloadUrl || '#') +'" class="btn btn-download">📥 Télécharger</a> <a href="'+ (exp.previewUrl || '#') +'" target="_blank" class="btn btn-download">👁️ Lire</a>')
-         :
-         ('<button class="btn btn-pay" data-id="'+exp.id+'" data-title="'+(exp.titre||'')+'" data-prix="'+(exp.prix||0)+'">💳 Payer</button>')
-      }
-    `;
-    container.appendChild(card);
-  });
-  // attach handlers for pay buttons
-  container.querySelectorAll('.btn-pay').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.id;
-      const titre = btn.dataset.title;
-      const prix = btn.dataset.prix;
-      // store pending payment
-      localStorage.setItem('pendingPayment', JSON.stringify({ id, titre, prix, origin: window.location.pathname }));
-      // redirect to paiement.html with params
-      const url = `paiement.html?type=expose&id=${encodeURIComponent(id)}&title=${encodeURIComponent(titre)}&prix=${encodeURIComponent(prix)}&origin=${encodeURIComponent(window.location.pathname)}`;
-      console.log('[exposes] redirecting to payment page', url);
-      window.location.href = url;
-    });
-  });
-}
-
-// Auto-init: if existing global loadExposes or displayExposes, we'll try to call them after checkPaymentStatus, else use a fallback demo render
-document.addEventListener('DOMContentLoaded', async () => {
-  checkPaymentStatus();
-  // Attempt to call user-defined loadExposes() if exists and returns data to render
-  try {
-    if (typeof loadExposes === 'function') {
-      console.log('[exposes] calling existing loadExposes()');
-      await loadExposes();
-      if (window.allExposes && Array.isArray(window.allExposes)) {
-        renderExposesFromData(window.allExposes, '#exposesContainer');
-        return;
-      }
-      if (typeof applyFilters === 'function') {
-        applyFilters();
-        return;
-      }
-    }
-  } catch(e) {
-    console.warn('[exposes] existing loaders failed', e);
-  }
-
-  // Fallback: if a global "exposes" array exists in script, use it, else do nothing
-  if (window.exposes && Array.isArray(window.exposes)) {
-    renderExposesFromData(window.exposes, '#exposes-container');
-  } else {
-    console.log('[exposes] no exposes data found to render automatically.');
-  }
-});
-</script>
 
 </body>
 </html>
