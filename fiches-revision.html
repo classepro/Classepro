@@ -6,8 +6,6 @@
   <title>Fiches de Révision - ClassePro</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- SDK Paystack -->
-  <script src="https://js.paystack.co/v1/inline.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
     
@@ -693,9 +691,8 @@
     const analytics = getAnalytics(app);
     const db = getFirestore(app);
 
-    // Configuration Paystack
-    const backendUrl = "https://backend2-rcqi.onrender.com";
-    const publicKey = "pk_test_7b8c7b4c175d2a76f17dc3d449ff410d88dd5d89";
+    // URL de votre backend (à adapter selon votre déploiement)
+    const BACKEND_URL = "https://backend2-rcqi.onrender.com"; // Remplace par ton URL de backend
 
     // Références aux éléments du DOM
     const fichesContainer = document.getElementById('fiches-container');
@@ -724,8 +721,79 @@
     const fichesPerPage = 6;
     let currentFicheId = null;
     let currentFichePrice = 0;
+    let currentFicheTitle = "";
 
-    // Charger les fiches depuis Firestore (collection "fiches de révision")
+    // Fonction pour vérifier si un paiement vient d'être effectué
+    function verifierPaiementRecent() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const paid = urlParams.get('paid');
+      
+      if (paid === 'true') {
+        // 🔥 CORRECTION : Récupérer la fiche payée et la marquer comme débloquée
+        const lastPaidFicheId = localStorage.getItem("lastPaidFicheId");
+        if (lastPaidFicheId) {
+          markFicheAsPaid(lastPaidFicheId);
+          localStorage.removeItem("lastPaidFicheId"); // Nettoyer après utilisation
+          
+          // Afficher un message de succès avec le déblocage
+          showSuccessMessage('🎉 Paiement réussi ! La fiche est maintenant débloquée.');
+        } else {
+          showSuccessMessage('🎉 Paiement réussi !');
+        }
+        
+        // Optionnel: retirer le paramètre de l'URL sans recharger la page
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // Recharger les fiches pour afficher le contenu débloqué
+        loadFiches();
+      }
+    }
+
+    // Fonction pour afficher un message de succès
+    function showSuccessMessage(message) {
+      // Créer une notification toast
+      const toast = document.createElement('div');
+      toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      
+      // Supprimer la notification après 3 secondes
+      setTimeout(() => {
+        document.body.removeChild(toast);
+      }, 3000);
+    }
+
+    // Fonction pour initier le paiement avec callback_url dynamique
+    async function initierPaiement(email, montant, sourcePage) {
+      try {
+        const response = await fetch(`${BACKEND_URL}/create-payment`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            amount: montant,
+            sourcePage: sourcePage
+          }),
+        });
+
+        const data = await response.json();
+        
+        if (data.status && data.data.authorization_url) {
+          // Rediriger vers l'URL de paiement Paystack
+          window.location.href = data.data.authorization_url;
+        } else {
+          throw new Error(data.message || 'Erreur lors de la création du paiement');
+        }
+      } catch (error) {
+        console.error('Erreur:', error);
+        paymentStatus.textContent = "❌ Erreur: " + error.message;
+        paymentStatus.className = "payment-status payment-error";
+      }
+    }
+
+    // Charger les fiches depuis Firestore
     async function loadFiches() {
       try {
         loadingIndicator.classList.remove('hidden');
@@ -822,7 +890,7 @@
             <i class="fas fa-download mr-2"></i>Télécharger
           </a>`;
         } else {
-          actionButton = `<button class="payment-btn" onclick="openPaymentModal('${fiche.id}', ${fiche.prix}, '${fiche.titre}')">
+          actionButton = `<button class="payment-btn" onclick="openPaymentModal('${fiche.id}', ${fiche.prix}, '${fiche.titre.replace(/'/g, "\\'")}')">
             <i class="fas fa-lock mr-1"></i>Accéder à la fiche
             <span class="price-tag">${fiche.prix} CFA</span>
           </button>`;
@@ -866,6 +934,7 @@
     window.openPaymentModal = function(ficheId, price, ficheTitle) {
       currentFicheId = ficheId;
       currentFichePrice = price;
+      currentFicheTitle = ficheTitle;
       
       // Remplir les informations de la modale
       paymentEmail.value = localStorage.getItem('userEmail') || '';
@@ -882,98 +951,32 @@
       paymentModal.style.display = 'none';
       currentFicheId = null;
       currentFichePrice = 0;
+      currentFicheTitle = "";
     }
 
-    // Fonction pour initier le processus de paiement
+    // Fonction pour initier le paiement avec redirection
     async function initiatePayment() {
       const email = paymentEmail.value.trim();
-      
-      // Validation
+
       if (!email) {
         paymentStatus.textContent = "⚠️ Veuillez entrer un email valide.";
         paymentStatus.className = "payment-status payment-error";
         return;
       }
 
-      // Sauvegarder l'email dans le localStorage
       localStorage.setItem('userEmail', email);
-
-      // Animation bouton
-      paystackBtn.innerHTML = '⏳ Initialisation <span class="spinner"></span>';
-      paystackBtn.disabled = true;
-      paymentStatus.textContent = "";
       
-      try {
-        // Appel au backend pour initialiser le paiement
-        const response = await fetch(`${backendUrl}/create-payment`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ 
-            email, 
-            amount: currentFichePrice 
-          })
-        });
-
-        const data = await response.json();
-
-        // Vérifier si la réponse contient la référence nécessaire
-        if (!data.data || !data.data.reference) {
-          throw new Error("Référence de paiement introuvable");
-        }
-
-        // Ouvrir l'iframe / popup Paystack
-        const handler = PaystackPop.setup({
-          key: publicKey,
-          email: email,
-          amount: currentFichePrice * 100, // conversion en kobo
-          currency: "XOF",
-          ref: data.data.reference,
-          callback: function(response) {
-            // Après le paiement, vérifier le statut côté backend
-            paymentStatus.textContent = "🔍 Vérification en cours...";
-            
-            fetch(`${backendUrl}/verify-payment/${response.reference}`)
-            .then(res => res.json())
-            .then(result => {
-              if (result.data && result.data.status === "success") {
-                paymentStatus.textContent = "🎉 Paiement réussi !";
-                paymentStatus.className = "payment-status payment-success";
-                
-                // Marquer la fiche comme payée dans le localStorage
-                markFicheAsPaid(currentFicheId);
-                
-                // Mettre à jour l'affichage après un délai
-                setTimeout(() => {
-                  closeModal();
-                  displayFiches(); // Recharger les fiches pour mettre à jour les boutons
-                }, 2000);
-              } else {
-                paymentStatus.textContent = "❌ Paiement non confirmé.";
-                paymentStatus.className = "payment-status payment-error";
-              }
-            })
-            .catch(err => {
-              console.error("Erreur vérification:", err);
-              paymentStatus.textContent = "❌ Erreur lors de la vérification.";
-              paymentStatus.className = "payment-status payment-error";
-            });
-          },
-          onClose: function() {
-            paymentStatus.textContent = "❌ Paiement annulé.";
-            paymentStatus.className = "payment-status payment-error";
-          }
-        });
-
-        handler.openIframe();
-
-      } catch (error) {
-        paymentStatus.textContent = "❌ Erreur : " + error.message;
-        paymentStatus.className = "payment-status payment-error";
-      } finally {
-        // Réinitialiser bouton initial
-        paystackBtn.innerHTML = "💳 Payer maintenant";
-        paystackBtn.disabled = false;
-      }
+      // 🔥 CORRECTION : Sauvegarder l'ID de la fiche payée avant redirection
+      localStorage.setItem("lastPaidFicheId", currentFicheId);
+      
+      // Déterminer la page source (pour fiches-revision.html, c'est "fiches-revision")
+      const sourcePage = "fiches-revision";
+      
+      paymentStatus.textContent = "🔄 Redirection vers Paystack...";
+      paymentStatus.className = "payment-status";
+      
+      // Appeler la nouvelle fonction de paiement
+      await initierPaiement(email, currentFichePrice, sourcePage);
     }
 
     // Mettre à jour la pagination
@@ -1068,6 +1071,9 @@
         });
       }
 
+      // Vérifier si un paiement vient d'être effectué
+      verifierPaiementRecent();
+      
       // Charger les fiches au chargement de la page
       loadFiches();
     });
