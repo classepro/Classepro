@@ -6,8 +6,6 @@
   <title>Exposés - ClassePro</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- SDK Paystack -->
-  <script src="https://js.paystack.co/v1/inline.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
     
@@ -566,7 +564,7 @@
       color: #ccc;
     }
     
-    /* Styles améliorés pour la modale de paiement */
+    /* Styles pour la modale de paiement */
     .payment-modal {
       display: none;
       position: fixed;
@@ -574,68 +572,65 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(5px);
+      background-color: rgba(0, 0, 0, 0.5);
       z-index: 1000;
       justify-content: center;
       align-items: center;
-      animation: fadeIn 0.3s ease;
     }
     
     .payment-modal-content {
       background: white;
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
       width: 90%;
-      max-width: 450px;
-      max-height: 90vh;
-      overflow-y: auto;
-      animation: slideUp 0.4s ease;
-      position: relative;
+      max-width: 400px;
+      text-align: center;
     }
     
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    @keyframes slideUp {
-      from { 
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to { 
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .payment-modal h3 {
+      margin-bottom: 20px;
+      color: var(--secondary);
     }
     
     .payment-modal input {
-      transition: all 0.3s ease;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      box-sizing: border-box;
     }
     
-    .payment-modal input:focus {
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    .payment-modal button {
+      margin-top: 15px;
+      padding: 12px;
+      width: 100%;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(135deg, #4cafef, #0072ff);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
     }
     
-    /* Styles pour le statut de paiement */
+    .payment-modal button:hover {
+      background: linear-gradient(135deg, #3a9bdc, #005ed6);
+    }
+    
+    .payment-status {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    
     .payment-success {
-      background-color: #f0fff4;
-      border: 1px solid #9ae6b4;
-      color: #2d774a;
+      color: #28a745;
     }
     
     .payment-error {
-      background-color: #fed7d7;
-      border: 1px solid #feb2b2;
-      color: #c53030;
-    }
-    
-    .payment-processing {
-      background-color: #ebf8ff;
-      border: 1px solid #90cdf4;
-      color: #2c5aa0;
+      color: #dc3545;
     }
     
     /* Media Queries pour la responsivité */
@@ -744,13 +739,6 @@
       .preview-btn {
         padding: 4px 8px;
         font-size: 0.6rem;
-      }
-      
-      /* Responsive pour la modale de paiement */
-      .payment-modal-content {
-        padding: 20px;
-        margin: 20px;
-        width: calc(100% - 40px);
       }
     }
     
@@ -922,85 +910,15 @@
     </div>
   </footer>
 
-  <!-- Modale de paiement améliorée -->
+  <!-- Modale de paiement -->
   <div id="payment-modal" class="payment-modal">
     <div class="payment-modal-content">
-      <!-- En-tête de la modale -->
-      <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
-        <div class="flex items-center">
-          <div class="bg-gradient-to-r from-[#3D3B8E] to-[#FF7E5F] p-2 rounded-full mr-3">
-            <i class="fas fa-lock text-white text-sm"></i>
-          </div>
-          <div>
-            <h3 class="text-lg font-bold text-gray-800">Accéder à l'exposé</h3>
-            <p class="text-xs text-gray-600">Paiement sécurisé via Paystack</p>
-          </div>
-        </div>
-        <button id="close-payment-modal" class="text-gray-400 hover:text-gray-600 text-xl">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <!-- Informations sur l'achat -->
-      <div class="bg-blue-50 rounded-lg p-4 mb-4">
-        <div class="flex justify-between items-center mb-2">
-          <span class="text-sm font-medium text-gray-700">Exposé sélectionné:</span>
-          <span id="expose-title" class="text-sm font-semibold text-blue-800 text-right"></span>
-        </div>
-        <div class="flex justify-between items-center">
-          <span class="text-sm font-medium text-gray-700">Montant à payer:</span>
-          <span id="payment-amount" class="text-lg font-bold text-blue-800"></span>
-        </div>
-      </div>
-
-      <!-- Formulaire de paiement -->
-      <div class="mb-4">
-        <label for="payment-email" class="block text-sm font-medium text-gray-700 mb-1">
-          <i class="fas fa-envelope mr-1 text-blue-500"></i>Adresse email
-        </label>
-        <input type="email" id="payment-email" placeholder="votre@email.com" 
-               class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
-        <p class="text-xs text-gray-500 mt-1">Vous recevrez votre reçu à cette adresse</p>
-      </div>
-
-      <!-- Message d'alerte important -->
-      <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4 rounded">
-        <div class="flex">
-          <div class="flex-shrink-0">
-            <i class="fas fa-exclamation-triangle text-yellow-400"></i>
-          </div>
-          <div class="ml-3">
-            <h4 class="text-sm font-medium text-yellow-800">Important</h4>
-            <div class="mt-1 text-sm text-yellow-700">
-              <p>• Ne quittez pas la page de paiement Paystack avant confirmation</p>
-              <p>• La confirmation peut prendre jusqu'à 2 minutes dans certains cas</p>
-              <p>• Restez sur cette page jusqu'à ce que le statut s'affiche</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bouton de paiement -->
-      <button id="paystack-btn" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center">
-        <i class="fas fa-credit-card mr-2"></i>
-        <span>Payer maintenant</span>
-      </button>
-
-      <!-- Sécurité et garanties -->
-      <div class="mt-4 text-center">
-        <div class="flex justify-center space-x-4 text-xs text-gray-500 mb-2">
-          <span class="flex items-center">
-            <i class="fas fa-shield-alt mr-1 text-green-500"></i> Paiement sécurisé
-          </span>
-          <span class="flex items-center">
-            <i class="fas fa-lock mr-1 text-blue-500"></i> SSL encrypté
-          </span>
-        </div>
-        <p class="text-xs text-gray-400">ClassePro - Votre réussite, notre priorité</p>
-      </div>
-
-      <!-- Statut du paiement -->
-      <div id="payment-status" class="mt-4 p-3 rounded-lg text-center hidden"></div>
+      <h3>Paiement de l'exposé</h3>
+      <input type="email" id="payment-email" placeholder="Votre email" value="">
+      <div id="payment-amount" class="payment-amount"></div>
+      <button id="paystack-btn">💳 Payer maintenant</button>
+      <div id="payment-status" class="payment-status"></div>
+      <button id="close-payment-modal" style="margin-top: 10px; background: #6c757d;">Annuler</button>
     </div>
   </div>
 
@@ -1027,8 +945,8 @@
     const analytics = getAnalytics(app);
     const db = getFirestore(app);
 
-    // Configuration Paystack
-    const publicKey = "pk_live_777a7c63bdb21fe5600c3bc048da89da3b756d86";
+    // URL de votre backend (à adapter selon votre déploiement)
+    const BACKEND_URL = "https://backend2-rcqi.onrender.com"; // Remplace par ton URL de backend
 
     // Références aux éléments du DOM
     const exposesContainer = document.getElementById('exposes-container');
@@ -1045,7 +963,6 @@
     // Éléments de la modale de paiement
     const paymentModal = document.getElementById('payment-modal');
     const paymentEmail = document.getElementById('payment-email');
-    const exposeTitleElement = document.getElementById('expose-title');
     const paymentAmount = document.getElementById('payment-amount');
     const paystackBtn = document.getElementById('paystack-btn');
     const paymentStatus = document.getElementById('payment-status');
@@ -1058,7 +975,68 @@
     const exposesPerPage = 6;
     let currentExposeId = null;
     let currentExposePrice = 0;
-    let currentExposeTitle = '';
+    let currentExposeTitle = "";
+
+    // Fonction pour vérifier si un paiement vient d'être effectué
+    function verifierPaiementRecent() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const paid = urlParams.get('paid');
+      
+      if (paid === 'true') {
+        // Afficher un message de succès
+        showSuccessMessage('🎉 Paiement réussi ! Votre contenu est maintenant disponible.');
+        
+        // Optionnel: retirer le paramètre de l'URL sans recharger la page
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // Recharger les exposés pour afficher le contenu débloqué
+        loadExposes();
+      }
+    }
+
+    // Fonction pour afficher un message de succès
+    function showSuccessMessage(message) {
+      // Créer une notification toast
+      const toast = document.createElement('div');
+      toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      
+      // Supprimer la notification après 3 secondes
+      setTimeout(() => {
+        document.body.removeChild(toast);
+      }, 3000);
+    }
+
+    // Fonction pour initier le paiement avec callback_url dynamique
+    async function initierPaiement(email, montant, sourcePage) {
+      try {
+        const response = await fetch(`${BACKEND_URL}/create-payment`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            amount: montant,
+            sourcePage: sourcePage
+          }),
+        });
+
+        const data = await response.json();
+        
+        if (data.status && data.data.authorization_url) {
+          // Rediriger vers l'URL de paiement Paystack
+          window.location.href = data.data.authorization_url;
+        } else {
+          throw new Error(data.message || 'Erreur lors de la création du paiement');
+        }
+      } catch (error) {
+        console.error('Erreur:', error);
+        paymentStatus.textContent = "❌ Erreur: " + error.message;
+        paymentStatus.className = "payment-status payment-error";
+      }
+    }
 
     // Charger les exposés depuis Firestore
     async function loadExposes() {
@@ -1196,7 +1174,7 @@
       updatePagination();
     }
 
-    // Ouvrir la modale de paiement (version améliorée)
+    // Ouvrir la modale de paiement
     window.openPaymentModal = function(exposeId, price, exposeTitle) {
       currentExposeId = exposeId;
       currentExposePrice = price;
@@ -1204,18 +1182,12 @@
       
       // Remplir les informations de la modale
       paymentEmail.value = localStorage.getItem('userEmail') || '';
-      exposeTitleElement.textContent = exposeTitle;
-      paymentAmount.textContent = price + ' CFA';
+      paymentAmount.textContent = `Montant: ${price} CFA - ${exposeTitle}`;
       paymentStatus.textContent = '';
-      paymentStatus.className = 'payment-status hidden';
+      paymentStatus.className = 'payment-status';
       
       // Afficher la modale
       paymentModal.style.display = 'flex';
-      
-      // Focus sur le champ email
-      setTimeout(() => {
-        paymentEmail.focus();
-      }, 300);
     };
 
     // Fermer la modale de paiement
@@ -1223,76 +1195,29 @@
       paymentModal.style.display = 'none';
       currentExposeId = null;
       currentExposePrice = 0;
-      currentExposeTitle = '';
+      currentExposeTitle = "";
     }
 
-    // Fonction pour initier le paiement directement avec Paystack Inline
+    // Fonction pour initier le paiement avec redirection
     async function initiatePayment() {
       const email = paymentEmail.value.trim();
 
       if (!email) {
         paymentStatus.textContent = "⚠️ Veuillez entrer un email valide.";
         paymentStatus.className = "payment-status payment-error";
-        paymentStatus.classList.remove('hidden');
-        return;
-      }
-
-      if (!email.includes('@')) {
-        paymentStatus.textContent = "⚠️ Format d'email invalide.";
-        paymentStatus.className = "payment-status payment-error";
-        paymentStatus.classList.remove('hidden');
         return;
       }
 
       localStorage.setItem('userEmail', email);
-      paymentStatus.textContent = "⏳ Ouverture du portail de paiement...";
-      paymentStatus.className = "payment-status payment-processing";
-      paymentStatus.classList.remove('hidden');
       
-      try {
-        const handler = PaystackPop.setup({
-          key: publicKey,
-          email: email,
-          amount: currentExposePrice * 100, // conversion en kobo
-          currency: "XOF",
-          ref: 'CLASSEPRO_' + Math.floor((Math.random() * 1000000000) + 1),
-          metadata: {
-            custom_fields: [
-              {
-                display_name: "Exposé",
-                variable_name: "expose",
-                value: currentExposeTitle
-              }
-            ]
-          },
-          callback: function(response) {
-            // Ici, le paiement est validé par Paystack
-            paymentStatus.textContent = "🎉 Paiement réussi ! Redirection...";
-            paymentStatus.className = "payment-status payment-success";
-            paymentStatus.classList.remove('hidden');
-
-            // Marquer l'exposé comme payé
-            markExposeAsPaid(currentExposeId);
-
-            setTimeout(() => {
-              closeModal();
-              displayExposes(); // rafraîchir la liste
-            }, 2000);
-          },
-          onClose: function() {
-            paymentStatus.textContent = "❌ Paiement annulé. Vous pouvez réessayer.";
-            paymentStatus.className = "payment-status payment-error";
-            paymentStatus.classList.remove('hidden');
-          }
-        });
-
-        handler.openIframe();
-
-      } catch (error) {
-        paymentStatus.textContent = "❌ Erreur : " + error.message;
-        paymentStatus.className = "payment-status payment-error";
-        paymentStatus.classList.remove('hidden');
-      }
+      // Déterminer la page source (pour exposes.html, c'est "exposes")
+      const sourcePage = "exposes";
+      
+      paymentStatus.textContent = "🔄 Redirection vers Paystack...";
+      paymentStatus.className = "payment-status";
+      
+      // Appeler la nouvelle fonction de paiement
+      await initierPaiement(email, currentExposePrice, sourcePage);
     }
 
     // Mettre à jour la pagination
@@ -1305,19 +1230,6 @@
         
         prevBtn.disabled = currentPage === 1;
         nextBtn.disabled = currentPage === totalPages;
-        
-        // Appliquer des styles pour les boutons désactivés
-        if (currentPage === 1) {
-          prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
-        } else {
-          prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-        }
-        
-        if (currentPage === totalPages) {
-          nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
-        } else {
-          nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-        }
       } else {
         pagination.classList.add('hidden');
       }
@@ -1366,13 +1278,6 @@
       }
     });
 
-    // Fermer la modale avec la touche Échap
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && paymentModal.style.display === 'flex') {
-        closeModal();
-      }
-    });
-
     // Gestion du menu hamburger pour mobile
     document.addEventListener('DOMContentLoaded', function() {
       const menuToggle = document.querySelector('.menu-toggle');
@@ -1407,6 +1312,9 @@
         });
       }
 
+      // Vérifier si un paiement vient d'être effectué
+      verifierPaiementRecent();
+      
       // Charger les exposés au chargement de la page
       loadExposes();
     });
