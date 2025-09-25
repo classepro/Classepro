@@ -1190,5 +1190,50 @@
     });
   </script>
 
+
+<script>
+  // Débloquer un exposé déjà payé
+  function markExposeAsPaid(exposeId) {
+    const paidExposes = JSON.parse(localStorage.getItem('classepro_paidExposes')) || {};
+    paidExposes[exposeId] = true;
+    localStorage.setItem('classepro_paidExposes', JSON.stringify(paidExposes));
+  }
+
+  // Vérifier si un exposé est déjà payé
+  function isExposePaid(exposeId) {
+    const paidExposes = JSON.parse(localStorage.getItem('classepro_paidExposes')) || {};
+    return paidExposes[exposeId] === true;
+  }
+
+  // Vérifier l’URL (paiement en cours)
+  function checkPaymentStatus() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const paidExposeId = urlParams.get('paid');
+    
+    if (paidExposeId) {
+      markExposeAsPaid(paidExposeId); // ✅ Sauvegarde dans localStorage
+      alert("✅ Paiement confirmé pour l’exposé " + paidExposeId);
+    }
+  }
+
+  // Appliquer l’état payé lors du rendu des cartes exposés
+  function applyPaidState() {
+    document.querySelectorAll(".expose").forEach(card => {
+      const exposeId = card.dataset.id;
+      if (isExposePaid(exposeId)) {
+        const downloadBtn = card.querySelector(".download-btn");
+        const payBtn = card.querySelector(".pay-btn");
+        if (downloadBtn) downloadBtn.style.display = "inline-block";
+        if (payBtn) payBtn.style.display = "none";
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    checkPaymentStatus();
+    applyPaidState();
+  });
+</script>
+
 </body>
 </html>
