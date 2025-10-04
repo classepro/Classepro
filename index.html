@@ -2,9 +2,18 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>ClassePro - Plateforme Éducative</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- PWA Meta Tags -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#3D3B8E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ClassePro">
+<link rel="apple-touch-icon" href="icon-192.png">
+
 <style>
     :root {
         --primary: #FF7E5F;
@@ -18,7 +27,7 @@
         --radius: 16px;
         --text-on-dark: #ffffff;
         --text-light: #eef2ff;
-        --footer-color: #2F2F2F; /* Nouvelle couleur pour le footer */
+        --footer-color: #2F2F2F;
     }
     
     * {
@@ -196,7 +205,7 @@
     .footer {
         margin-top: 25px;
         font-size: 12px;
-        color: var(--footer-color); /* Changé pour utiliser la nouvelle variable */
+        color: var(--footer-color);
         text-align: center;
         text-shadow: 0 1px 2px rgba(0,0,0,0.05);
         font-weight: 600;
@@ -482,6 +491,104 @@
         ClassePro - Votre réussite, notre priorité
     </div>
 </div>
+
+<script>
+// Service Worker Registration pour PWA
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker enregistré avec succès:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log("Échec de l'enregistrement du Service Worker:", error);
+            });
+    });
+}
+
+// Gestion de l'installation de la PWA
+let deferredPrompt;
+const installButton = document.createElement('button');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    // Optionnel: Afficher un bouton d'installation
+    installButton.style.display = 'block';
+    installButton.textContent = 'Installer l\'app';
+    installButton.className = 'btn btn-primary';
+    installButton.style.marginTop = '10px';
+    document.querySelector('.container').appendChild(installButton);
+    
+    installButton.addEventListener('click', () => {
+        installButton.style.display = 'none';
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('Utilisateur a accepté l\'installation');
+            } else {
+                console.log('Utilisateur a refusé l\'installation');
+            }
+            deferredPrompt = null;
+        });
+    });
+});
+
+// Animation au chargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    const page = document.getElementById('page-accueil');
+    page.style.opacity = '0';
+    page.style.transform = 'translateY(20px)';
+    
+    setTimeout(() => {
+        page.style.transition = 'all 0.4s ease-out';
+        page.style.opacity = '1';
+        page.style.transform = 'translateY(0)';
+    }, 100);
+});
+
+// Gestion du responsive et des interactions
+document.querySelectorAll('.btn').forEach(button => {
+    button.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-3px)';
+    });
+    
+    button.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+    });
+    
+    button.addEventListener('touchstart', function() {
+        this.style.transform = 'translateY(-1px)';
+    });
+    
+    button.addEventListener('touchend', function() {
+        this.style.transform = 'translateY(0)';
+    });
+});
+
+// Amélioration de l'accessibilité
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Tab') {
+        document.body.classList.add('keyboard-navigation');
+    }
+});
+
+document.addEventListener('mousedown', function() {
+    document.body.classList.remove('keyboard-navigation');
+});
+
+// Styles additionnels pour la navigation au clavier
+document.head.insertAdjacentHTML('beforeend', `
+<style>
+    .keyboard-navigation button:focus,
+    .keyboard-navigation .btn:focus {
+        outline: 3px solid var(--accent);
+        outline-offset: 2px;
+    }
+</style>
+`);
+</script>
 
 </body>
 </html>
