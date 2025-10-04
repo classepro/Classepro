@@ -224,6 +224,19 @@
         border-bottom: 1px solid var(--text-light);
     }
     
+    /* Styles pour le bouton d'installation */
+    #installButton {
+        display: none;
+        background: linear-gradient(135deg, var(--accent), var(--secondary));
+        color: white;
+        border: none;
+        margin: 10px 0;
+    }
+    
+    #installButton:hover {
+        background: linear-gradient(135deg, var(--secondary), var(--accent));
+    }
+    
     /* Animation entre pages */
     .page {
         animation: fadeIn 0.4s ease-out;
@@ -480,6 +493,11 @@
         <i class="fas fa-headset"></i> Contacter le Support
     </button>
     
+    <!-- Bouton d'installation PWA -->
+    <button id="installButton" class="btn">
+        <i class="fas fa-download"></i> Installer l'Application
+    </button>
+    
     <div class="features">
         <p><span><i class="fas fa-file-alt"></i></span> Rapports de stage professionnels</p>
         <p><span><i class="fas fa-id-card"></i></span> CV et lettres de motivation</p>
@@ -493,47 +511,92 @@
 </div>
 
 <script>
-// Service Worker Registration pour PWA
+// Service Worker Registration avec gestion d'erreur améliorée
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js')
-            .then(function(registration) {
-                console.log('Service Worker enregistré avec succès:', registration.scope);
-            })
-            .catch(function(error) {
-                console.log("Échec de l'enregistrement du Service Worker:", error);
-            });
+        // Essayer différents chemins pour le service worker
+        const swPaths = ['./sw.js', 'sw.js', '/Classepro/sw.js'];
+        
+        const registerSW = (pathIndex) => {
+            if (pathIndex >= swPaths.length) {
+                console.log('Aucun chemin de Service Worker valide trouvé');
+                return;
+            }
+            
+            const swPath = swPaths[pathIndex];
+            navigator.serviceWorker.register(swPath)
+                .then(function(registration) {
+                    console.log('Service Worker enregistré avec succès:', registration.scope);
+                    console.log('Chemin utilisé:', swPath);
+                })
+                .catch(function(error) {
+                    console.log(`Échec avec le chemin ${swPath}:`, error);
+                    // Essayer le chemin suivant
+                    registerSW(pathIndex + 1);
+                });
+        };
+        
+        registerSW(0);
     });
+} else {
+    console.log('Service Worker non supporté par ce navigateur');
 }
 
 // Gestion de l'installation de la PWA
 let deferredPrompt;
-const installButton = document.createElement('button');
+const installButton = document.getElementById('installButton');
 
 window.addEventListener('beforeinstallprompt', (e) => {
+    console.log('beforeinstallprompt event déclenché');
+    
+    // Empêche le navigateur de montrer l'invite automatique
     e.preventDefault();
+    
+    // Stocke l'événement pour l'utiliser plus tard
     deferredPrompt = e;
     
-    // Optionnel: Afficher un bouton d'installation
+    // Affiche le bouton d'installation
     installButton.style.display = 'block';
-    installButton.textContent = 'Installer l\'app';
-    installButton.className = 'btn btn-primary';
-    installButton.style.marginTop = '10px';
-    document.querySelector('.container').appendChild(installButton);
-    
-    installButton.addEventListener('click', () => {
-        installButton.style.display = 'none';
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('Utilisateur a accepté l\'installation');
-            } else {
-                console.log('Utilisateur a refusé l\'installation');
-            }
-            deferredPrompt = null;
-        });
-    });
+    console.log('Bouton d installation affiché');
 });
+
+// Gestion du clic sur le bouton d'installation
+installButton.addEventListener('click', async () => {
+    if (!deferredPrompt) {
+        console.log('Aucune invite d installation disponible');
+        return;
+    }
+    
+    console.log('Déclenchement de l invite d installation');
+    
+    // Montre l'invite d'installation
+    deferredPrompt.prompt();
+    
+    // Attend la réponse de l'utilisateur
+    const choiceResult = await deferredPrompt.userChoice;
+    
+    console.log(`Résultat de l installation: ${choiceResult.outcome}`);
+    
+    // On peut vider deferredPrompt car il ne peut être utilisé qu'une fois
+    deferredPrompt = null;
+    
+    // Cache le bouton d'installation
+    installButton.style.display = 'none';
+});
+
+// Cache le bouton si l'app est déjà installée
+window.addEventListener('appinstalled', (evt) => {
+    console.log('Application installée avec succès');
+    installButton.style.display = 'none';
+    deferredPrompt = null;
+});
+
+// Vérifie si l'app est déjà installée
+if (window.matchMedia('(display-mode: standalone)').matches || 
+    window.navigator.standalone === true) {
+    console.log('Application déjà installée');
+    installButton.style.display = 'none';
+}
 
 // Animation au chargement de la page
 document.addEventListener('DOMContentLoaded', function() {
@@ -551,18 +614,12 @@ document.addEventListener('DOMContentLoaded', function() {
 // Gestion du responsive et des interactions
 document.querySelectorAll('.btn').forEach(button => {
     button.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-3px)';
+        if (!this.classList.contains('disabled')) {
+            this.style.transform = 'translateY(-3px)';
+        }
     });
     
     button.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0)';
-    });
-    
-    button.addEventListener('touchstart', function() {
-        this.style.transform = 'translateY(-1px)';
-    });
-    
-    button.addEventListener('touchend', function() {
         this.style.transform = 'translateY(0)';
     });
 });
@@ -579,15 +636,24 @@ document.addEventListener('mousedown', function() {
 });
 
 // Styles additionnels pour la navigation au clavier
-document.head.insertAdjacentHTML('beforeend', `
-<style>
+const keyboardStyles = document.createElement('style');
+keyboardStyles.textContent = `
     .keyboard-navigation button:focus,
     .keyboard-navigation .btn:focus {
         outline: 3px solid var(--accent);
         outline-offset: 2px;
     }
-</style>
-`);
+`;
+document.head.appendChild(keyboardStyles);
+
+// Debug: Vérification des conditions PWA
+console.log('=== DEBUG PWA ===');
+console.log('Service Worker supporté:', 'serviceWorker' in navigator);
+console.log('BeforeInstallPrompt supporté:', 'BeforeInstallPromptEvent' in window);
+console.log('Display mode:', window.matchMedia('(display-mode: standalone)').matches);
+console.log('Standalone:', window.navigator.standalone);
+console.log('HTTPS:', window.location.protocol === 'https:');
+console.log('==================');
 </script>
 
 </body>
