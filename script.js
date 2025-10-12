@@ -1,11 +1,157 @@
 // =============================================
+// GESTIONNAIRE DE MISES À JOUR
+// =============================================
+
+class UpdateManager {
+    constructor() {
+        this.updateButton = null;
+        this.isUpdateAvailable = false;
+        this.registration = null;
+        this.init();
+    }
+    
+    init() {
+        this.setupServiceWorker();
+        this.createUpdateButton();
+    }
+    
+    setupServiceWorker() {
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js')
+                .then(registration => {
+                    this.registration = registration;
+                    console.log('✅ Service Worker enregistré:', registration.scope);
+                    
+                    // Écouter les mises à jour
+                    registration.addEventListener('updatefound', () => {
+                        this.handleUpdateFound(registration);
+                    });
+                    
+                    // Vérifier s'il y a une mise à jour en attente
+                    if (registration.waiting) {
+                        this.showUpdateButton();
+                    }
+                })
+                .catch(error => {
+                    console.log('❌ Échec Service Worker:', error);
+                });
+                
+            // Écouter les changements d'état du controller
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                console.log('🔄 Controller changé - rechargement de la page');
+                this.showUpdateAnimation();
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+            });
+        }
+    }
+    
+    handleUpdateFound(registration) {
+        const newWorker = registration.installing;
+        
+        newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                console.log('🆕 Nouvelle version disponible!');
+                this.isUpdateAvailable = true;
+                this.showUpdateButton();
+            }
+        });
+    }
+    
+    createUpdateButton() {
+        this.updateButton = document.createElement('button');
+        this.updateButton.id = 'updateButton';
+        this.updateButton.innerHTML = `
+            <i class="fas fa-sync-alt"></i>
+            <span>Mettre à jour</span>
+            <div class="update-pulse"></div>
+        `;
+        this.updateButton.style.display = 'none';
+        
+        this.updateButton.addEventListener('click', () => {
+            this.applyUpdate();
+        });
+        
+        document.body.appendChild(this.updateButton);
+    }
+    
+    showUpdateButton() {
+        if (this.updateButton) {
+            console.log('🔼 Affichage du bouton de mise à jour');
+            this.updateButton.style.display = 'flex';
+            
+            // Animation d'apparition
+            setTimeout(() => {
+                this.updateButton.classList.add('show');
+            }, 100);
+            
+            // Notification discrète
+            this.showUpdateNotification();
+        }
+    }
+    
+    showUpdateNotification() {
+        const notification = document.createElement('div');
+        notification.className = 'update-notification';
+        notification.innerHTML = `
+            <i class="fas fa-rocket"></i>
+            <span>Nouvelle version disponible !</span>
+            <button onclick="this.parentElement.remove()">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Suppression automatique après 5 secondes
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.remove();
+            }
+        }, 5000);
+    }
+    
+    applyUpdate() {
+        if (this.registration && this.registration.waiting) {
+            console.log('🚀 Application de la mise à jour...');
+            
+            // Envoyer un message au service worker pour skip waiting
+            this.registration.waiting.postMessage({ type: 'skipWaiting' });
+            
+            // L'animation de mise à jour sera déclenchée par l'événement controllerchange
+        }
+    }
+    
+    showUpdateAnimation() {
+        const updateOverlay = document.createElement('div');
+        updateOverlay.id = 'updateOverlay';
+        updateOverlay.innerHTML = `
+            <div class="update-animation">
+                <lottie-player
+                    src="https://assets1.lottiefiles.com/packages/lf20_iv4dsx3q.json"
+                    background="transparent"
+                    speed="1"
+                    loop
+                    autoplay>
+                </lottie-player>
+                <h3>Mise à jour en cours...</h3>
+                <p>Votre application se met à jour avec les dernières améliorations</p>
+            </div>
+        `;
+        
+        document.body.appendChild(updateOverlay);
+    }
+}
+
+// =============================================
 // ANIMATION DE CHARGEMENT - VERSION CORRIGÉE
 // =============================================
 
 class LoadingAnimation {
     constructor() {
-        this.totalDuration = 3000; // 3 secondes
-        this.intervalTime = 30; // Mise à jour toutes les 30ms
+        this.totalDuration = 3000;
+        this.intervalTime = 30;
         this.progress = 0;
         this.intervalId = null;
         
@@ -16,23 +162,15 @@ class LoadingAnimation {
             pageAccueil: document.getElementById('page-accueil')
         };
         
-        console.log('🔍 Éléments trouvés:', this.elements);
         this.init();
     }
     
     init() {
-        console.log('🚀 Initialisation de l animation de chargement');
-        
-        // Vérifier que tous les éléments existent
         if (!this.validateElements()) {
-            console.error('❌ Éléments manquants, affichage direct de la page principale');
             this.showMainContent();
             return;
         }
         
-        console.log('✅ Tous les éléments sont présents, démarrage dans 100ms');
-        
-        // Démarrer l'animation après un court délai
         setTimeout(() => {
             this.startProgressAnimation();
         }, 100);
@@ -45,8 +183,6 @@ class LoadingAnimation {
             if (!element) {
                 console.error(`❌ Élément manquant: ${key}`);
                 allValid = false;
-            } else {
-                console.log(`✅ ${key}: présent`);
             }
         }
         
@@ -54,18 +190,13 @@ class LoadingAnimation {
     }
     
     startProgressAnimation() {
-        console.log('🔄 Démarrage de l animation de progression');
-        
         const steps = this.totalDuration / this.intervalTime;
         const increment = 100 / steps;
         
         this.intervalId = setInterval(() => {
             this.progress += increment;
-            this.progress = Math.min(this.progress, 100); // Éviter de dépasser 100%
+            this.progress = Math.min(this.progress, 100);
             
-            console.log(`📊 Progression: ${Math.round(this.progress)}%`);
-            
-            // Mettre à jour les éléments visuels
             if (this.elements.loadingProgress) {
                 this.elements.loadingProgress.style.width = `${this.progress}%`;
             }
@@ -74,7 +205,6 @@ class LoadingAnimation {
                 this.elements.percentage.textContent = `${Math.round(this.progress)}%`;
             }
             
-            // Vérifier si l'animation est terminée
             if (this.progress >= 100) {
                 this.completeAnimation();
             }
@@ -82,15 +212,11 @@ class LoadingAnimation {
     }
     
     completeAnimation() {
-        console.log('✅ Animation terminée à 100%');
-        
-        // Arrêter l'intervalle
         if (this.intervalId) {
             clearInterval(this.intervalId);
             this.intervalId = null;
         }
         
-        // S'assurer que la barre est à 100%
         if (this.elements.loadingProgress) {
             this.elements.loadingProgress.style.width = '100%';
         }
@@ -98,60 +224,37 @@ class LoadingAnimation {
             this.elements.percentage.textContent = '100%';
         }
         
-        console.log('⏳ Attente de 500ms avant transition...');
-        
-        // Attendre un peu puis passer à la page principale
         setTimeout(() => {
             this.showMainContent();
         }, 500);
     }
     
     showMainContent() {
-        console.log('🔄 Transition vers la page principale');
-        
-        if (!this.elements.splashScreen || !this.elements.pageAccueil) {
-            console.error('❌ Impossible de faire la transition - éléments manquants');
-            return;
-        }
+        if (!this.elements.splashScreen || !this.elements.pageAccueil) return;
 
-        // Étape 1: Commencer la disparition de l'écran de démarrage
         this.elements.splashScreen.style.opacity = '0';
         this.elements.splashScreen.style.transition = 'opacity 0.5s ease';
         
-        console.log('🎭 Début du fondu de sortie du splash screen');
-        
-        // Étape 2: Après la disparition, afficher la page principale
         setTimeout(() => {
-            console.log('👋 Cache le splash screen');
             this.elements.splashScreen.style.display = 'none';
-            
-            // Étape 3: Afficher la page principale IMMÉDIATEMENT
-            console.log('🎪 Affichage de la page principale');
             this.elements.pageAccueil.style.display = 'block';
             
-            // Forcer un reflow pour s'assurer que le navigateur enregistre le display: block
             void this.elements.pageAccueil.offsetWidth;
             
-            // Étape 4: Préparer l'animation d'entrée
             this.elements.pageAccueil.style.opacity = '0';
             this.elements.pageAccueil.style.transform = 'translateY(20px)';
             this.elements.pageAccueil.style.transition = 'all 0.4s ease-out';
             
-            // Étape 5: Démarrer l'animation d'entrée sur le prochain frame
             requestAnimationFrame(() => {
-                console.log('🎬 Démarrage de l animation d entrée');
                 this.elements.pageAccueil.style.opacity = '1';
                 this.elements.pageAccueil.style.transform = 'translateY(0)';
-                
-                console.log('✅ Page principale complètement affichée');
             });
-            
-        }, 500); // Correspond à la durée de la transition opacity
+        }, 500);
     }
 }
 
 // =============================================
-// GESTION PWA (inchangée)
+// GESTION PWA
 // =============================================
 
 class PWAHandler {
@@ -162,21 +265,8 @@ class PWAHandler {
     }
     
     init() {
-        this.registerServiceWorker();
         this.setupInstallPrompt();
         this.checkIfInstalled();
-    }
-    
-    registerServiceWorker() {
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js')
-                .then(registration => {
-                    console.log('✅ Service Worker enregistré:', registration.scope);
-                })
-                .catch(error => {
-                    console.log('❌ Échec Service Worker:', error);
-                });
-        }
     }
     
     setupInstallPrompt() {
@@ -185,8 +275,7 @@ class PWAHandler {
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             this.deferredPrompt = e;
-            this.installButton.style.display = 'block';
-            console.log('📱 Bouton d installation affiché');
+            this.showInstallButton();
         });
         
         this.installButton.addEventListener('click', async () => {
@@ -197,14 +286,32 @@ class PWAHandler {
             
             console.log(`📱 Installation: ${choiceResult.outcome}`);
             this.deferredPrompt = null;
-            this.installButton.style.display = 'none';
+            this.hideInstallButton();
         });
         
         window.addEventListener('appinstalled', () => {
             console.log('✅ Application installée');
-            this.installButton.style.display = 'none';
+            this.hideInstallButton();
             this.deferredPrompt = null;
         });
+    }
+    
+    showInstallButton() {
+        if (this.installButton) {
+            this.installButton.style.display = 'block';
+            setTimeout(() => {
+                this.installButton.classList.add('show');
+            }, 100);
+        }
+    }
+    
+    hideInstallButton() {
+        if (this.installButton) {
+            this.installButton.classList.remove('show');
+            setTimeout(() => {
+                this.installButton.style.display = 'none';
+            }, 300);
+        }
     }
     
     checkIfInstalled() {
@@ -213,13 +320,13 @@ class PWAHandler {
         if (window.matchMedia('(display-mode: standalone)').matches || 
             window.navigator.standalone === true) {
             console.log('📱 Application déjà installée');
-            this.installButton.style.display = 'none';
+            this.hideInstallButton();
         }
     }
 }
 
 // =============================================
-// INTERACTIONS UTILISATEUR (inchangée)
+// INTERACTIONS UTILISATEUR
 // =============================================
 
 class InteractionHandler {
@@ -279,7 +386,6 @@ class InteractionHandler {
 // INITIALISATION PRINCIPALE
 // =============================================
 
-// Attendre que le DOM soit complètement chargé
 document.addEventListener('DOMContentLoaded', function() {
     console.log('=====================================');
     console.log('🚀 ClassePro - DOM Chargé');
@@ -287,6 +393,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Démarrer l'animation de chargement
     const loadingAnimation = new LoadingAnimation();
+    
+    // Initialiser le gestionnaire de mises à jour
+    const updateManager = new UpdateManager();
     
     // Initialiser la PWA
     const pwaHandler = new PWAHandler();
@@ -296,16 +405,4 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('✅ Application initialisée avec succès');
     console.log('=====================================');
-});
-
-// Debug informations au chargement du script
-console.log('🔍 Debug Information - Script chargé:');
-console.log(' - DOM ContentLoaded attaché: ✅');
-console.log(' - Service Worker supporté:', 'serviceWorker' in navigator);
-console.log(' - Éléments présents au chargement:', {
-    splashScreen: !!document.getElementById('splash-screen'),
-    loadingProgress: !!document.getElementById('loading-progress'),
-    percentage: !!document.getElementById('percentage'),
-    pageAccueil: !!document.getElementById('page-accueil'),
-    installButton: !!document.getElementById('installButton')
 });
