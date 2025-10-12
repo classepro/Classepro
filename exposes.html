@@ -6,6 +6,8 @@
   <title>Exposés - ClassePro</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- SDK Paystack -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
   <link rel="stylesheet" href="exposes.css">
 </head>
 <body class="min-h-screen flex flex-col">
@@ -141,19 +143,88 @@
     </div>
   </footer>
 
-  <!-- Modale de paiement -->
+  <!-- Modale de paiement améliorée -->
   <div id="payment-modal" class="payment-modal">
     <div class="payment-modal-content">
-      <h3>Paiement de l'exposé</h3>
-      <input type="email" id="payment-email" placeholder="Votre email" value="">
-      <div id="payment-amount" class="payment-amount"></div>
-      <button id="paystack-btn">💳 Payer maintenant</button>
-      <div id="payment-status" class="payment-status"></div>
-      <button id="close-payment-modal" style="margin-top: 10px; background: #6c757d;">Annuler</button>
+      <!-- En-tête de la modale -->
+      <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
+        <div class="flex items-center">
+          <div class="bg-gradient-to-r from-[#3D3B8E] to-[#FF7E5F] p-2 rounded-full mr-3">
+            <i class="fas fa-lock text-white text-sm"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-gray-800">Accéder à l'exposé</h3>
+            <p class="text-xs text-gray-600">Paiement sécurisé via Paystack</p>
+          </div>
+        </div>
+        <button id="close-payment-modal" class="text-gray-400 hover:text-gray-600 text-xl">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Informations sur l'achat -->
+      <div class="bg-blue-50 rounded-lg p-4 mb-4">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-sm font-medium text-gray-700">Exposé sélectionné:</span>
+          <span id="expose-title" class="text-sm font-semibold text-blue-800 text-right"></span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-sm font-medium text-gray-700">Montant à payer:</span>
+          <span id="payment-amount" class="text-lg font-bold text-blue-800"></span>
+        </div>
+      </div>
+
+      <!-- Formulaire de paiement -->
+      <div class="mb-4">
+        <label for="payment-email" class="block text-sm font-medium text-gray-700 mb-1">
+          <i class="fas fa-envelope mr-1 text-blue-500"></i>Adresse email
+        </label>
+        <input type="email" id="payment-email" placeholder="votre@email.com" 
+               class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+        <p class="text-xs text-gray-500 mt-1">Vous recevrez votre reçu à cette adresse</p>
+      </div>
+
+      <!-- Message d'alerte important -->
+      <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4 rounded">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+          </div>
+          <div class="ml-3">
+            <h4 class="text-sm font-medium text-yellow-800">Important</h4>
+            <div class="mt-1 text-sm text-yellow-700">
+              <p>• Ne quittez pas la page de paiement Paystack avant confirmation</p>
+              <p>• La confirmation peut prendre jusqu'à 2 minutes dans certains cas</p>
+              <p>• Restez sur cette page jusqu'à ce que le statut s'affiche</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bouton de paiement -->
+      <button id="paystack-btn" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center">
+        <i class="fas fa-credit-card mr-2"></i>
+        <span>Payer maintenant</span>
+      </button>
+
+      <!-- Sécurité et garanties -->
+      <div class="mt-4 text-center">
+        <div class="flex justify-center space-x-4 text-xs text-gray-500 mb-2">
+          <span class="flex items-center">
+            <i class="fas fa-shield-alt mr-1 text-green-500"></i> Paiement sécurisé
+          </span>
+          <span class="flex items-center">
+            <i class="fas fa-lock mr-1 text-blue-500"></i> SSL encrypté
+          </span>
+        </div>
+        <p class="text-xs text-gray-400">ClassePro - Votre réussite, notre priorité</p>
+      </div>
+
+      <!-- Statut du paiement -->
+      <div id="payment-status" class="mt-4 p-3 rounded-lg text-center hidden"></div>
     </div>
   </div>
 
-  <!-- Firebase SDK -->
   <script type="module" src="exposes.js"></script>
 </body>
 </html>

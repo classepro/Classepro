@@ -555,7 +555,7 @@ footer {
   color: #ccc;
 }
 
-/* Styles pour la modale de paiement */
+/* Styles améliorés pour la modale de paiement */
 .payment-modal {
   display: none;
   position: fixed;
@@ -563,65 +563,68 @@ footer {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
   z-index: 1000;
   justify-content: center;
   align-items: center;
+  animation: fadeIn 0.3s ease;
 }
 
 .payment-modal-content {
   background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   width: 90%;
-  max-width: 400px;
-  text-align: center;
+  max-width: 450px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.4s ease;
+  position: relative;
 }
 
-.payment-modal h3 {
-  margin-bottom: 20px;
-  color: var(--secondary);
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .payment-modal input {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 15px;
-  box-sizing: border-box;
+  transition: all 0.3s ease;
 }
 
-.payment-modal button {
-  margin-top: 15px;
-  padding: 12px;
-  width: 100%;
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-  background: linear-gradient(135deg, #4cafef, #0072ff);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+.payment-modal input:focus {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.payment-modal button:hover {
-  background: linear-gradient(135deg, #3a9bdc, #005ed6);
-}
-
-.payment-status {
-  margin-top: 15px;
-  font-size: 14px;
-}
-
+/* Styles pour le statut de paiement */
 .payment-success {
-  color: #28a745;
+  background-color: #f0fff4;
+  border: 1px solid #9ae6b4;
+  color: #2d774a;
 }
 
 .payment-error {
-  color: #dc3545;
+  background-color: #fed7d7;
+  border: 1px solid #feb2b2;
+  color: #c53030;
+}
+
+.payment-processing {
+  background-color: #ebf8ff;
+  border: 1px solid #90cdf4;
+  color: #2c5aa0;
 }
 
 /* Media Queries pour la responsivité */
@@ -730,6 +733,13 @@ footer {
   .preview-btn {
     padding: 4px 8px;
     font-size: 0.6rem;
+  }
+  
+  /* Responsive pour la modale de paiement */
+  .payment-modal-content {
+    padding: 20px;
+    margin: 20px;
+    width: calc(100% - 40px);
   }
 }
 

@@ -19,8 +19,8 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore(app);
 
-// URL de votre backend (à adapter selon votre déploiement)
-const BACKEND_URL = "https://ton-backend.herokuapp.com"; // Remplace par ton URL de backend
+// Configuration Paystack
+const publicKey = "pk_live_777a7c63bdb21fe5600c3bc048da89da3b756d86";
 
 // Références aux éléments du DOM
 const exposesContainer = document.getElementById('exposes-container');
@@ -37,6 +37,7 @@ const filterBtns = document.querySelectorAll('.filter-btn');
 // Éléments de la modale de paiement
 const paymentModal = document.getElementById('payment-modal');
 const paymentEmail = document.getElementById('payment-email');
+const exposeTitleElement = document.getElementById('expose-title');
 const paymentAmount = document.getElementById('payment-amount');
 const paystackBtn = document.getElementById('paystack-btn');
 const paymentStatus = document.getElementById('payment-status');
@@ -49,68 +50,7 @@ let currentPage = 1;
 const exposesPerPage = 6;
 let currentExposeId = null;
 let currentExposePrice = 0;
-let currentExposeTitle = "";
-
-// Fonction pour vérifier si un paiement vient d'être effectué
-function verifierPaiementRecent() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const paid = urlParams.get('paid');
-  
-  if (paid === 'true') {
-    // Afficher un message de succès
-    showSuccessMessage('🎉 Paiement réussi ! Votre contenu est maintenant disponible.');
-    
-    // Optionnel: retirer le paramètre de l'URL sans recharger la page
-    window.history.replaceState({}, document.title, window.location.pathname);
-    
-    // Recharger les exposés pour afficher le contenu débloqué
-    loadExposes();
-  }
-}
-
-// Fonction pour afficher un message de succès
-function showSuccessMessage(message) {
-  // Créer une notification toast
-  const toast = document.createElement('div');
-  toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50';
-  toast.textContent = message;
-  document.body.appendChild(toast);
-  
-  // Supprimer la notification après 3 secondes
-  setTimeout(() => {
-    document.body.removeChild(toast);
-  }, 3000);
-}
-
-// Fonction pour initier le paiement avec callback_url dynamique
-async function initierPaiement(email, montant, sourcePage) {
-  try {
-    const response = await fetch(`${BACKEND_URL}/create-payment`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email,
-        amount: montant,
-        sourcePage: sourcePage
-      }),
-    });
-
-    const data = await response.json();
-    
-    if (data.status && data.data.authorization_url) {
-      // Rediriger vers l'URL de paiement Paystack
-      window.location.href = data.data.authorization_url;
-    } else {
-      throw new Error(data.message || 'Erreur lors de la création du paiement');
-    }
-  } catch (error) {
-    console.error('Erreur:', error);
-    paymentStatus.textContent = "❌ Erreur: " + error.message;
-    paymentStatus.className = "payment-status payment-error";
-  }
-}
+let currentExposeTitle = '';
 
 // Charger les exposés depuis Firestore
 async function loadExposes() {
@@ -248,7 +188,7 @@ function displayExposes() {
   updatePagination();
 }
 
-// Ouvrir la modale de paiement
+// Ouvrir la modale de paiement (version améliorée)
 window.openPaymentModal = function(exposeId, price, exposeTitle) {
   currentExposeId = exposeId;
   currentExposePrice = price;
@@ -256,12 +196,18 @@ window.openPaymentModal = function(exposeId, price, exposeTitle) {
   
   // Remplir les informations de la modale
   paymentEmail.value = localStorage.getItem('userEmail') || '';
-  paymentAmount.textContent = `Montant: ${price} CFA - ${exposeTitle}`;
+  exposeTitleElement.textContent = exposeTitle;
+  paymentAmount.textContent = price + ' CFA';
   paymentStatus.textContent = '';
-  paymentStatus.className = 'payment-status';
+  paymentStatus.className = 'payment-status hidden';
   
   // Afficher la modale
   paymentModal.style.display = 'flex';
+  
+  // Focus sur le champ email
+  setTimeout(() => {
+    paymentEmail.focus();
+  }, 300);
 };
 
 // Fermer la modale de paiement
@@ -269,29 +215,76 @@ function closeModal() {
   paymentModal.style.display = 'none';
   currentExposeId = null;
   currentExposePrice = 0;
-  currentExposeTitle = "";
+  currentExposeTitle = '';
 }
 
-// Fonction pour initier le paiement avec redirection
+// Fonction pour initier le paiement directement avec Paystack Inline
 async function initiatePayment() {
   const email = paymentEmail.value.trim();
 
   if (!email) {
     paymentStatus.textContent = "⚠️ Veuillez entrer un email valide.";
     paymentStatus.className = "payment-status payment-error";
+    paymentStatus.classList.remove('hidden');
+    return;
+  }
+
+  if (!email.includes('@')) {
+    paymentStatus.textContent = "⚠️ Format d'email invalide.";
+    paymentStatus.className = "payment-status payment-error";
+    paymentStatus.classList.remove('hidden');
     return;
   }
 
   localStorage.setItem('userEmail', email);
+  paymentStatus.textContent = "⏳ Ouverture du portail de paiement...";
+  paymentStatus.className = "payment-status payment-processing";
+  paymentStatus.classList.remove('hidden');
   
-  // Déterminer la page source (pour exposes.html, c'est "exposes")
-  const sourcePage = "exposes";
-  
-  paymentStatus.textContent = "🔄 Redirection vers Paystack...";
-  paymentStatus.className = "payment-status";
-  
-  // Appeler la nouvelle fonction de paiement
-  await initierPaiement(email, currentExposePrice, sourcePage);
+  try {
+    const handler = PaystackPop.setup({
+      key: publicKey,
+      email: email,
+      amount: currentExposePrice * 100, // conversion en kobo
+      currency: "XOF",
+      ref: 'CLASSEPRO_' + Math.floor((Math.random() * 1000000000) + 1),
+      metadata: {
+        custom_fields: [
+          {
+            display_name: "Exposé",
+            variable_name: "expose",
+            value: currentExposeTitle
+          }
+        ]
+      },
+      callback: function(response) {
+        // Ici, le paiement est validé par Paystack
+        paymentStatus.textContent = "🎉 Paiement réussi ! Redirection...";
+        paymentStatus.className = "payment-status payment-success";
+        paymentStatus.classList.remove('hidden');
+
+        // Marquer l'exposé comme payé
+        markExposeAsPaid(currentExposeId);
+
+        setTimeout(() => {
+          closeModal();
+          displayExposes(); // rafraîchir la liste
+        }, 2000);
+      },
+      onClose: function() {
+        paymentStatus.textContent = "❌ Paiement annulé. Vous pouvez réessayer.";
+        paymentStatus.className = "payment-status payment-error";
+        paymentStatus.classList.remove('hidden');
+      }
+    });
+
+    handler.openIframe();
+
+  } catch (error) {
+    paymentStatus.textContent = "❌ Erreur : " + error.message;
+    paymentStatus.className = "payment-status payment-error";
+    paymentStatus.classList.remove('hidden');
+  }
 }
 
 // Mettre à jour la pagination
@@ -304,6 +297,19 @@ function updatePagination() {
     
     prevBtn.disabled = currentPage === 1;
     nextBtn.disabled = currentPage === totalPages;
+    
+    // Appliquer des styles pour les boutons désactivés
+    if (currentPage === 1) {
+      prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
+    } else {
+      prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+    }
+    
+    if (currentPage === totalPages) {
+      nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+    } else {
+      nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+    }
   } else {
     pagination.classList.add('hidden');
   }
@@ -352,6 +358,13 @@ paymentModal.addEventListener('click', (e) => {
   }
 });
 
+// Fermer la modale avec la touche Échap
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && paymentModal.style.display === 'flex') {
+    closeModal();
+  }
+});
+
 // Gestion du menu hamburger pour mobile
 document.addEventListener('DOMContentLoaded', function() {
   const menuToggle = document.querySelector('.menu-toggle');
@@ -386,9 +399,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Vérifier si un paiement vient d'être effectué
-  verifierPaiementRecent();
-  
   // Charger les exposés au chargement de la page
   loadExposes();
 });
