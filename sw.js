@@ -1,12 +1,12 @@
 const CACHE_NAME = 'classepro-v1.1';
 const urlsToCache = [
-  '/Classepro/',
-  '/Classepro/index.html',
-  '/Classepro/menu.html',
-  '/Classepro/support.html',
-  '/Classepro/style.css',
-  '/Classepro/script.js',
-  '/Classepro/manifest.json',
+  'https://classepro.github.io/Classepro/',
+  'https://classepro.github.io/Classepro/index.html',
+  'https://classepro.github.io/Classepro/menu.html',
+  'https://classepro.github.io/Classepro/support.html',
+  'https://classepro.github.io/Classepro/style.css',
+  'https://classepro.github.io/Classepro/script.js',
+  'https://classepro.github.io/Classepro/manifest.json',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
   'https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js'
 ];
