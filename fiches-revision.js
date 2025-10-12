@@ -19,8 +19,8 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore(app);
 
-// Configuration Paystack (comme dans exposes.html)
-const publicKey = "pk_live_777a7c63bdb21fe5600c3bc048da89da3b756d86";
+// URL de votre backend (à adapter selon votre déploiement)
+const BACKEND_URL = "https://backend2-rcqi.onrender.com"; // Remplace par ton URL de backend
 
 // Références aux éléments du DOM
 const fichesContainer = document.getElementById('fiches-container');
@@ -34,7 +34,7 @@ const searchInput = document.getElementById('search-input');
 const levelFilter = document.getElementById('level-filter');
 const filterBtns = document.querySelectorAll('.filter-btn');
 
-// Éléments de la modale de paiement (comme dans exposes.html)
+// Éléments de la modale de paiement améliorée
 const paymentModal = document.getElementById('payment-modal');
 const paymentEmail = document.getElementById('payment-email');
 const ficheTitleElement = document.getElementById('fiche-title');
@@ -51,6 +51,77 @@ const fichesPerPage = 6;
 let currentFicheId = null;
 let currentFichePrice = 0;
 let currentFicheTitle = '';
+
+// Fonction pour vérifier si un paiement vient d'être effectué
+function verifierPaiementRecent() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const paid = urlParams.get('paid');
+  
+  if (paid === 'true') {
+    // 🔥 CORRECTION : Récupérer la fiche payée et la marquer comme débloquée
+    const lastPaidFicheId = localStorage.getItem("lastPaidFicheId");
+    if (lastPaidFicheId) {
+      markFicheAsPaid(lastPaidFicheId);
+      localStorage.removeItem("lastPaidFicheId"); // Nettoyer après utilisation
+      
+      // Afficher un message de succès avec le déblocage
+      showSuccessMessage('🎉 Paiement réussi ! La fiche est maintenant débloquée.');
+    } else {
+      showSuccessMessage('🎉 Paiement réussi !');
+    }
+    
+    // Optionnel: retirer le paramètre de l'URL sans recharger la page
+    window.history.replaceState({}, document.title, window.location.pathname);
+    
+    // Recharger les fiches pour afficher le contenu débloqué
+    loadFiches();
+  }
+}
+
+// Fonction pour afficher un message de succès
+function showSuccessMessage(message) {
+  // Créer une notification toast
+  const toast = document.createElement('div');
+  toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  
+  // Supprimer la notification après 3 secondes
+  setTimeout(() => {
+    document.body.removeChild(toast);
+  }, 3000);
+}
+
+// Fonction pour initier le paiement avec callback_url dynamique
+async function initierPaiement(email, montant, sourcePage) {
+  try {
+    const response = await fetch(`${BACKEND_URL}/create-payment`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        amount: montant,
+        sourcePage: sourcePage
+      }),
+    });
+
+    const data = await response.json();
+    
+    if (data.status && data.data.authorization_url) {
+      // Rediriger vers l'URL de paiement Paystack
+      window.location.href = data.data.authorization_url;
+    } else {
+      throw new Error(data.message || 'Erreur lors de la création du paiement');
+    }
+  } catch (error) {
+    console.error('Erreur:', error);
+    paymentStatus.textContent = "❌ Erreur: " + error.message;
+    paymentStatus.className = "payment-status payment-error";
+    paymentStatus.classList.remove('hidden');
+  }
+}
 
 // Charger les fiches depuis Firestore
 async function loadFiches() {
@@ -189,7 +260,7 @@ function displayFiches() {
   updatePagination();
 }
 
-// Ouvrir la modale de paiement (version améliorée comme dans exposes.html)
+// Ouvrir la modale de paiement (version améliorée)
 window.openPaymentModal = function(ficheId, price, ficheTitle) {
   currentFicheId = ficheId;
   currentFichePrice = price;
@@ -219,7 +290,7 @@ function closeModal() {
   currentFicheTitle = '';
 }
 
-// Fonction pour initier le paiement directement avec Paystack Inline (comme dans exposes.html)
+// Fonction pour initier le paiement avec redirection
 async function initiatePayment() {
   const email = paymentEmail.value.trim();
 
@@ -230,62 +301,20 @@ async function initiatePayment() {
     return;
   }
 
-  if (!email.includes('@')) {
-    paymentStatus.textContent = "⚠️ Format d'email invalide.";
-    paymentStatus.className = "payment-status payment-error";
-    paymentStatus.classList.remove('hidden');
-    return;
-  }
-
   localStorage.setItem('userEmail', email);
-  paymentStatus.textContent = "⏳ Ouverture du portail de paiement...";
+  
+  // 🔥 CORRECTION : Sauvegarder l'ID de la fiche payée avant redirection
+  localStorage.setItem("lastPaidFicheId", currentFicheId);
+  
+  // Déterminer la page source (pour fiches-revision.html, c'est "fiches-revision")
+  const sourcePage = "fiches-revision";
+  
+  paymentStatus.textContent = "🔄 Redirection vers Paystack...";
   paymentStatus.className = "payment-status payment-processing";
   paymentStatus.classList.remove('hidden');
   
-  try {
-    const handler = PaystackPop.setup({
-      key: publicKey,
-      email: email,
-      amount: currentFichePrice * 100, // conversion en kobo
-      currency: "XOF",
-      ref: 'CLASSEPRO_' + Math.floor((Math.random() * 1000000000) + 1),
-      metadata: {
-        custom_fields: [
-          {
-            display_name: "Fiche de révision",
-            variable_name: "fiche",
-            value: currentFicheTitle
-          }
-        ]
-      },
-      callback: function(response) {
-        // Ici, le paiement est validé par Paystack
-        paymentStatus.textContent = "🎉 Paiement réussi ! Redirection...";
-        paymentStatus.className = "payment-status payment-success";
-        paymentStatus.classList.remove('hidden');
-
-        // Marquer la fiche comme payée
-        markFicheAsPaid(currentFicheId);
-
-        setTimeout(() => {
-          closeModal();
-          displayFiches(); // rafraîchir la liste
-        }, 2000);
-      },
-      onClose: function() {
-        paymentStatus.textContent = "❌ Paiement annulé. Vous pouvez réessayer.";
-        paymentStatus.className = "payment-status payment-error";
-        paymentStatus.classList.remove('hidden');
-      }
-    });
-
-    handler.openIframe();
-
-  } catch (error) {
-    paymentStatus.textContent = "❌ Erreur : " + error.message;
-    paymentStatus.className = "payment-status payment-error";
-    paymentStatus.classList.remove('hidden');
-  }
+  // Appeler la nouvelle fonction de paiement
+  await initierPaiement(email, currentFichePrice, sourcePage);
 }
 
 // Mettre à jour la pagination
@@ -298,19 +327,6 @@ function updatePagination() {
     
     prevBtn.disabled = currentPage === 1;
     nextBtn.disabled = currentPage === totalPages;
-    
-    // Appliquer des styles pour les boutons désactivés
-    if (currentPage === 1) {
-      prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
-    } else {
-      prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-    }
-    
-    if (currentPage === totalPages) {
-      nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
-    } else {
-      nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-    }
   } else {
     pagination.classList.add('hidden');
   }
@@ -400,6 +416,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  // Vérifier si un paiement vient d'être effectué
+  verifierPaiementRecent();
+  
   // Charger les fiches au chargement de la page
   loadFiches();
 });

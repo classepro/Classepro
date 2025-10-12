@@ -405,7 +405,7 @@ footer {
   color: #ccc;
 }
 
-/* Styles améliorés pour la modale de paiement (comme dans exposes.html) */
+/* Styles améliorés pour la modale de paiement */
 .payment-modal {
   display: none;
   position: fixed;
