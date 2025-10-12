@@ -1,4 +1,4 @@
-const CACHE_NAME = 'classepro-v1.2';
+const CACHE_NAME = 'classepro-v1.1';
 const urlsToCache = [
   'https://classepro.github.io/Classepro/',
   'https://classepro.github.io/Classepro/index.html',
@@ -45,17 +45,6 @@ self.addEventListener('activate', function(event) {
       );
     }).then(function() {
       console.log('✅ Nouveau Service Worker activé:', CACHE_NAME);
-      
-      // Envoyer un message à toutes les pages pour notifier de la mise à jour
-      self.clients.matchAll().then(function(clients) {
-        clients.forEach(function(client) {
-          client.postMessage({
-            type: 'NEW_VERSION_AVAILABLE',
-            version: CACHE_NAME
-          });
-        });
-      });
-      
       return self.clients.claim(); // Prend le contrôle immédiat de toutes les pages
     })
   );
@@ -97,11 +86,4 @@ self.addEventListener('fetch', function(event) {
           });
       })
   );
-});
-
-// Écouter les messages depuis la page
-self.addEventListener('message', function(event) {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
 });
