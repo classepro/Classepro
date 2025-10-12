@@ -1,7 +1,7 @@
 {
   "background_color": "#ffffff",
   "dir": "auto",
-  "display": "fullscreen",
+  "display": "standalone",
   "name": "ClassePro - Plateforme Éducative",
   "short_name": "ClassePro",
   "orientation": "portrait",
