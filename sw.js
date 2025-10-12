@@ -11,72 +11,97 @@ const urlsToCache = [
   'https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js'
 ];
 
-// Installation
-self.addEventListener('install', event => {
-  console.log('🔄 Service Worker installation...');
+// Installation du Service Worker
+self.addEventListener('install', function(event) {
+  console.log('🔄 Service Worker en cours d\'installation...');
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
-      .then(() => {
-        console.log('✅ Cache initialisé:', CACHE_NAME);
-        return self.skipWaiting();
+      .then(function(cache) {
+        console.log('✅ Cache ouvert:', CACHE_NAME);
+        return cache.addAll(urlsToCache);
+      })
+      .then(function() {
+        console.log('✅ Toutes les ressources ont été mises en cache');
+        return self.skipWaiting(); // Force l'activation immédiate
+      })
+      .catch(function(error) {
+        console.error('❌ Erreur lors de la mise en cache:', error);
       })
   );
 });
 
-// Activation et nettoyage des anciens caches
-self.addEventListener('activate', event => {
-  console.log('🔄 Service Worker activation...');
+// Activation du Service Worker
+self.addEventListener('activate', function(event) {
+  console.log('🔄 Service Worker en cours d\'activation...');
   event.waitUntil(
-    caches.keys().then(cacheNames => 
-      Promise.all(
-        cacheNames.map(name => {
-          if (name !== CACHE_NAME) {
-            console.log('🗑️ Suppression ancien cache:', name);
-            return caches.delete(name);
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.map(function(cacheName) {
+          if (cacheName !== CACHE_NAME) {
+            console.log('🗑️ Suppression de l\'ancien cache:', cacheName);
+            return caches.delete(cacheName);
           }
         })
-      )
-    ).then(() => {
-      console.log('✅ Nouveau Service Worker activé');
-      return self.clients.claim();
+      );
+    }).then(function() {
+      console.log('✅ Nouveau Service Worker activé:', CACHE_NAME);
+      
+      // Envoyer un message à toutes les pages pour notifier de la mise à jour
+      self.clients.matchAll().then(function(clients) {
+        clients.forEach(function(client) {
+          client.postMessage({
+            type: 'NEW_VERSION_AVAILABLE',
+            version: CACHE_NAME
+          });
+        });
+      });
+      
+      return self.clients.claim(); // Prend le contrôle immédiat de toutes les pages
     })
   );
 });
 
 // Interception des requêtes
-self.addEventListener('fetch', event => {
+self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request)
-      .then(response => {
-        // Retourne la ressource du cache si disponible
+      .then(function(response) {
+        // Retourne la réponse en cache ou fetch la requête
         if (response) {
+          console.log('📦 Ressource servie depuis le cache:', event.request.url);
           return response;
         }
         
-        // Sinon, fetch depuis le réseau
-        return fetch(event.request).then(response => {
-          // Vérifie si la réponse est valide
-          if (!response || response.status !== 200 || response.type !== 'basic') {
+        console.log('🌐 Ressource fetch depuis le réseau:', event.request.url);
+        return fetch(event.request)
+          .then(function(response) {
+            // Vérifie si la réponse est valide
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+
+            // Clone la réponse pour la mettre en cache
+            var responseToCache = response.clone();
+
+            caches.open(CACHE_NAME)
+              .then(function(cache) {
+                cache.put(event.request, responseToCache);
+                console.log('💾 Nouvelle ressource mise en cache:', event.request.url);
+              });
+
             return response;
-          }
-
-          // Clone la réponse pour la mettre en cache
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME)
-            .then(cache => {
-              cache.put(event.request, responseToCache);
-            });
-
-          return response;
-        });
+          })
+          .catch(function(error) {
+            console.error('❌ Erreur fetch:', error);
+            // Vous pouvez retourner une page d'erreur personnalisée ici
+          });
       })
   );
 });
 
-// Communication avec la page pour les mises à jour
-self.addEventListener('message', event => {
-  if (event.data === 'skipWaiting') {
+// Écouter les messages depuis la page
+self.addEventListener('message', function(event) {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 });
