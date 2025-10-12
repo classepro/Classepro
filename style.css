@@ -1,512 +1,201 @@
-/* RESET ET VARIABLES */
-:root {
-    --primary: #FF7E5F;
-    --secondary: #3D3B8E;
-    --accent: #6883BA;
-    --light: #F9F9F9;
-    --dark: #2F2F2F;
-    --success: #4BB543;
-    --shadow: 0 4px 12px rgba(0,0,0,0.08);
-    --shadow-hover: 0 6px 15px rgba(61, 59, 142, 0.3);
-    --radius: 16px;
-    --text-on-dark: #ffffff;
-    --text-light: #eef2ff;
-    --footer-color: #2F2F2F;
+/* ============================================= */
+/* BOUTON DE MISE À JOUR AVEC ANIMATIONS */
+/* ============================================= */
+
+.update-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10000;
+  animation: slideInUp 0.5s ease-out;
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+.update-btn {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+  padding: 16px 24px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: var(--shadow-hover);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
 }
 
-/* STYLES GÉNÉRAUX */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(180deg, #f5f7ff 0%, #e6eeff 100%);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
-    color: var(--dark);
+.update-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
 }
 
-body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 35%;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    border-bottom-left-radius: 30% 20%;
-    border-bottom-right-radius: 30% 20%;
-    z-index: -1;
+.update-btn:hover::before {
+  left: 100%;
 }
 
-/* ÉCRAN DE DÉMARRAGE */
-#splash-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #FF7E5F, #3D3B8E);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    z-index: 9999;
-    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    overflow: hidden;
+.update-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(61, 59, 142, 0.4);
 }
 
-/* Fond avec motifs géométriques animés */
-.geometric-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -2;
-    overflow: hidden;
+.update-btn:active {
+  transform: translateY(-1px) scale(1.02);
 }
 
-.shape {
-    position: absolute;
-    opacity: 0.1;
-    animation: float 20s infinite linear;
+.update-btn i {
+  font-size: 16px;
+  animation: spin 2s linear infinite;
 }
 
-.shape-1 {
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    background: #FF7E5F;
-    top: -150px;
-    left: -150px;
-    animation-delay: 0s;
+.update-btn.updating i {
+  animation: spin 0.8s linear infinite;
 }
 
-.shape-2 {
-    width: 200px;
-    height: 200px;
-    background: #3D3B8E;
-    top: 20%;
-    right: -100px;
-    transform: rotate(45deg);
-    animation-delay: -5s;
+.update-pulse {
+  animation: pulse 2s infinite;
 }
 
-.shape-3 {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background: #6883BA;
-    bottom: -75px;
-    left: 20%;
-    animation-delay: -10s;
-}
-
-.shape-4 {
-    width: 250px;
-    height: 250px;
-    background: #FF7E5F;
-    bottom: -125px;
-    right: 10%;
-    transform: rotate(30deg);
-    animation-delay: -15s;
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0) rotate(0deg);
-    }
-    33% {
-        transform: translateY(-20px) rotate(120deg);
-    }
-    66% {
-        transform: translateY(10px) rotate(240deg);
-    }
-}
-
-/* Logo avec animation */
-.logo-container {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 25px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 12px 24px;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    backdrop-filter: blur(5px);
+@keyframes slideInUp {
+  from {
     opacity: 0;
-    animation: fadeInUp 1.2s ease 0.5s forwards;
+    transform: translateY(30px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-.logo-icon {
-    background: linear-gradient(135deg, #FF7E5F, #3D3B8E);
-    color: white;
-    font-weight: bold;
-    padding: 10px;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    margin-right: 12px;
-    box-shadow: 0 4px 8px rgba(67, 97, 238, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 126, 95, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(255, 126, 95, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 126, 95, 0);
+  }
 }
 
-.logo-text {
-    font-size: 26px;
-    font-weight: 700;
-    color: #3D3B8E;
-    margin: 0;
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* Animation Lottie */
-.animation-container {
-    width: 320px;
-    height: 320px;
-    margin: 0 auto 2rem;
-    opacity: 0;
-    animation: fadeIn 1.2s ease 1s forwards;
-    position: relative;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+/* Overlay de mise à jour */
+.update-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9998;
+  color: white;
+  text-align: center;
+  padding: 20px;
 }
 
-/* Texte de chargement */
-.loading-container {
-    opacity: 0;
-    animation: fadeIn 1s ease 1.5s forwards;
-    margin-bottom: 2rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.update-overlay.active {
+  display: flex;
+  animation: fadeIn 0.5s ease;
 }
 
-.loading-text {
-    font-size: 1.3rem;
-    font-weight: 500;
-    margin-bottom: 1rem;
-    letter-spacing: 0.5px;
+.update-animation-container {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 2rem;
 }
 
-.loading-bar {
-    width: 280px;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
-    overflow: hidden;
-    position: relative;
+.update-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  animation: gentlePulse 2s infinite;
 }
 
-.loading-progress {
-    height: 100%;
-    width: 0%;
-    background: white;
-    border-radius: 4px;
-    position: relative;
-    transition: width 0.1s linear;
+.update-subtext {
+  font-size: 1rem;
+  opacity: 0.9;
+  max-width: 300px;
 }
 
-.loading-progress::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-    animation: loadingShine 2s infinite;
-}
-
-@keyframes loadingShine {
-    0% {
-        transform: translateX(-100%);
-    }
-    100% {
-        transform: translateX(100%);
-    }
-}
-
-/* Compteur de pourcentage */
-.percentage {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    opacity: 0;
-    animation: fadeIn 1s ease 2s forwards;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-/* Tagline */
-.tagline {
-    margin-top: 1rem;
-    font-size: 1rem;
-    max-width: 80%;
-    line-height: 1.6;
-    opacity: 0;
-    animation: fadeIn 1s ease 2.5s forwards;
-    font-weight: 300;
-    letter-spacing: 0.3px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 12px 20px;
-    border-radius: 50px;
-    backdrop-filter: blur(5px);
-}
-
-/* Animations générales */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Effet de pulsation */
-.pulse-element {
-    animation: gentlePulse 4s infinite ease-in-out;
-}
-
-@keyframes gentlePulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.02);
-    }
-}
-
-/* PAGE PRINCIPALE */
-.container {
-    width: 100%;
-    max-width: 450px;
-    padding: 20px;
-    text-align: center;
-    margin: 20px auto;
-}
-
-.logo {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 25px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 12px 24px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    backdrop-filter: blur(5px);
-}
-
-h1 {
-    margin: 0;
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--secondary);
-}
-
-h2 {
-    margin: 15px 0;
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 1.5;
-    color: var(--text-on-dark);
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.highlight {
-    color: var(--text-light);
-    background: rgba(255, 255, 255, 0.2);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-weight: 600;
-    display: inline-block;
-    margin: 0 2px;
-    backdrop-filter: blur(4px);
-    font-size: 0.9em;
-}
-
-.subtitle {
-    color: var(--text-light);
-    margin: 20px 0;
-    font-size: 14px;
-    line-height: 1.6;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.btn {
-    display: block;
-    width: 100%;
-    padding: 16px;
-    margin: 15px 0;
-    font-size: 16px;
-    border-radius: var(--radius);
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    box-shadow: var(--shadow);
-    transition: all 0.3s ease;
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: white;
-}
-
-.btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-hover);
-    background: linear-gradient(135deg, var(--secondary), var(--primary));
-}
-
-.btn-outline {
-    background-color: rgba(255, 255, 255, 0.9);
-    color: var(--secondary);
-    border: 2px solid var(--secondary);
-}
-
-.btn-outline:hover {
-    background-color: var(--secondary);
-    color: white;
-    transform: translateY(-3px);
-}
-
-.features {
-    background: white;
-    text-align: left;
-    margin-top: 30px;
-    font-size: 15px;
-    padding: 25px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-}
-
-.features p {
-    margin: 15px 0;
-    color: #444;
-    display: flex;
-    align-items: center;
-    padding: 8px 0;
-}
-
-.features span {
-    background: rgba(104, 131, 186, 0.15);
-    color: var(--accent);
-    margin-right: 15px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    flex-shrink: 0;
-}
-
-.footer {
-    margin-top: 25px;
-    font-size: 12px;
-    color: var(--footer-color);
-    text-align: center;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    font-weight: 600;
-}
-
-/* Bouton d'installation PWA */
+/* Bouton d'installation amélioré */
 #installButton {
-    display: none;
-    background: linear-gradient(135deg, var(--accent), var(--secondary));
-    color: white;
-    border: none;
-    margin: 10px 0;
+  display: none;
+  background: linear-gradient(135deg, var(--accent), var(--secondary));
+  color: white;
+  border: none;
+  margin: 10px 0;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+#installButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+#installButton:hover::before {
+  left: 100%;
 }
 
 #installButton:hover {
-    background: linear-gradient(135deg, var(--secondary), var(--accent));
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
 }
 
-/* Animation entre pages */
-.page {
-    animation: fadeIn 0.4s ease-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* RESPONSIVE */
-
-/* Tablettes */
-@media (min-width: 481px) and (max-width: 768px) {
-    .container {
-        max-width: 85%;
-        padding: 30px;
-    }
-    
-    h1 { font-size: 28px; }
-    h2 { font-size: 20px; }
-    .subtitle { font-size: 16px; }
-    .logo { padding: 15px 30px; }
-    .logo-icon { width: 45px; height: 45px; }
-    .btn { padding: 18px; font-size: 17px; }
-    .features { padding: 30px; font-size: 16px; }
-    .footer { font-size: 14px; }
-    
-    /* Splash screen responsive */
-    .logo-text { font-size: 22px; }
-    .logo-container { padding: 10px 20px; }
-    .logo-icon { width: 35px; height: 35px; }
-    .animation-container { width: 260px; height: 260px; }
-    .loading-text { font-size: 1.1rem; }
-    .tagline { font-size: 0.9rem; }
-    .percentage { font-size: 1.8rem; }
-    .loading-bar { width: 250px; }
-}
-
-/* Téléphones */
+/* RESPONSIVE pour le bouton de mise à jour */
 @media (max-width: 480px) {
-    .logo-text { font-size: 20px; }
-    .logo-container { padding: 8px 16px; }
-    .logo-icon { width: 30px; height: 30px; }
-    .animation-container { width: 220px; height: 220px; }
-    .loading-text { font-size: 1rem; }
-    .tagline { font-size: 0.85rem; padding: 10px 16px; }
-    .percentage { font-size: 1.6rem; }
-    .loading-bar { width: 220px; }
-    
-    .container { padding: 15px; }
-    h1 { font-size: 22px; }
-    h2 { font-size: 16px; }
-    .logo { padding: 10px 15px; }
-    .logo-icon { width: 35px; height: 35px; margin-right: 10px; }
-    .btn { padding: 14px; font-size: 14px; }
-    .features { padding: 20px; font-size: 14px; }
-    .features span { width: 25px; height: 25px; margin-right: 12px; font-size: 0.9em; }
-    .subtitle { font-size: 13px; }
-    .footer { font-size: 11px; }
+  .update-notification {
+    bottom: 15px;
+    right: 15px;
+    left: 15px;
+  }
+  
+  .update-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 20px;
+    font-size: 13px;
+  }
+  
+  .update-text {
+    font-size: 1.3rem;
+  }
+  
+  .update-subtext {
+    font-size: 0.9rem;
+  }
+  
+  .update-animation-container {
+    width: 150px;
+    height: 150px;
+  }
 }
