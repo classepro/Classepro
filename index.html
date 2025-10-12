@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ClassePro - Plateforme Éducative</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+<!-- PWA Meta Tags -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#3D3B8E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ClassePro">
+<link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+
+<!-- Écran de démarrage -->
+<div id="splash-screen">
+    <!-- Fond avec motifs géométriques -->
+    <div class="geometric-bg">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+    
+    <!-- Logo -->
+    <div class="logo-container pulse-element">
+        <div class="logo-icon">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+        <h1 class="logo-text">ClassePro</h1>
+    </div>
+    
+    <!-- Animation Lottie -->
+    <div class="animation-container">
+        <lottie-player
+            src="https://assets1.lottiefiles.com/packages/lf20_iv4dsx3q.json"
+            background="transparent"
+            speed="1"
+            loop
+            autoplay>
+        </lottie-player>
+    </div>
+    
+    <!-- Compteur de pourcentage -->
+    <div class="percentage" id="percentage">0%</div>
+    
+    <!-- Texte de chargement avec barre centrée -->
+    <div class="loading-container">
+        <div class="loading-text">Préparation de votre espace éducatif</div>
+        <div class="loading-bar">
+            <div class="loading-progress" id="loading-progress"></div>
+        </div>
+    </div>
+    
+    <!-- Tagline -->
+    <div class="tagline">
+        Votre plateforme éducative pour réussir ensemble
+    </div>
+</div>
+
+<!-- Page d'accueil (cachée initialement) -->
+<div class="container page" id="page-accueil" style="display: none;">
+    <div class="logo">
+        <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+        <h1>ClassePro</h1>
+    </div>
+    
+    <h2>Votre plateforme éducative <span class="highlight">complète</span><br>pour réussir vos études</h2>
+    
+    <p class="subtitle">Accédez à des services de qualité et obtenez de l'aide pour vos projets académiques et professionnels.</p>
+    
+    <button class="btn btn-primary" onclick="window.location.href='menu.html'">
+        <i class="fas fa-bars"></i> Explorer le Menu
+    </button>
+    
+    <button class="btn btn-outline" onclick="window.location.href='support.html'">
+        <i class="fas fa-headset"></i> Contacter le Support
+    </button>
+    
+    <!-- Bouton d'installation PWA -->
+    <button id="installButton" class="btn">
+        <i class="fas fa-download"></i> Installer l'Application
+    </button>
+    
+    <div class="features">
+        <p><span><i class="fas fa-file-alt"></i></span> Rapports de stage professionnels</p>
+        <p><span><i class="fas fa-id-card"></i></span> CV et lettres de motivation</p>
+        <p><span><i class="fas fa-book"></i></span> Exposés et travaux académiques</p>
+        <p><span><i class="fas fa-download"></i></span> Ressources gratuites</p>
+    </div>
+    
+    <div class="footer">
+        ClassePro - Votre réussite, notre priorité
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
