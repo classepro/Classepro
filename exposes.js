@@ -61,9 +61,15 @@ function verifierPaiementRecent() {
   const paid = urlParams.get('paid');
   
   if (paid === 'true') {
-    // Afficher un message de succès
-    showSuccessMessage('🎉 Paiement réussi ! Votre contenu est maintenant disponible.');
-    
+    showSuccessMessage('🎉 Paiement réussi ! Votre exposé est maintenant débloqué.');
+
+    // ✅ Débloquer automatiquement l'exposé payé
+    const lastExposeId = localStorage.getItem('lastExposeId');
+    if (lastExposeId) {
+      markExposeAsPaid(lastExposeId);
+      localStorage.removeItem('lastExposeId');
+    }
+
     // Optionnel: retirer le paramètre de l'URL sans recharger la page
     window.history.replaceState({}, document.title, window.location.pathname);
     
@@ -258,6 +264,9 @@ window.openPaymentModal = function(exposeId, price, exposeTitle) {
   currentExposeId = exposeId;
   currentExposePrice = price;
   currentExposeTitle = exposeTitle;
+  
+  // ✅ AJOUT: Sauvegarde temporaire de l'exposé payé
+  localStorage.setItem('lastExposeId', exposeId);
   
   // Remplir les informations de la modale
   paymentEmail.value = localStorage.getItem('userEmail') || '';
