@@ -1,6 +1,6 @@
 // Configuration Paystack
 const publicKey = "pk_live_777a7c63bdb21fe5600c3bc048da89da3b756d86";
-const BACKEND_URL = "https://backend2-rcqi.onrender.com";
+const BACKEND_URL = "https://test-pehc.onrender.com";
 
 // Éléments de la modale de paiement
 const paymentModal = document.getElementById('payment-modal');
