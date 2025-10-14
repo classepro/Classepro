@@ -16,23 +16,65 @@ let currentForfaitId = null;
 let currentForfaitPrice = 0;
 let currentForfaitTitle = '';
 
+// ✅ Fonction pour activer le forfait et enregistrer ses détails
+function activerForfait(forfaitId) {
+  let forfait = {};
+
+  if (forfaitId === "forfait_hebdo") {
+    forfait = { 
+      nom: "Hebdomadaire", 
+      quota: 10, 
+      duree: 7,
+      type: "hebdo"
+    };
+  } else if (forfaitId === "forfait_mensuel") {
+    forfait = { 
+      nom: "Mensuel", 
+      quota: 25, 
+      duree: 30,
+      type: "mensuel"
+    };
+  } else {
+    console.warn("Forfait inconnu :", forfaitId);
+    return;
+  }
+
+  const dateFin = new Date();
+  dateFin.setDate(dateFin.getDate() + forfait.duree);
+
+  // Enregistrer les informations dans localStorage
+  localStorage.setItem("classepro_forfait", JSON.stringify({
+    ...forfait,
+    questionsJour: 0,
+    derniereDate: new Date().toDateString(),
+    dateFin: dateFin.toDateString(),
+    dateActivation: new Date().toISOString()
+  }));
+
+  console.log(`✅ Forfait ${forfait.nom} activé jusqu'au ${dateFin.toLocaleDateString()}`);
+}
+
 // Fonction pour vérifier si un paiement vient d'être effectué
 function verifierPaiementRecent() {
   const urlParams = new URLSearchParams(window.location.search);
   const paid = urlParams.get('paid');
-  
+
   if (paid === 'true') {
     showSuccessMessage('🎉 Paiement réussi ! Votre forfait est maintenant activé.');
 
-    // Débloquer automatiquement le forfait payé
-    const lastForfaitId = localStorage.getItem('lastForfaitId');
-    if (lastForfaitId) {
+    // Débloquer automatiquement le forfait payé  
+    const lastForfaitId = localStorage.getItem('lastForfaitId');  
+    if (lastForfaitId) {  
       markForfaitAsPaid(lastForfaitId);
-      localStorage.removeItem('lastForfaitId');
-      updateForfaitButtons();
-    }
+      
+      // 🟩 AJOUT IMPORTANT : Activer le forfait avec ses détails
+      activerForfait(lastForfaitId);
+      
+      localStorage.removeItem('lastForfaitId');  
+      updateForfaitButtons();  
+    }  
 
-    // Retirer le paramètre de l'URL sans recharger la page
+    // Retirer le paramètre de l'URL sans recharger la page  
     window.history.replaceState({}, document.title, window.location.pathname);
   }
 }
@@ -44,7 +86,7 @@ function showSuccessMessage(message) {
   toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50';
   toast.textContent = message;
   document.body.appendChild(toast);
-  
+
   // Supprimer la notification après 3 secondes
   setTimeout(() => {
     document.body.removeChild(toast);
@@ -66,14 +108,15 @@ async function initierPaiement(email, montant, sourcePage) {
       }),
     });
 
-    const data = await response.json();
+    const data = await response.json();  
     
-    if (data.status && data.data.authorization_url) {
-      // Rediriger vers l'URL de paiement Paystack
-      window.location.href = data.data.authorization_url;
-    } else {
-      throw new Error(data.message || 'Erreur lors de la création du paiement');
+    if (data.status && data.data.authorization_url) {  
+      // Rediriger vers l'URL de paiement Paystack  
+      window.location.href = data.data.authorization_url;  
+    } else {  
+      throw new Error(data.message || 'Erreur lors de la création du paiement');  
     }
+
   } catch (error) {
     console.error('Erreur:', error);
     paymentStatus.textContent = "❌ Erreur: " + error.message;
@@ -100,21 +143,17 @@ function updateForfaitButtons() {
   // Forfait hebdomadaire
   if (isForfaitPaid('forfait_hebdo')) {
     const container = document.getElementById('forfait-hebdo-btn-container');
-    container.innerHTML = `
-      <a href="ia.html" class="pricing-btn" id="forfait-hebdo-btn">
-        <i class="fas fa-robot mr-2"></i>Accéder à l'IA
-      </a>
-    `;
+    container.innerHTML = `<a href="ia.html" class="pricing-btn" id="forfait-hebdo-btn">
+      <i class="fas fa-robot mr-2"></i>Accéder à l'IA
+    </a>`;
   }
 
   // Forfait mensuel
   if (isForfaitPaid('forfait_mensuel')) {
     const container = document.getElementById('forfait-mensuel-btn-container');
-    container.innerHTML = `
-      <a href="ia.html" class="pricing-btn" id="forfait-mensuel-btn">
-        <i class="fas fa-robot mr-2"></i>Accéder à l'IA
-      </a>
-    `;
+    container.innerHTML = `<a href="ia.html" class="pricing-btn" id="forfait-mensuel-btn">
+      <i class="fas fa-robot mr-2"></i>Accéder à l'IA
+    </a>`;
   }
 }
 
@@ -123,20 +162,20 @@ window.openPaymentModal = function(forfaitId, price, forfaitTitle) {
   currentForfaitId = forfaitId;
   currentForfaitPrice = price;
   currentForfaitTitle = forfaitTitle;
-  
+
   // Sauvegarde temporaire du forfait en cours de paiement
   localStorage.setItem('lastForfaitId', forfaitId);
-  
+
   // Remplir les informations de la modale
   paymentEmail.value = localStorage.getItem('userEmail') || '';
   forfaitTitleElement.textContent = forfaitTitle;
   paymentAmount.textContent = price + ' CFA';
   paymentStatus.textContent = '';
   paymentStatus.className = 'payment-status hidden';
-  
+
   // Afficher la modale
   paymentModal.style.display = 'flex';
-  
+
   // Focus sur le champ email
   setTimeout(() => {
     paymentEmail.focus();
@@ -163,14 +202,14 @@ async function initiatePayment() {
   }
 
   localStorage.setItem('userEmail', email);
-  
-  // Déterminer la page source (pour cette page, c'est "ia-professor")
+
+  // Déterminer la page source (pour cette page, c'est "classepro-ia")
   const sourcePage = "classepro-ia";
-  
+
   paymentStatus.textContent = "🔄 Redirection vers Paystack...";
   paymentStatus.className = "payment-status payment-processing";
   paymentStatus.classList.remove('hidden');
-  
+
   // Appeler la fonction de paiement
   await initierPaiement(email, currentForfaitPrice, sourcePage);
 }
@@ -198,53 +237,53 @@ document.addEventListener('DOMContentLoaded', function() {
   const menuToggle = document.getElementById('mobile-menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
   const menuOverlay = document.getElementById('menu-overlay');
-  
+
   if (menuToggle && mobileMenu) {
     menuToggle.addEventListener('click', function() {
       mobileMenu.classList.toggle('active');
       menuOverlay.classList.toggle('active');
       document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
     });
+
+    menuOverlay.addEventListener('click', function() {  
+      mobileMenu.classList.remove('active');  
+      menuOverlay.classList.remove('active');  
+      document.body.style.overflow = '';  
+    });  
     
-    menuOverlay.addEventListener('click', function() {
-      mobileMenu.classList.remove('active');
-      menuOverlay.classList.remove('active');
-      document.body.style.overflow = '';
-    });
-    
-    // Fermer le menu en cliquant sur un lien
-    const mobileLinks = mobileMenu.querySelectorAll('.nav-link');
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', function() {
-        mobileMenu.classList.remove('active');
-        menuOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-      });
+    // Fermer le menu en cliquant sur un lien  
+    const mobileLinks = mobileMenu.querySelectorAll('.nav-link');  
+    mobileLinks.forEach(link => {  
+      link.addEventListener('click', function() {  
+        mobileMenu.classList.remove('active');  
+        menuOverlay.classList.remove('active');  
+        document.body.style.overflow = '';  
+      });  
     });
   }
-  
+
   // FAQ interactif
   const faqItems = document.querySelectorAll('.faq-item');
-  
+
   faqItems.forEach(item => {
     const question = item.querySelector('.faq-question');
-    
-    question.addEventListener('click', () => {
-      // Fermer tous les autres éléments FAQ
-      faqItems.forEach(otherItem => {
-        if (otherItem !== item) {
-          otherItem.classList.remove('active');
-        }
-      });
-      
-      // Basculer l'état de l'élément actuel
-      item.classList.toggle('active');
+
+    question.addEventListener('click', () => {  
+      // Fermer tous les autres éléments FAQ  
+      faqItems.forEach(otherItem => {  
+        if (otherItem !== item) {  
+          otherItem.classList.remove('active');  
+        }  
+      });  
+        
+      // Basculer l'état de l'élément actuel  
+      item.classList.toggle('active');  
     });
   });
 
   // Vérifier si un paiement vient d'être effectué
   verifierPaiementRecent();
-  
+
   // Mettre à jour l'affichage des boutons selon le statut de paiement
   updateForfaitButtons();
 });
