@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClassePro IA - Version Gratuite</title>
+  <link rel="stylesheet" href="ia-gratuite.css">
+</head>
+<body>
+
+  <div class="chat-container">
+    <div class="chat-header">
+      <div class="header-top">
+        <h1>ClassePro IA <span class="professor-badge">GRATUIT</span></h1>
+        <!-- Affichage du quota gratuit -->
+        <div class="forfait-info" id="forfaitInfo">
+          <div class="quota-counter" id="quotaCounter"></div>
+          <div class="forfait-name" id="forfaitName">Version d'essai</div>
+        </div>
+      </div>
+      <div class="task-selector-container">
+        <div class="task-selector" id="taskSelector">
+          <button class="task-btn" data-type="cours">📚 Cours</button>
+          <button class="task-btn" data-type="explication">💡 Explication</button>
+          <button class="task-btn" data-type="exercices">✏️ Exercices</button>
+          <button class="task-btn" data-type="resume">📋 Résumé</button>
+          <button class="task-btn" data-type="qcm">❓ QCM</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="chat-messages" id="chatMessages">
+      <!-- Messages dynamiques -->
+      <div class="message bot">
+        <div class="bot-message-content">
+          <strong>Bonjour ! 👋</strong> Bienvenue sur <strong>ClassePro IA - Version Gratuite</strong>
+          <br><br>
+          🎁 <strong>Offre spéciale découverte :</strong>
+          <br>
+          • <strong>3 questions gratuites</strong> pour tester notre IA pédagogique
+          <br>
+          • <strong>Aucune réinitialisation</strong> - utilisez-les judicieusement !
+          <br>
+          • <strong>Fonctionnalités complètes</strong> pendant votre essai
+          <br><br>
+          <strong>Types de contenu disponibles :</strong>
+          <br>
+          • 📚 <strong>Cours complet</strong> - Structure détaillée
+          <br>
+          • 💡 <strong>Explication simplifiée</strong> - Comprendre facilement
+          <br>
+          • ✏️ <strong>Exercices avec corrigés</strong> - S'entraîner
+          <br>
+          • 📋 <strong>Résumé</strong> - Réviser rapidement
+          <br>
+          • ❓ <strong>QCM interactif</strong> - Tester ses connaissances
+          <br><br>
+          <div style="background: #e8f4fd; padding: 12px; border-radius: 8px; border-left: 3px solid #3498db;">
+            <strong>💎 Passez à la version complète pour :</strong>
+            <br>• Accès illimité à toutes les fonctionnalités
+            <br>• Dissertations, corrections, maths avancées
+            <br>• Fiches de révision complètes
+            <br>• Support prioritaire
+          </div>
+          <br>
+          Quelle matière souhaitez-vous découvrir ?
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-input-container">
+    <div class="chat-input-wrapper">
+      <div class="chat-input">
+        <textarea id="messageInput" placeholder="Posez votre question..." rows="1"></textarea>
+        <div class="chat-input-actions">
+          <button type="button" id="sendBtn">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="ia-gratuite.js"></script>
+</body>
+</html>
