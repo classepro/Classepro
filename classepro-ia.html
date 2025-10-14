@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professeur IA - ClassePro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="classepro-ia.css">
+  <!-- SDK Paystack -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Navigation -->
+  <header>
+    <nav class="py-4 px-4 md:px-6">
+      <div class="max-w-6xl mx-auto flex justify-between items-center">
+        <div class="flex items-center">
+          <div class="gradient-bg p-2 rounded-lg mr-3">
+            <i class="fas fa-graduation-cap text-white text-xl"></i>
+          </div>
+          <span class="text-xl font-bold gradient-text">ClassePro</span>
+        </div>
+        
+        <div class="hidden md:flex space-x-6">
+          <a href="index.html" class="nav-link text-gray-600 hover:text-[#3D3B8E]">Accueil</a>
+          <a href="exposes.html" class="nav-link text-gray-600 hover:text-[#3D3B8E]">Exposés</a>
+          <a href="support.html" class="nav-link text-gray-600 hover:text-[#3D3B8E]">Support</a>
+          <a href="operateur.html" class="nav-link active text-[#3D3B8E] font-medium">Opérateur</a>
+        </div>
+        
+        <button class="md:hidden text-gray-600 text-xl" id="mobile-menu-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Menu mobile -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html" class="nav-link text-gray-600 hover:text-[#3D3B8E]">Accueil</a>
+    <a href="exposes.html" class="nav-link text-gray-600 hover:text-[#3D3B8E]">Exposés</a>
+    <a href="support.html" class="nav-link text-gray-600 hover:text-[#3D3B8E]">Support</a>
+    <a href="operateur.html" class="nav-link active text-[#3D3B8E] font-medium">Opérateur</a>
+  </div>
+  
+  <div class="menu-overlay" id="menu-overlay"></div>
+
+  <!-- Contenu principal -->
+  <main class="flex-grow max-w-6xl mx-auto px-4 py-6 w-full">
+    <!-- Hero Section -->
+    <section class="hero-section py-8 px-6 mb-12">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="inline-flex items-center justify-center mb-4">
+          <div class="bg-white p-3 rounded-full shadow-md mr-4">
+            <i class="fas fa-robot text-2xl gradient-text"></i>
+          </div>
+          <h1 class="text-3xl md:text-4xl font-bold gradient-text">Professeur ClassePro IA</h1>
+        </div>
+        <p class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">Votre assistant pédagogique intelligent pour comprendre vos cours, résoudre des exercices et préparer vos examens.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="#forfaits" class="px-6 py-3 gradient-bg text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all">Choisir un forfait</a>
+          <a href="#fonctionnalites" class="px-6 py-3 bg-white text-[#3D3B8E] border border-[#3D3B8E] rounded-lg font-medium hover:bg-gray-50 transition-all">Découvrir les fonctionnalités</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section de présentation -->
+    <section class="mb-16">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div>
+          <h2 class="text-2xl font-bold mb-4 text-[#3D3B8E]">Une IA spécialisée pour votre réussite</h2>
+          <p class="text-gray-600 mb-4">Le <span class="font-semibold text-[#3D3B8E]">Professeur ClassePro IA</span> est un assistant pédagogique avancé qui vous accompagne dans vos apprentissages grâce à l'intelligence artificielle.</p>
+          <p class="text-gray-600 mb-4">Que vous soyez au collège, au lycée ou à l'université, notre IA s'adapte à votre niveau pour vous offrir un accompagnement personnalisé.</p>
+          <div class="flex items-center mt-6">
+            <div class="flex-shrink-0 mr-4">
+              <div class="gradient-bg p-3 rounded-full">
+                <i class="fas fa-brain text-white text-xl"></i>
+              </div>
+            </div>
+            <div>
+              <h3 class="font-semibold text-[#3D3B8E]">IA Spécialisée</h3>
+              <p class="text-sm text-gray-600">Optimisée pour l'éducation et l'apprentissage</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-center">
+          <div class="bg-gradient-to-r from-[#3D3B8E] to-[#FF7E5F] rounded-2xl p-8 text-white w-full max-w-md shadow-lg">
+            <div class="text-center">
+              <i class="fas fa-lightbulb text-5xl mb-4"></i>
+              <h3 class="text-xl font-bold mb-2">Apprentissage Personnalisé</h3>
+              <p class="text-white/90">Des explications adaptées à votre niveau et à votre rythme</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fonctionnalités -->
+    <section id="fonctionnalites" class="mb-16">
+      <div class="text-center mb-10">
+        <h2 class="text-2xl font-bold mb-3 text-[#3D3B8E]">Fonctionnalités principales</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Découvrez comment notre IA peut vous aider dans vos études</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="feature-card p-5 animated-card">
+          <div class="feature-icon gradient-bg">
+            <i class="fas fa-book text-white"></i>
+          </div>
+          <h3 class="font-semibold text-lg mb-2 text-[#3D3B8E]">Cours complets</h3>
+          <p class="text-gray-600 text-sm">Structures détaillées avec exemples et explications claires.</p>
+        </div>
+        
+        <div class="feature-card p-5 animated-card">
+          <div class="feature-icon" style="background: #FF7E5F;">
+            <i class="fas fa-lightbulb text-white"></i>
+          </div>
+          <h3 class="font-semibold text-lg mb-2 text-[#3D3B8E]">Explications simplifiées</h3>
+          <p class="text-gray-600 text-sm">Comprendre facilement les concepts les plus complexes.</p>
+        </div>
+        
+        <div class="feature-card p-5 animated-card">
+          <div class="feature-icon" style="background: #6883BA;">
+            <i class="fas fa-pencil-alt text-white"></i>
+          </div>
+          <h3 class="font-semibold text-lg mb-2 text-[#3D3B8E]">Exercices personnalisés</h3>
+          <p class="text-gray-600 text-sm">Avec solutions détaillées et étapes de résolution.</p>
+        </div>
+        
+        <div class="feature-card p-5 animated-card">
+          <div class="feature-icon gradient-bg">
+            <i class="fas fa-file-alt text-white"></i>
+          </div>
+          <h3 class="font-semibold text-lg mb-2 text-[#3D3B8E]">Résumés et fiches</h3>
+          <p class="text-gray-600 text-sm">Pour réviser rapidement avant les examens.</p>
+        </div>
+        
+        <div class="feature-card p-5 animated-card">
+          <div class="feature-icon" style="background: #FF7E5F;">
+            <i class="fas fa-check-circle text-white"></i>
+          </div>
+          <h3 class="font-semibold text-lg mb-2 text-[#3D3B8E]">QCM interactifs</h3>
+          <p class="text-gray-600 text-sm">Tester vos connaissances avec des quiz adaptatifs.</p>
+        </div>
+        
+        <div class="feature-card p-5 animated-card">
+          <div class="feature-icon" style="background: #6883BA;">
+            <i class="fas fa-spell-check text-white"></i>
+          </div>
+          <h3 class="font-semibold text-lg mb-2 text-[#3D3B8E]">Corrections de texte</h3>
+          <p class="text-gray-600 text-sm">Amélioration orthographe, grammaire et style.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section forfaits -->
+    <section id="forfaits" class="mb-16">
+      <div class="text-center mb-10">
+        <h2 class="text-2xl font-bold mb-3 text-[#3D3B8E]">Choisissez votre forfait</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Des options adaptées à vos besoins et à votre budget</p>
+        
+        <!-- Méthodes de paiement animées -->
+        <div class="payment-methods mt-6">
+          <div class="payment-method">
+            <i class="fab fa-cc-visa text-blue-600"></i>
+          </div>
+          <div class="payment-method">
+            <i class="fab fa-cc-mastercard text-red-500"></i>
+          </div>
+          <div class="payment-method">
+            <i class="fas fa-mobile-alt text-green-500"></i>
+          </div>
+          <div class="payment-method">
+            <i class="fas fa-university text-purple-500"></i>
+          </div>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Forfait Test Gratuit -->
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3 class="pricing-title">Test Gratuit</h3>
+            <div class="pricing-price">0 FCFA</div>
+            <div class="pricing-period">Découverte</div>
+          </div>
+          <div class="pricing-body">
+            <ul class="pricing-features">
+              <li><i class="fas fa-check"></i> Accès limité aux fonctionnalités</li>
+              <li><i class="fas fa-check"></i> Jusqu'à 3 exercices par jour</li>
+              <li><i class="fas fa-check"></i> Support basique</li>
+              <li><i class="fas fa-times"></i> Fonctionnalités avancées</li>
+              <li><i class="fas fa-times"></i> Génération de contenu illimitée</li>
+            </ul>
+            <a href="GROQ 3.html" class="test-free-btn">
+              <i class="fas fa-play-circle mr-2"></i>Essayer gratuitement
+            </a>
+          </div>
+        </div>
+        
+        <!-- Forfait Hebdomadaire -->
+        <div class="pricing-card popular">
+          <div class="popular-badge">Le plus populaire</div>
+          <div class="pricing-header">
+            <h3 class="pricing-title">Forfait Hebdomadaire</h3>
+            <div class="pricing-price">250 FCFA</div>
+            <div class="pricing-period">par semaine</div>
+          </div>
+          <div class="pricing-body">
+            <ul class="pricing-features">
+              <li><i class="fas fa-check"></i> Accès complet aux fonctionnalités</li>
+              <li><i class="fas fa-check"></i> Jusqu'à 10 exercices par jour</li>
+              <li><i class="fas fa-check"></i> Support prioritaire</li>
+              <li><i class="fas fa-check"></i> Génération de contenu avancée</li>
+              <li><i class="fas fa-times"></i> Accès illimité</li>
+            </ul>
+            <!-- Bouton dynamique qui change selon le statut de paiement -->
+            <div id="forfait-hebdo-btn-container">
+              <a href="#" class="pricing-btn" onclick="openPaymentModal('forfait_hebdo', 250, 'Forfait Hebdomadaire - Professeur IA')" id="forfait-hebdo-btn">
+                <i class="fas fa-shopping-cart mr-2"></i>Choisir ce forfait
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Forfait Mensuel -->
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3 class="pricing-title">Forfait Mensuel</h3>
+            <div class="pricing-price">1.000 FCFA</div>
+            <div class="pricing-period">par mois</div>
+          </div>
+          <div class="pricing-body">
+            <ul class="pricing-features">
+              <li><i class="fas fa-check"></i> Accès complet aux fonctionnalités</li>
+              <li><i class="fas fa-check"></i> Jusqu'à 25 exercices par jour</li>
+              <li><i class="fas fa-check"></i> Support prioritaire 24/7</li>
+              <li><i class="fas fa-check"></i> Génération de contenu illimitée</li>
+              <li><i class="fas fa-check"></i> Accès à toutes les matières</li>
+            </ul>
+            <!-- Bouton dynamique qui change selon le statut de paiement -->
+            <div id="forfait-mensuel-btn-container">
+              <a href="#" class="pricing-btn" onclick="openPaymentModal('forfait_mensuel', 1000, 'Forfait Mensuel - Professeur IA')" id="forfait-mensuel-btn">
+                <i class="fas fa-shopping-cart mr-2"></i>Choisir ce forfait
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section FAQ -->
+    <section class="mb-12">
+      <div class="bg-white rounded-xl shadow-sm p-6">
+        <h2 class="text-xl font-semibold mb-6 text-[#3D3B8E]">Questions fréquentes</h2>
+        
+        <div class="space-y-2">
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3 class="font-medium">Comment fonctionne l'IA Professeur ClassePro ?</h3>
+              <i class="fas fa-chevron-down faq-toggle text-[#3D3B8E] transition-transform"></i>
+            </div>
+            <div class="faq-answer">
+              <p class="text-gray-600 text-sm">Notre IA utilise des modèles de langage avancés spécialement entraînés pour l'éducation. Elle peut générer du contenu pédagogique, expliquer des concepts, créer des exercices et corriger vos travaux.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3 class="font-medium">Puis-je essayer gratuitement avant de payer ?</h3>
+              <i class="fas fa-chevron-down faq-toggle text-[#3D3B8E] transition-transform"></i>
+            </div>
+            <div class="faq-answer">
+              <p class="text-gray-600 text-sm">Oui, nous proposons un test gratuit qui vous permet de découvrir les fonctionnalités de base avec quelques limitations. Vous pouvez ensuite choisir un forfait payant pour un accès complet.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3 class="font-medium">Quelles matières sont couvertes ?</h3>
+              <i class="fas fa-chevron-down faq-toggle text-[#3D3B8E] transition-transform"></i>
+            </div>
+            <div class="faq-answer">
+              <p class="text-gray-600 text-sm">Notre IA couvre un large éventail de matières : mathématiques, physique, chimie, SVT, français, histoire-géographie, philosophie, langues vivantes, et bien d'autres.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3 class="font-medium">Comment est calculée la limite d'exercices par jour ?</h3>
+              <i class="fas fa-chevron-down faq-toggle text-[#3D3B8E] transition-transform"></i>
+            </div>
+            <div class="faq-answer">
+              <p class="text-gray-600 text-sm">Chaque interaction avec l'IA (génération d'un cours, création d'exercices, explication d'un concept) compte comme un exercice. La limite est réinitialisée chaque jour à minuit.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="max-w-6xl mx-auto text-center">
+      <div class="flex justify-center mb-4">
+        <div class="bg-white/10 p-2 rounded-lg">
+          <i class="fas fa-graduation-cap text-white text-xl"></i>
+        </div>
+      </div>
+      <h3 class="text-lg font-semibold mb-2">ClassePro - Votre réussite, notre priorité</h3>
+      <p class="text-white/80 text-sm">&copy; 2023 ClassePro. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <!-- Modale de paiement -->
+  <div id="payment-modal" class="payment-modal">
+    <div class="payment-modal-content">
+      <!-- En-tête de la modale -->
+      <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
+        <div class="flex items-center">
+          <div class="bg-gradient-to-r from-[#3D3B8E] to-[#FF7E5F] p-2 rounded-full mr-3">
+            <i class="fas fa-lock text-white text-sm"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-gray-800">Accéder au forfait</h3>
+            <p class="text-xs text-gray-600">Paiement sécurisé via Paystack</p>
+          </div>
+        </div>
+        <button id="close-payment-modal" class="text-gray-400 hover:text-gray-600 text-xl">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Informations sur l'achat -->
+      <div class="bg-blue-50 rounded-lg p-4 mb-4">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-sm font-medium text-gray-700">Forfait sélectionné:</span>
+          <span id="forfait-title" class="text-sm font-semibold text-blue-800 text-right"></span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-sm font-medium text-gray-700">Montant à payer:</span>
+          <span id="payment-amount" class="text-lg font-bold text-blue-800"></span>
+        </div>
+      </div>
+
+      <!-- Formulaire de paiement -->
+      <div class="mb-4">
+        <label for="payment-email" class="block text-sm font-medium text-gray-700 mb-1">
+          <i class="fas fa-envelope mr-1 text-blue-500"></i>Adresse email
+        </label>
+        <input type="email" id="payment-email" placeholder="votre@email.com" 
+               class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+        <p class="text-xs text-gray-500 mt-1">Vous recevrez votre reçu à cette adresse</p>
+      </div>
+
+      <!-- Message d'alerte important -->
+      <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4 rounded">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+          </div>
+          <div class="ml-3">
+            <h4 class="text-sm font-medium text-yellow-800">Important</h4>
+            <div class="mt-1 text-sm text-yellow-700">
+              <p>• Ne quittez pas la page de paiement Paystack avant confirmation</p>
+              <p>• La confirmation peut prendre jusqu'à 2 minutes dans certains cas</p>
+              <p>• Restez sur cette page jusqu'à ce que le statut s'affiche</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bouton de paiement -->
+      <button id="paystack-btn" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center">
+        <i class="fas fa-credit-card mr-2"></i>
+        <span>Payer maintenant</span>
+      </button>
+
+      <!-- Sécurité et garanties -->
+      <div class="mt-4 text-center">
+        <div class="flex justify-center space-x-4 text-xs text-gray-500 mb-2">
+          <span class="flex items-center">
+            <i class="fas fa-shield-alt mr-1 text-green-500"></i> Paiement sécurisé
+          </span>
+          <span class="flex items-center">
+            <i class="fas fa-lock mr-1 text-blue-500"></i> SSL encrypté
+          </span>
+        </div>
+        <p class="text-xs text-gray-400">ClassePro - Votre réussite, notre priorité</p>
+      </div>
+
+      <!-- Statut du paiement -->
+      <div id="payment-status" class="mt-4 p-3 rounded-lg text-center hidden"></div>
+    </div>
+  </div>
+
+  <script src="classepro-ia.js"></script>
+</body>
+</html>
