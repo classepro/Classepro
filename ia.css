@@ -33,13 +33,66 @@ body {
   flex-shrink: 0;
 }
 
+/* AJOUT: Header top pour organiser titre et infos forfait */
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .chat-header h1 {
   font-size: 1.1rem;
-  margin-bottom: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  margin: 0;
+}
+
+/* AJOUT: Styles pour l'affichage du forfait */
+.forfait-info {
+  text-align: right;
+  font-size: 0.7rem;
+  background: rgba(255,255,255,0.2);
+  padding: 4px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.quota-counter {
+  font-weight: bold;
+  font-size: 0.75rem;
+  margin-bottom: 2px;
+}
+
+.forfait-name {
+  opacity: 0.9;
+  font-size: 0.65rem;
+}
+
+.quota-warning {
+  color: #ffeb3b;
+  font-weight: bold;
+}
+
+.quota-danger {
+  color: #ff6b6b;
+  font-weight: bold;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+.no-forfait {
+  background: rgba(255,107,107,0.3);
+  border: 1px solid rgba(255,107,107,0.5);
 }
 
 .task-selector-container {
@@ -386,6 +439,16 @@ body {
 @media (max-width: 380px) {
   .chat-header h1 {
     font-size: 1rem;
+  }
+  
+  .header-top {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .forfait-info {
+    font-size: 0.65rem;
+    padding: 3px 6px;
   }
   
   .task-btn {

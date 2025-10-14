@@ -10,7 +10,14 @@
 
   <div class="chat-container">
     <div class="chat-header">
-      <h1>Professeur ClassePro <span class="professor-badge">IA</span></h1>
+      <div class="header-top">
+        <h1>Professeur ClassePro <span class="professor-badge">IA</span></h1>
+        <!-- AJOUT: Affichage du forfait et quota -->
+        <div class="forfait-info" id="forfaitInfo">
+          <div class="quota-counter" id="quotaCounter"></div>
+          <div class="forfait-name" id="forfaitName"></div>
+        </div>
+      </div>
       <div class="task-selector-container">
         <div class="task-selector" id="taskSelector">
           <button class="task-btn" data-type="cours">📚 Cours</button>

@@ -74,6 +74,9 @@ const uploadBtn = document.getElementById("uploadBtn");
 const fileInput = document.getElementById("fileInput");
 const sendBtn = document.getElementById("sendBtn");
 const taskSelector = document.getElementById("taskSelector");
+const forfaitInfo = document.getElementById("forfaitInfo");
+const quotaCounter = document.getElementById("quotaCounter");
+const forfaitName = document.getElementById("forfaitName");
 
 // Historique des messages avec prompt système intégré
 let messageHistory = [
@@ -111,6 +114,98 @@ Maintenant, accueille l'élève comme le Professeur ClassePro.`
     content: "Bonjour ! 👋 Je suis votre Professeur ClassePro. Je suis là pour vous aider à réviser vos cours, comprendre vos leçons et progresser dans vos apprentissages. \n\nSélectionnez le type de contenu que vous souhaitez générer :\n• Cours complet - Structure détaillée avec exemples\n• Explication simplifiée - Pour comprendre facilement\n• Exercices avec corrigés - Pour s'entraîner\n• Résumé - Pour réviser rapidement\n• QCM interactif - Pour tester ses connaissances\n• Dissertation/Exposé - Structure académique complète\n• Correction de texte - Amélioration orthographe/grammaire\n• Exercices de maths - Avec solutions détaillées\n• Fiche de révision - Points clés essentiels\n\nQuelle matière ou quel sujet souhaitez-vous travailler aujourd'hui ?"
   }
 ];
+
+// 🔐 FONCTIONS DE GESTION DES QUOTAS ET FORFAITS
+
+function verifierAccesIA() {
+  const forfait = JSON.parse(localStorage.getItem("classepro_forfait"));
+  const aujourdHui = new Date().toDateString();
+
+  // Vérifier si un forfait existe
+  if (!forfait) {
+    return { 
+      ok: false, 
+      message: "❌ Aucun forfait actif. Veuillez souscrire à un forfait pour utiliser l'IA.",
+      questionsRestantes: 0
+    };
+  }
+
+  // Vérifier si le forfait est expiré
+  if (new Date(forfait.dateFin) < new Date()) {
+    return { 
+      ok: false, 
+      message: "⏳ Votre abonnement a expiré. Veuillez renouveler votre forfait.",
+      questionsRestantes: 0
+    };
+  }
+
+  // Réinitialiser le compteur chaque jour
+  if (forfait.derniereDate !== aujourdHui) {
+    forfait.questionsJour = 0;
+    forfait.derniereDate = aujourdHui;
+    localStorage.setItem("classepro_forfait", JSON.stringify(forfait));
+  }
+
+  // Vérifier si le quota quotidien est atteint
+  if (forfait.questionsJour >= forfait.quota) {
+    return { 
+      ok: false, 
+      message: "🚫 Quota quotidien atteint. Réessayez demain à minuit.",
+      questionsRestantes: 0
+    };
+  }
+
+  // Calculer les questions restantes
+  const questionsRestantes = forfait.quota - forfait.questionsJour;
+
+  return { 
+    ok: true, 
+    message: "Autorisé",
+    questionsRestantes: questionsRestantes,
+    forfait: forfait
+  };
+}
+
+function incrementerQuestion() {
+  const forfait = JSON.parse(localStorage.getItem("classepro_forfait"));
+  if (forfait) {
+    forfait.questionsJour++;
+    localStorage.setItem("classepro_forfait", JSON.stringify(forfait));
+    
+    // Retourner le nouveau nombre de questions restantes
+    return forfait.quota - forfait.questionsJour;
+  }
+  return 0;
+}
+
+function mettreAJourAffichageForfait() {
+  const acces = verifierAccesIA();
+  
+  if (!acces.ok) {
+    // Aucun forfait actif ou forfait expiré
+    quotaCounter.textContent = "❌ Aucun forfait";
+    forfaitName.textContent = "Souscrire pour utiliser l'IA";
+    forfaitInfo.classList.add('no-forfait');
+    forfaitInfo.classList.remove('quota-warning', 'quota-danger');
+    return;
+  }
+
+  // Forfait actif
+  const questionsRestantes = acces.questionsRestantes;
+  
+  // Mettre à jour le compteur avec des couleurs selon le niveau
+  quotaCounter.textContent = `${questionsRestantes} question(s) restante(s)`;
+  forfaitName.textContent = `Forfait ${acces.forfait.nom}`;
+  
+  // Appliquer les styles selon le nombre de questions restantes
+  forfaitInfo.classList.remove('no-forfait', 'quota-warning', 'quota-danger');
+  
+  if (questionsRestantes <= 3) {
+    quotaCounter.classList.add('quota-danger');
+  } else if (questionsRestantes <= 5) {
+    quotaCounter.classList.add('quota-warning');
+  }
+}
 
 // Initialiser le scroll vers le bas
 scrollToBottom();
@@ -189,6 +284,13 @@ fileInput.addEventListener("change", () => {
 async function sendMessage() {
   const userMessage = messageInput.value.trim();
   if (userMessage) {
+    // 🔐 VÉRIFICATION DE L'ACCÈS AVANT ENVOI
+    const acces = verifierAccesIA();
+    if (!acces.ok) {
+      addMessage(acces.message, "bot");
+      return;
+    }
+
     // Formater le message avec le prompt de la tâche sélectionnée
     const taskPrompt = TASK_PROMPTS[currentTaskType].replace("{sujet}", userMessage);
     const finalMessage = `[Tâche: ${currentTaskType}] ${taskPrompt}`;
@@ -225,6 +327,11 @@ async function sendMessage() {
         messageHistory.push({ role: "assistant", content: response });
         addMessage(response, "bot");
         apiErrorCount = 0; // Réinitialiser le compteur d'erreurs
+        
+        // 🔄 INCRÉMENTER LE COMPTEUR DE QUESTIONS
+        const nouvellesQuestionsRestantes = incrementerQuestion();
+        mettreAJourAffichageForfait();
+        
       } else {
         throw new Error("Aucune réponse de l'API Groq");
       }
@@ -602,6 +709,10 @@ function scrollToBottom() {
 // Initialisation au chargement de la page
 document.addEventListener('DOMContentLoaded', function() {
   console.log("Professeur ClassePro initialisé avec API Groq et LLaMA 4 Scout");
+  
+  // 🔄 INITIALISER L'AFFICHAGE DU FORFAIT
+  mettreAJourAffichageForfait();
+  
   // Sélectionner le premier bouton par défaut
   document.querySelector('.task-btn').classList.add('active');
   
