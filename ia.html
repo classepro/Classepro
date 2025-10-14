@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professeur ClassePro - Assistant Pédagogique</title>
+  <link rel="stylesheet" href="ia.css">
+</head>
+<body>
+
+  <div class="chat-container">
+    <div class="chat-header">
+      <h1>Professeur ClassePro <span class="professor-badge">IA</span></h1>
+      <div class="task-selector-container">
+        <div class="task-selector" id="taskSelector">
+          <button class="task-btn" data-type="cours">📚 Cours</button>
+          <button class="task-btn" data-type="explication">💡 Explication</button>
+          <button class="task-btn" data-type="exercices">✏️ Exercices</button>
+          <button class="task-btn" data-type="resume">📋 Résumé</button>
+          <button class="task-btn" data-type="qcm">❓ QCM</button>
+          <button class="task-btn" data-type="dissertation">📝 Dissertation</button>
+          <button class="task-btn" data-type="correction">✍️ Correction</button>
+          <button class="task-btn" data-type="maths">➗ Maths</button>
+          <button class="task-btn" data-type="fiche">📄 Fiche</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="chat-messages" id="chatMessages">
+      <!-- Messages dynamiques -->
+      <div class="message bot">
+        <div class="bot-message-content">
+          <strong>Bonjour ! 👋</strong> Je suis votre <span class="professor-badge">Professeur ClassePro</span>. 
+          <br><br>
+          <strong>Sélectionnez le type de contenu :</strong>
+          <br>
+          • <strong>Cours complet</strong> - Structure détaillée
+          <br>
+          • <strong>Explication simplifiée</strong> - Comprendre facilement
+          <br>
+          • <strong>Exercices avec corrigés</strong> - S'entraîner
+          <br>
+          • <strong>Résumé</strong> - Réviser rapidement
+          <br>
+          • <strong>QCM interactif</strong> - Tester ses connaissances
+          <br>
+          • <strong>Dissertation/Exposé</strong> - Structure académique
+          <br>
+          • <strong>Correction de texte</strong> - Amélioration
+          <br>
+          • <strong>Exercices de maths</strong> - Solutions détaillées
+          <br>
+          • <strong>Fiche de révision</strong> - Points clés
+          <br><br>
+          Quelle matière ou sujet souhaitez-vous travailler ?
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-input-container">
+    <div class="chat-input-wrapper">
+      <div class="chat-input">
+        <textarea id="messageInput" placeholder="Indiquez le sujet, le texte ou l'URL..." rows="1"></textarea>
+        <div class="chat-input-actions">
+          <input type="file" id="fileInput" accept="image/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt" hidden multiple>
+          <button type="button" id="uploadBtn" title="Envoyer un fichier">📎</button>
+          <button type="button" id="sendBtn">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="ia.js"></script>
+</body>
+</html>
