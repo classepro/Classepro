@@ -1,3 +1,4 @@
+
 // Configuration Paystack
 const publicKey = "pk_test_7b8c7b4c175d2a76f17dc3d449ff410d88dd5d89";
 const BACKEND_URL = "https://test-pehc.onrender.com";
@@ -138,22 +139,57 @@ function markForfaitAsPaid(forfaitId) {
   localStorage.setItem('paidForfaits', JSON.stringify(paidForfaits));
 }
 
-// Mettre à jour l'affichage des boutons selon le statut de paiement
+// 🟩 NOUVELLE FONCTION : Mettre à jour l'affichage des boutons selon le statut de paiement et l'expiration
 function updateForfaitButtons() {
+  const forfait = JSON.parse(localStorage.getItem("classepro_forfait"));
+  const aujourdHui = new Date();
+
   // Forfait hebdomadaire
-  if (isForfaitPaid('forfait_hebdo')) {
-    const container = document.getElementById('forfait-hebdo-btn-container');
-    container.innerHTML = `<a href="ia.html" class="pricing-btn" id="forfait-hebdo-btn">
-      <i class="fas fa-robot mr-2"></i>Accéder à l'IA
-    </a>`;
+  const hebdoContainer = document.getElementById('forfait-hebdo-btn-container');
+  if (hebdoContainer) {
+    if (isForfaitPaid('forfait_hebdo') && forfait && forfait.nom === "Hebdomadaire" && new Date(forfait.dateFin) >= aujourdHui) {
+      // Forfait encore actif
+      hebdoContainer.innerHTML = `
+        <a href="ia.html" class="pricing-btn" id="forfait-hebdo-btn">
+          <i class="fas fa-robot mr-2"></i>Accéder à l'IA
+        </a>
+      `;
+    } else {
+      // Forfait expiré ou non actif
+      hebdoContainer.innerHTML = `
+        <button class="pricing-btn" onclick="openPaymentModal('forfait_hebdo', 250, 'Forfait Hebdomadaire - Professeur IA')">
+          <i class="fas fa-shopping-cart mr-2"></i>Choisir ce forfait
+        </button>
+      `;
+      // Nettoyage du forfait expiré
+      if (forfait && new Date(forfait.dateFin) < aujourdHui) {
+        localStorage.removeItem("classepro_forfait");
+      }
+    }
   }
 
   // Forfait mensuel
-  if (isForfaitPaid('forfait_mensuel')) {
-    const container = document.getElementById('forfait-mensuel-btn-container');
-    container.innerHTML = `<a href="ia.html" class="pricing-btn" id="forfait-mensuel-btn">
-      <i class="fas fa-robot mr-2"></i>Accéder à l'IA
-    </a>`;
+  const mensuelContainer = document.getElementById('forfait-mensuel-btn-container');
+  if (mensuelContainer) {
+    if (isForfaitPaid('forfait_mensuel') && forfait && forfait.nom === "Mensuel" && new Date(forfait.dateFin) >= aujourdHui) {
+      // Forfait encore actif
+      mensuelContainer.innerHTML = `
+        <a href="ia.html" class="pricing-btn" id="forfait-mensuel-btn">
+          <i class="fas fa-robot mr-2"></i>Accéder à l'IA
+        </a>
+      `;
+    } else {
+      // Forfait expiré ou non actif
+      mensuelContainer.innerHTML = `
+        <button class="pricing-btn" onclick="openPaymentModal('forfait_mensuel', 1000, 'Forfait Mensuel - Professeur IA')">
+          <i class="fas fa-shopping-cart mr-2"></i>Choisir ce forfait
+        </button>
+      `;
+      // Nettoyage du forfait expiré
+      if (forfait && new Date(forfait.dateFin) < aujourdHui) {
+        localStorage.removeItem("classepro_forfait");
+      }
+    }
   }
 }
 
@@ -287,3 +323,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Mettre à jour l'affichage des boutons selon le statut de paiement
   updateForfaitButtons();
 });
+
+// 🟩 AJOUT : Vérification périodique de l'expiration des forfaits (toutes les heures)
+setInterval(() => {
+  updateForfaitButtons();
+}, 60 * 60 * 1000); // toutes les heures
