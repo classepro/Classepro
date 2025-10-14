@@ -165,7 +165,7 @@ async function initiatePayment() {
   localStorage.setItem('userEmail', email);
   
   // Déterminer la page source (pour cette page, c'est "ia-professor")
-  const sourcePage = "ia-professor";
+  const sourcePage = "classepro-ia";
   
   paymentStatus.textContent = "🔄 Redirection vers Paystack...";
   paymentStatus.className = "payment-status payment-processing";
