@@ -327,7 +327,7 @@ async function handleFileUpload(file) {
           if (typingIndicator && typingIndicator.parentNode) {
             typingIndicator.parentNode.remove();
           }
-          handleGenericError(extractedText);
+          addMessage(`❌ Erreur: ${error.message}`, "bot");
         }
         
       } else {
@@ -342,9 +342,6 @@ async function handleFileUpload(file) {
     displayFile(file);
   }
 }
-
-// Initialiser le scroll vers le bas
-scrollToBottom();
 
 // Gestion de la sélection du type de tâche
 taskSelector.addEventListener("click", (e) => {
@@ -395,10 +392,8 @@ messageInput.addEventListener("keydown", (e) => {
       // Ctrl+Entrée envoie le message
       e.preventDefault();
       sendMessage();
-    } else {
-      // Entrée seule fait un saut de ligne
-      // Comportement par défaut préservé
     }
+    // Entrée seule fait un saut de ligne (comportement par défaut préservé)
   }
 });
 
@@ -480,30 +475,16 @@ async function sendMessage() {
         typingIndicator.parentNode.remove();
       }
       
-      handleGenericError(userMessage);
+      addMessage(`❌ Erreur: ${error.message}`, "bot");
     }
   }
 }
 
-// Fonction pour obtenir une clé API depuis le backend
-async function getApiKeyFromBackend() {
-  try {
-    const response = await fetch(`${BACKEND_URL}/api/groq-key`);
-    if (!response.ok) {
-      throw new Error(`Erreur backend: ${response.status}`);
-    }
-    const data = await response.json();
-    return data.apiKey;
-  } catch (error) {
-    console.error('Erreur récupération clé API:', error);
-    throw error;
-  }
-}
-
-// Fonction pour appeler l'API Groq via le proxy backend
+// Fonction pour appeler l'API Groq via le proxy backend (version simplifiée)
 async function callGroqAPI(userPrompt) {
+  console.log("🔄 Appel API via proxy backend...");
+  
   try {
-    // Option 1: Utiliser le proxy backend (recommandé)
     const response = await fetch(`${BACKEND_URL}/api/groq-proxy`, {
       method: "POST",
       headers: {
@@ -517,132 +498,46 @@ async function callGroqAPI(userPrompt) {
       })
     });
 
+    console.log(`📡 Statut backend: ${response.status}`);
+    
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(`Erreur proxy: ${response.status} - ${errorData.error}`);
+      let errorDetails = `Erreur HTTP: ${response.status}`;
+      try {
+        const errorData = await response.json();
+        errorDetails = errorData.error || errorDetails;
+        if (errorData.details) {
+          errorDetails += ` - ${errorData.details}`;
+        }
+      } catch (e) {
+        // Si la réponse n'est pas du JSON
+        errorDetails = await response.text();
+      }
+      
+      throw new Error(errorDetails);
     }
 
     const data = await response.json();
+    
+    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+      throw new Error("Format de réponse invalide de l'API");
+    }
+    
+    console.log("✅ Réponse reçue avec succès");
     return data.choices[0].message.content.trim();
     
   } catch (error) {
-    console.error("Erreur proxy backend:", error);
+    console.error("💥 Erreur callGroqAPI:", error);
     
-    // Fallback: Essayer avec une clé directe si le proxy échoue
-    try {
-      console.log("Tentative de fallback avec clé directe...");
-      const apiKey = await getApiKeyFromBackend();
-      
-      const directResponse = await fetch(GROQ_API_URL, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${apiKey}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          model: MODEL,
-          messages: messageHistory,
-          temperature: 0.7,
-          max_tokens: 4096
-        })
-      });
-
-      if (!directResponse.ok) {
-        throw new Error(`Erreur API directe: ${directResponse.status}`);
-      }
-
-      const directData = await directResponse.json();
-      return directData.choices[0].message.content.trim();
-      
-    } catch (fallbackError) {
-      console.error("Erreur fallback:", fallbackError);
-      throw new Error("Tous les modes de connexion ont échoué");
-    }
-  }
-}
-
-// Fonction pour gérer les erreurs génériques
-function handleGenericError(originalMessage) {
-  const errorMsg = document.createElement("div");
-  errorMsg.classList.add("message", "bot");
-  errorMsg.innerHTML = `
-    <div class="bot-message-content">
-      <div style="background: #ffe6e6; border: 1px solid #ffcccc; color: #cc0000; padding: 10px; border-radius: 8px; margin: 10px 0;">
-        <strong>Problème de connexion</strong><br>
-        Impossible de contacter le service IA pour le moment. 
-        Cela peut être dû à :<br>
-        • Saturation des services API<br>
-        • Problème de connexion internet<br>
-        • Maintenance temporaire<br><br>
-        
-        <strong>En tant que Professeur ClassePro</strong>, je rencontre des difficultés techniques. 
-        ${generateFallbackResponse(originalMessage)}
-        <br><br>
-        <button class="retry-btn" onclick="retryLastMessage()" style="background: linear-gradient(135deg, #3D3B8E, #FF7E5F); color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; margin-top: 10px; font-weight: bold;">Réessayer</button>
-      </div>
-    </div>
-  `;
-  chatMessages.appendChild(errorMsg);
-  scrollToBottom();
-}
-
-// Fonction pour regénérer une réponse de secours
-function generateFallbackResponse(message) {
-  const taskTitles = {
-    cours: "cours complet",
-    explication: "explication simplifiée",
-    exercices: "exercices avec corrigés",
-    resume: "résumé",
-    qcm: "QCM interactif",
-    dissertation: "dissertation",
-    correction: "correction de texte",
-    maths: "exercices de maths",
-    fiche: "fiche de révision"
-  };
-  
-  return `Je prépare ${taskTitles[currentTaskType]} sur "${message}". Une fois le service rétabli, je pourrai vous fournir un contenu structuré et pédagogique. En attendant, vous pouvez reformuler votre demande ou essayer un autre type de contenu.`;
-}
-
-// Fonction pour réessayer le dernier message
-window.retryLastMessage = function() {
-  // Supprimer le message d'erreur
-  const lastMessage = chatMessages.lastChild;
-  if (lastMessage && lastMessage.querySelector('.bot-message-content')) {
-    lastMessage.remove();
-  }
-  
-  // Réessayer d'envoyer le dernier message utilisateur
-  const lastUserMessage = messageHistory[messageHistory.length - 1];
-  if (lastUserMessage && lastUserMessage.role === 'user') {
-    sendMessageToAPI(lastUserMessage.content);
-  }
-};
-
-// Fonction pour envoyer un message à l'API (séparée pour la réutilisation)
-async function sendMessageToAPI(message) {
-  const typingIndicator = addTypingIndicator();
-  
-  try {
-    lastApiCall = Date.now();
-    const response = await callGroqAPI(message);
-    
-    if (typingIndicator && typingIndicator.parentNode) {
-      typingIndicator.parentNode.remove();
-    }
-    
-    if (response) {
-      messageHistory.push({ role: "assistant", content: response });
-      addMessage(response, "bot");
-      apiErrorCount = 0;
+    // Messages d'erreur plus clairs
+    if (error.message.includes('401')) {
+      throw new Error("🔐 Erreur d'authentification - Veuillez contacter le support");
+    } else if (error.message.includes('429')) {
+      throw new Error("⏳ Limite de requêtes atteinte - Réessayez dans quelques instants");
+    } else if (error.message.includes('network') || error.message.includes('fetch')) {
+      throw new Error("🌐 Problème de connexion - Vérifiez votre connexion internet");
     } else {
-      throw new Error("Aucune réponse de l'API Groq");
+      throw new Error(`❌ Erreur: ${error.message}`);
     }
-  } catch (error) {
-    console.error("Erreur lors de la nouvelle tentative:", error);
-    if (typingIndicator && typingIndicator.parentNode) {
-      typingIndicator.parentNode.remove();
-    }
-    handleGenericError(message);
   }
 }
 
@@ -887,6 +782,29 @@ function scrollToBottom() {
   }, 100);
 }
 
+// 🧪 FONCTION DE TEST DE CONNECTIVITÉ
+async function testBackendConnectivity() {
+  try {
+    console.log("🧪 Test de connectivité backend...");
+    
+    const healthResponse = await fetch(`${BACKEND_URL}/api/health`);
+    const healthData = await healthResponse.json();
+    
+    console.log("Résultat health check:", healthData);
+    
+    if (healthData.status === "success") {
+      console.log("✅ Backend et Groq opérationnels");
+      return true;
+    } else {
+      console.error("❌ Problème backend:", healthData.message);
+      return false;
+    }
+  } catch (error) {
+    console.error("💥 Impossible de joindre le backend:", error);
+    return false;
+  }
+}
+
 // Initialisation au chargement de la page
 document.addEventListener('DOMContentLoaded', function() {
   console.log("Professeur ClassePro initialisé avec backend sécurisé et OCR Tesseract.js");
@@ -899,4 +817,13 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Forcer le scroll vers le bas au chargement initial
   setTimeout(scrollToBottom, 500);
+  
+  // 🧪 Test de connectivité (optionnel - pour débogage)
+  testBackendConnectivity().then(success => {
+    if (success) {
+      console.log("🎉 Système opérationnel");
+    } else {
+      console.error("🔧 Vérifiez la configuration du backend");
+    }
+  });
 });
