@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Professeur ClassePro - Assistant Pédagogique</title>
   <link rel="stylesheet" href="ia.css">
+  <!-- AJOUT: Tesseract.js pour l'OCR -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.0.2/dist/tesseract.min.js"></script>
 </head>
 <body>
 
@@ -59,7 +61,7 @@
           <br>
           • <strong>Fiche de révision</strong> - Points clés
           <br><br>
-          Quelle matière ou sujet souhaitez-vous travailler ?
+          <strong>Nouveau : 📸 Analyse OCR</strong> - Uploader une image de document pour extraire le texte automatiquement !
         </div>
       </div>
     </div>
@@ -71,7 +73,7 @@
         <textarea id="messageInput" placeholder="Indiquez le sujet, le texte ou l'URL..." rows="1"></textarea>
         <div class="chat-input-actions">
           <input type="file" id="fileInput" accept="image/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt" hidden multiple>
-          <button type="button" id="uploadBtn" title="Envoyer un fichier">📎</button>
+          <button type="button" id="uploadBtn" title="Envoyer un fichier ou une image (OCR)">📎</button>
           <button type="button" id="sendBtn">➤</button>
         </div>
       </div>

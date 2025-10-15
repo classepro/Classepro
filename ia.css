@@ -382,6 +382,86 @@ body {
   font-weight: bold;
 }
 
+/* STYLES POUR L'OCR ET L'ANALYSE D'IMAGES */
+.ocr-processing {
+  background: #e8f4fd !important;
+  border-left: 3px solid #3498db !important;
+  font-style: italic;
+}
+
+.ocr-result {
+  background: #f0f8f0 !important;
+  border-left: 3px solid #4CAF50 !important;
+  white-space: pre-wrap;
+  line-height: 1.5;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 8px 0;
+}
+
+.ocr-error {
+  background: #ffe6e6 !important;
+  border-left: 3px solid #ff6b6b !important;
+  color: #cc0000;
+}
+
+.file-preview-container.ocr-image {
+  text-align: center;
+  padding: 15px;
+}
+
+.ocr-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+.ocr-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #f0f0f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.ocr-progress-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #3D3B8E, #FF7E5F);
+  transition: width 0.3s ease;
+}
+
+/* Amélioration de l'affichage des fichiers */
+.file-preview-container {
+  max-width: 100%;
+  word-break: break-word;
+}
+
+.file-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 10px;
+}
+
+.file-icon {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.file-name {
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+}
+
+.file-size {
+  color: #666;
+  font-size: 12px;
+}
+
 /* Indicateur de frappe */
 .typing-indicator {
   display: inline-block;

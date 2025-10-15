@@ -111,7 +111,7 @@ Maintenant, accueille l'élève comme le Professeur ClassePro.`
   },
   {
     role: "assistant",
-    content: "Bonjour ! 👋 Je suis votre Professeur ClassePro. Je suis là pour vous aider à réviser vos cours, comprendre vos leçons et progresser dans vos apprentissages. \n\nSélectionnez le type de contenu que vous souhaitez générer :\n• Cours complet - Structure détaillée avec exemples\n• Explication simplifiée - Pour comprendre facilement\n• Exercices avec corrigés - Pour s'entraîner\n• Résumé - Pour réviser rapidement\n• QCM interactif - Pour tester ses connaissances\n• Dissertation/Exposé - Structure académique complète\n• Correction de texte - Amélioration orthographe/grammaire\n• Exercices de maths - Avec solutions détaillées\n• Fiche de révision - Points clés essentiels\n\nQuelle matière ou quel sujet souhaitez-vous travailler aujourd'hui ?"
+    content: "Bonjour ! 👋 Je suis votre Professeur ClassePro. Je suis là pour vous aider à réviser vos cours, comprendre vos leçons et progresser dans vos apprentissages. \n\nSélectionnez le type de contenu que vous souhaitez générer :\n• Cours complet - Structure détaillée avec exemples\n• Explication simplifiée - Pour comprendre facilement\n• Exercices avec corrigés - Pour s'entraîner\n• Résumé - Pour réviser rapidement\n• QCM interactif - Pour tester ses connaissances\n• Dissertation/Exposé - Structure académique complète\n• Correction de texte - Amélioration orthographe/grammaire\n• Exercices de maths - Avec solutions détaillées\n• Fiche de révision - Points clés essentiels\n\n📸 <strong>Nouveau : Analyse OCR</strong> - Uploader une image de document pour extraire le texte automatiquement !\n\nQuelle matière ou quel sujet souhaitez-vous travailler aujourd'hui ?"
   }
 ];
 
@@ -207,6 +207,142 @@ function mettreAJourAffichageForfait() {
   }
 }
 
+// 🔍 FONCTIONS OCR - RECONNAISSANCE DE TEXTE DANS LES IMAGES
+
+// Fonction pour détecter si un fichier est une image
+function isImageFile(file) {
+  return file.type.startsWith('image/');
+}
+
+// Fonction pour extraire le texte d'une image avec Tesseract.js
+async function extractTextFromImage(file) {
+  try {
+    // Afficher un message de progression
+    const progressMsg = addMessage("🔍 Analyse de l'image en cours...", "bot");
+    progressMsg.classList.add('ocr-processing');
+    
+    const { data: { text } } = await Tesseract.recognize(
+      file,
+      'fra+eng', // Français et Anglais
+      {
+        logger: progress => {
+          if (progress.status === 'recognizing text') {
+            // Mettre à jour le message de progression
+            if (progressMsg && progressMsg.querySelector('.bot-message-content')) {
+              progressMsg.querySelector('.bot-message-content').innerHTML = 
+                `🔍 Analyse de l'image... ${Math.round(progress.progress * 100)}%`;
+            }
+          }
+        }
+      }
+    );
+    
+    // Supprimer le message de progression
+    if (progressMsg && progressMsg.parentNode) {
+      progressMsg.parentNode.removeChild(progressMsg);
+    }
+    
+    return formatOCRText(text);
+  } catch (error) {
+    console.error('Erreur OCR:', error);
+    throw new Error("Impossible de lire le texte dans l'image");
+  }
+}
+
+// Fonction pour formater le texte OCR
+function formatOCRText(text) {
+  // Nettoyer le texte OCR
+  return text
+    .replace(/\n\s*\n\s*\n/g, '\n\n') // Réduire les multiples sauts de ligne
+    .replace(/[^\S\r\n]+/g, ' ') // Normaliser les espaces
+    .trim();
+}
+
+// Fonction pour gérer les erreurs OCR spécifiques
+function handleOCRError(error, fileName) {
+  let errorMessage = "";
+  
+  if (error.message.includes("network")) {
+    errorMessage = "📡 Problème de connexion lors de l'analyse de l'image. Vérifiez votre connexion internet.";
+  } else if (error.message.includes("language")) {
+    errorMessage = "🔤 Erreur de langue. L'analyse supporte le français et l'anglais.";
+  } else {
+    errorMessage = `❌ Impossible d'analyser l'image "${fileName}". Assurez-vous que :\n• L'image est nette et bien éclairée\n• Le texte est lisible\n• Le format est supporté (JPG, PNG, etc.)`;
+  }
+  
+  addMessage(errorMessage, "bot");
+}
+
+// Fonction pour traiter les fichiers uploadés (MODIFIÉE)
+async function handleFileUpload(file) {
+  if (isImageFile(file)) {
+    // C'est une image - utiliser l'OCR
+    try {
+      const extractedText = await extractTextFromImage(file);
+      
+      if (extractedText && extractedText.length > 0) {
+        // Afficher le texte extrait
+        const ocrResult = addMessage(`📝 Texte extrait de l'image "${file.name}":\n\n${extractedText}`, "user");
+        ocrResult.classList.add('ocr-result');
+        
+        // 🔐 VÉRIFICATION DE L'ACCÈS AVANT TRAITEMENT
+        const acces = verifierAccesIA();
+        if (!acces.ok) {
+          addMessage(acces.message, "bot");
+          return;
+        }
+        
+        // Préparer le message avec le prompt de la tâche
+        const taskPrompt = TASK_PROMPTS[currentTaskType].replace("{sujet}", extractedText);
+        const finalMessage = `[Tâche: ${currentTaskType}] ${taskPrompt}`;
+        
+        // Ajouter à l'historique
+        messageHistory.push({ role: "user", content: finalMessage });
+        
+        // Afficher l'indicateur de frappe
+        const typingIndicator = addTypingIndicator();
+        
+        try {
+          // Appeler l'API Groq
+          lastApiCall = Date.now();
+          const response = await callGroqAPI(finalMessage);
+          
+          // Supprimer l'indicateur de frappe
+          if (typingIndicator && typingIndicator.parentNode) {
+            typingIndicator.parentNode.remove();
+          }
+          
+          if (response) {
+            // Ajouter la réponse à l'historique et l'afficher
+            messageHistory.push({ role: "assistant", content: response });
+            addMessage(response, "bot");
+            apiErrorCount = 0;
+            
+            // 🔄 INCRÉMENTER LE COMPTEUR DE QUESTIONS
+            const nouvellesQuestionsRestantes = incrementerQuestion();
+            mettreAJourAffichageForfait();
+          }
+        } catch (error) {
+          console.error("Erreur API après OCR:", error);
+          if (typingIndicator && typingIndicator.parentNode) {
+            typingIndicator.parentNode.remove();
+          }
+          handleGenericError(extractedText);
+        }
+        
+      } else {
+        addMessage("❌ Aucun texte n'a été détecté dans l'image. Veuillez essayer avec une image plus claire.", "bot");
+      }
+    } catch (error) {
+      console.error('Erreur traitement OCR:', error);
+      handleOCRError(error, file.name);
+    }
+  } else {
+    // Ce n'est pas une image - comportement normal
+    displayFile(file);
+  }
+}
+
 // Initialiser le scroll vers le bas
 scrollToBottom();
 
@@ -269,12 +405,12 @@ messageInput.addEventListener("keydown", (e) => {
 // Gestion du bouton d'upload
 uploadBtn.addEventListener("click", () => fileInput.click());
 
-// Gestion de la sélection de fichiers
-fileInput.addEventListener("change", () => {
+// MODIFICATION de l'événement change du fileInput
+fileInput.addEventListener("change", async () => {
   const files = fileInput.files;
   if (files.length > 0) {
     for (let i = 0; i < files.length; i++) {
-      displayFile(files[i]);
+      await handleFileUpload(files[i]);
     }
     fileInput.value = "";
   }
@@ -566,7 +702,7 @@ function resetTextareaHeight() {
   messageInput.style.height = "auto";
 }
 
-// Fonction pour afficher un fichier dans la conversation
+// Fonction pour afficher un fichier dans la conversation (pour fichiers non-images)
 function displayFile(file) {
   const preview = document.createElement("div");
   preview.classList.add("message", "user", "file-preview");
@@ -685,6 +821,7 @@ function addMessage(text, sender) {
   
   chatMessages.appendChild(msg);
   scrollToBottom();
+  return msg;
 }
 
 // FONCTION SCROLLTOBOTTON AMÉLIORÉE - CORRECTION CRITIQUE
@@ -708,7 +845,7 @@ function scrollToBottom() {
 
 // Initialisation au chargement de la page
 document.addEventListener('DOMContentLoaded', function() {
-  console.log("Professeur ClassePro initialisé avec API Groq et LLaMA 4 Scout");
+  console.log("Professeur ClassePro initialisé avec API Groq, LLaMA 4 Scout et OCR Tesseract.js");
   
   // 🔄 INITIALISER L'AFFICHAGE DU FORFAIT
   mettreAJourAffichageForfait();
