@@ -1,4 +1,4 @@
-const CACHE_NAME = 'classepro-v1.20';
+const CACHE_NAME = 'classepro-v2.1';
 const urlsToCache = [
   'https://classepro.github.io/Classepro/',
   'https://classepro.github.io/Classepro/index.html',
