@@ -1,5 +1,5 @@
-// Configuration Groq
-const GROQ_API_KEY = "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";
+// Configuration Groq - Utilisation du backend sécurisé
+const BACKEND_URL = "https://test-pehc.onrender.com";
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const MODEL = "meta-llama/llama-4-scout-17b-16e-instruct";
 
@@ -273,7 +273,7 @@ function handleOCRError(error, fileName) {
   addMessage(errorMessage, "bot");
 }
 
-// Fonction pour traiter les fichiers uploadés (MODIFIÉE)
+// Fonction pour traiter les fichiers uploadés
 async function handleFileUpload(file) {
   if (isImageFile(file)) {
     // C'est une image - utiliser l'OCR
@@ -303,7 +303,7 @@ async function handleFileUpload(file) {
         const typingIndicator = addTypingIndicator();
         
         try {
-          // Appeler l'API Groq
+          // Appeler l'API Groq via le backend
           lastApiCall = Date.now();
           const response = await callGroqAPI(finalMessage);
           
@@ -405,7 +405,7 @@ messageInput.addEventListener("keydown", (e) => {
 // Gestion du bouton d'upload
 uploadBtn.addEventListener("click", () => fileInput.click());
 
-// MODIFICATION de l'événement change du fileInput
+// Événement change du fileInput
 fileInput.addEventListener("change", async () => {
   const files = fileInput.files;
   if (files.length > 0) {
@@ -449,7 +449,7 @@ async function sendMessage() {
     const typingIndicator = addTypingIndicator();
 
     try {
-      // Appeler l'API Groq
+      // Appeler l'API Groq via le backend
       lastApiCall = Date.now();
       const response = await callGroqAPI(finalMessage);
       
@@ -485,13 +485,28 @@ async function sendMessage() {
   }
 }
 
-// Fonction pour appeler l'API Groq
+// Fonction pour obtenir une clé API depuis le backend
+async function getApiKeyFromBackend() {
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/groq-key`);
+    if (!response.ok) {
+      throw new Error(`Erreur backend: ${response.status}`);
+    }
+    const data = await response.json();
+    return data.apiKey;
+  } catch (error) {
+    console.error('Erreur récupération clé API:', error);
+    throw error;
+  }
+}
+
+// Fonction pour appeler l'API Groq via le proxy backend
 async function callGroqAPI(userPrompt) {
   try {
-    const response = await fetch(GROQ_API_URL, {
+    // Option 1: Utiliser le proxy backend (recommandé)
+    const response = await fetch(`${BACKEND_URL}/api/groq-proxy`, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${GROQ_API_KEY}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -503,21 +518,46 @@ async function callGroqAPI(userPrompt) {
     });
 
     if (!response.ok) {
-      throw new Error(`Erreur API Groq: ${response.status} ${response.statusText}`);
+      const errorData = await response.json();
+      throw new Error(`Erreur proxy: ${response.status} - ${errorData.error}`);
     }
 
     const data = await response.json();
-
-    if (data.error) {
-      console.error("Erreur API Groq :", data.error.message);
-      return null;
-    }
-
     return data.choices[0].message.content.trim();
     
   } catch (error) {
-    console.error("Erreur lors de l'appel à Groq :", error);
-    throw error;
+    console.error("Erreur proxy backend:", error);
+    
+    // Fallback: Essayer avec une clé directe si le proxy échoue
+    try {
+      console.log("Tentative de fallback avec clé directe...");
+      const apiKey = await getApiKeyFromBackend();
+      
+      const directResponse = await fetch(GROQ_API_URL, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiKey}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: MODEL,
+          messages: messageHistory,
+          temperature: 0.7,
+          max_tokens: 4096
+        })
+      });
+
+      if (!directResponse.ok) {
+        throw new Error(`Erreur API directe: ${directResponse.status}`);
+      }
+
+      const directData = await directResponse.json();
+      return directData.choices[0].message.content.trim();
+      
+    } catch (fallbackError) {
+      console.error("Erreur fallback:", fallbackError);
+      throw new Error("Tous les modes de connexion ont échoué");
+    }
   }
 }
 
@@ -529,8 +569,12 @@ function handleGenericError(originalMessage) {
     <div class="bot-message-content">
       <div style="background: #ffe6e6; border: 1px solid #ffcccc; color: #cc0000; padding: 10px; border-radius: 8px; margin: 10px 0;">
         <strong>Problème de connexion</strong><br>
-        Impossible de contacter le service pour le moment. 
-        Voici une réponse générée localement :<br><br>
+        Impossible de contacter le service IA pour le moment. 
+        Cela peut être dû à :<br>
+        • Saturation des services API<br>
+        • Problème de connexion internet<br>
+        • Maintenance temporaire<br><br>
+        
         <strong>En tant que Professeur ClassePro</strong>, je rencontre des difficultés techniques. 
         ${generateFallbackResponse(originalMessage)}
         <br><br>
@@ -563,7 +607,7 @@ function generateFallbackResponse(message) {
 window.retryLastMessage = function() {
   // Supprimer le message d'erreur
   const lastMessage = chatMessages.lastChild;
-  if (lastMessage && lastMessage.querySelector('.error-message')) {
+  if (lastMessage && lastMessage.querySelector('.bot-message-content')) {
     lastMessage.remove();
   }
   
@@ -845,7 +889,7 @@ function scrollToBottom() {
 
 // Initialisation au chargement de la page
 document.addEventListener('DOMContentLoaded', function() {
-  console.log("Professeur ClassePro initialisé avec API Groq, LLaMA 4 Scout et OCR Tesseract.js");
+  console.log("Professeur ClassePro initialisé avec backend sécurisé et OCR Tesseract.js");
   
   // 🔄 INITIALISER L'AFFICHAGE DU FORFAIT
   mettreAJourAffichageForfait();
