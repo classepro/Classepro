@@ -1,5 +1,5 @@
-// Configuration Groq - Utilisation du backend sécurisé
-const BACKEND_URL = "https://test-pehc.onrender.com";
+// Configuration Groq
+const GROQ_API_KEY = "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";
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const MODEL = "meta-llama/llama-4-scout-17b-16e-instruct";
 
@@ -111,7 +111,7 @@ Maintenant, accueille l'élève comme le Professeur ClassePro.`
   },
   {
     role: "assistant",
-    content: "Bonjour ! 👋 Je suis votre Professeur ClassePro. Je suis là pour vous aider à réviser vos cours, comprendre vos leçons et progresser dans vos apprentissages. \n\nSélectionnez le type de contenu que vous souhaitez générer :\n• Cours complet - Structure détaillée avec exemples\n• Explication simplifiée - Pour comprendre facilement\n• Exercices avec corrigés - Pour s'entraîner\n• Résumé - Pour réviser rapidement\n• QCM interactif - Pour tester ses connaissances\n• Dissertation/Exposé - Structure académique complète\n• Correction de texte - Amélioration orthographe/grammaire\n• Exercices de maths - Avec solutions détaillées\n• Fiche de révision - Points clés essentiels\n\n📸 <strong>Nouveau : Analyse OCR</strong> - Uploader une image de document pour extraire le texte automatiquement !\n\nQuelle matière ou quel sujet souhaitez-vous travailler aujourd'hui ?"
+    content: "Bonjour ! 👋 Je suis votre Professeur ClassePro. Je suis là pour vous aider à réviser vos cours, comprendre vos leçons et progresser dans vos apprentissages. \n\nSélectionnez le type de contenu que vous souhaitez générer :\n• Cours complet - Structure détaillée avec exemples\n• Explication simplifiée - Pour comprendre facilement\n• Exercices avec corrigés - Pour s'entraîner\n• Résumé - Pour réviser rapidement\n• QCM interactif - Pour tester ses connaissances\n• Dissertation/Exposé - Structure académique complète\n• Correction de texte - Amélioration orthographe/grammaire\n• Exercices de maths - Avec solutions détaillées\n• Fiche de révision - Points clés essentiels\n\nQuelle matière ou quel sujet souhaitez-vous travailler aujourd'hui ?"
   }
 ];
 
@@ -207,141 +207,8 @@ function mettreAJourAffichageForfait() {
   }
 }
 
-// 🔍 FONCTIONS OCR - RECONNAISSANCE DE TEXTE DANS LES IMAGES
-
-// Fonction pour détecter si un fichier est une image
-function isImageFile(file) {
-  return file.type.startsWith('image/');
-}
-
-// Fonction pour extraire le texte d'une image avec Tesseract.js
-async function extractTextFromImage(file) {
-  try {
-    // Afficher un message de progression
-    const progressMsg = addMessage("🔍 Analyse de l'image en cours...", "bot");
-    progressMsg.classList.add('ocr-processing');
-    
-    const { data: { text } } = await Tesseract.recognize(
-      file,
-      'fra+eng', // Français et Anglais
-      {
-        logger: progress => {
-          if (progress.status === 'recognizing text') {
-            // Mettre à jour le message de progression
-            if (progressMsg && progressMsg.querySelector('.bot-message-content')) {
-              progressMsg.querySelector('.bot-message-content').innerHTML = 
-                `🔍 Analyse de l'image... ${Math.round(progress.progress * 100)}%`;
-            }
-          }
-        }
-      }
-    );
-    
-    // Supprimer le message de progression
-    if (progressMsg && progressMsg.parentNode) {
-      progressMsg.parentNode.removeChild(progressMsg);
-    }
-    
-    return formatOCRText(text);
-  } catch (error) {
-    console.error('Erreur OCR:', error);
-    throw new Error("Impossible de lire le texte dans l'image");
-  }
-}
-
-// Fonction pour formater le texte OCR
-function formatOCRText(text) {
-  // Nettoyer le texte OCR
-  return text
-    .replace(/\n\s*\n\s*\n/g, '\n\n') // Réduire les multiples sauts de ligne
-    .replace(/[^\S\r\n]+/g, ' ') // Normaliser les espaces
-    .trim();
-}
-
-// Fonction pour gérer les erreurs OCR spécifiques
-function handleOCRError(error, fileName) {
-  let errorMessage = "";
-  
-  if (error.message.includes("network")) {
-    errorMessage = "📡 Problème de connexion lors de l'analyse de l'image. Vérifiez votre connexion internet.";
-  } else if (error.message.includes("language")) {
-    errorMessage = "🔤 Erreur de langue. L'analyse supporte le français et l'anglais.";
-  } else {
-    errorMessage = `❌ Impossible d'analyser l'image "${fileName}". Assurez-vous que :\n• L'image est nette et bien éclairée\n• Le texte est lisible\n• Le format est supporté (JPG, PNG, etc.)`;
-  }
-  
-  addMessage(errorMessage, "bot");
-}
-
-// Fonction pour traiter les fichiers uploadés
-async function handleFileUpload(file) {
-  if (isImageFile(file)) {
-    // C'est une image - utiliser l'OCR
-    try {
-      const extractedText = await extractTextFromImage(file);
-      
-      if (extractedText && extractedText.length > 0) {
-        // Afficher le texte extrait
-        const ocrResult = addMessage(`📝 Texte extrait de l'image "${file.name}":\n\n${extractedText}`, "user");
-        ocrResult.classList.add('ocr-result');
-        
-        // 🔐 VÉRIFICATION DE L'ACCÈS AVANT TRAITEMENT
-        const acces = verifierAccesIA();
-        if (!acces.ok) {
-          addMessage(acces.message, "bot");
-          return;
-        }
-        
-        // Préparer le message avec le prompt de la tâche
-        const taskPrompt = TASK_PROMPTS[currentTaskType].replace("{sujet}", extractedText);
-        const finalMessage = `[Tâche: ${currentTaskType}] ${taskPrompt}`;
-        
-        // Ajouter à l'historique
-        messageHistory.push({ role: "user", content: finalMessage });
-        
-        // Afficher l'indicateur de frappe
-        const typingIndicator = addTypingIndicator();
-        
-        try {
-          // Appeler l'API Groq via le backend
-          lastApiCall = Date.now();
-          const response = await callGroqAPI(finalMessage);
-          
-          // Supprimer l'indicateur de frappe
-          if (typingIndicator && typingIndicator.parentNode) {
-            typingIndicator.parentNode.remove();
-          }
-          
-          if (response) {
-            // Ajouter la réponse à l'historique et l'afficher
-            messageHistory.push({ role: "assistant", content: response });
-            addMessage(response, "bot");
-            apiErrorCount = 0;
-            
-            // 🔄 INCRÉMENTER LE COMPTEUR DE QUESTIONS
-            const nouvellesQuestionsRestantes = incrementerQuestion();
-            mettreAJourAffichageForfait();
-          }
-        } catch (error) {
-          console.error("Erreur API après OCR:", error);
-          if (typingIndicator && typingIndicator.parentNode) {
-            typingIndicator.parentNode.remove();
-          }
-          addMessage(`❌ Erreur: ${error.message}`, "bot");
-        }
-        
-      } else {
-        addMessage("❌ Aucun texte n'a été détecté dans l'image. Veuillez essayer avec une image plus claire.", "bot");
-      }
-    } catch (error) {
-      console.error('Erreur traitement OCR:', error);
-      handleOCRError(error, file.name);
-    }
-  } else {
-    // Ce n'est pas une image - comportement normal
-    displayFile(file);
-  }
-}
+// Initialiser le scroll vers le bas
+scrollToBottom();
 
 // Gestion de la sélection du type de tâche
 taskSelector.addEventListener("click", (e) => {
@@ -392,20 +259,22 @@ messageInput.addEventListener("keydown", (e) => {
       // Ctrl+Entrée envoie le message
       e.preventDefault();
       sendMessage();
+    } else {
+      // Entrée seule fait un saut de ligne
+      // Comportement par défaut préservé
     }
-    // Entrée seule fait un saut de ligne (comportement par défaut préservé)
   }
 });
 
 // Gestion du bouton d'upload
 uploadBtn.addEventListener("click", () => fileInput.click());
 
-// Événement change du fileInput
-fileInput.addEventListener("change", async () => {
+// Gestion de la sélection de fichiers
+fileInput.addEventListener("change", () => {
   const files = fileInput.files;
   if (files.length > 0) {
     for (let i = 0; i < files.length; i++) {
-      await handleFileUpload(files[i]);
+      displayFile(files[i]);
     }
     fileInput.value = "";
   }
@@ -444,7 +313,7 @@ async function sendMessage() {
     const typingIndicator = addTypingIndicator();
 
     try {
-      // Appeler l'API Groq via le backend
+      // Appeler l'API Groq
       lastApiCall = Date.now();
       const response = await callGroqAPI(finalMessage);
       
@@ -475,19 +344,18 @@ async function sendMessage() {
         typingIndicator.parentNode.remove();
       }
       
-      addMessage(`❌ Erreur: ${error.message}`, "bot");
+      handleGenericError(userMessage);
     }
   }
 }
 
-// Fonction pour appeler l'API Groq via le proxy backend (version simplifiée)
+// Fonction pour appeler l'API Groq
 async function callGroqAPI(userPrompt) {
-  console.log("🔄 Appel API via proxy backend...");
-  
   try {
-    const response = await fetch(`${BACKEND_URL}/api/groq-proxy`, {
+    const response = await fetch(GROQ_API_URL, {
       method: "POST",
       headers: {
+        "Authorization": `Bearer ${GROQ_API_KEY}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -498,46 +366,103 @@ async function callGroqAPI(userPrompt) {
       })
     });
 
-    console.log(`📡 Statut backend: ${response.status}`);
-    
     if (!response.ok) {
-      let errorDetails = `Erreur HTTP: ${response.status}`;
-      try {
-        const errorData = await response.json();
-        errorDetails = errorData.error || errorDetails;
-        if (errorData.details) {
-          errorDetails += ` - ${errorData.details}`;
-        }
-      } catch (e) {
-        // Si la réponse n'est pas du JSON
-        errorDetails = await response.text();
-      }
-      
-      throw new Error(errorDetails);
+      throw new Error(`Erreur API Groq: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
-    
-    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-      throw new Error("Format de réponse invalide de l'API");
+
+    if (data.error) {
+      console.error("Erreur API Groq :", data.error.message);
+      return null;
     }
-    
-    console.log("✅ Réponse reçue avec succès");
+
     return data.choices[0].message.content.trim();
     
   } catch (error) {
-    console.error("💥 Erreur callGroqAPI:", error);
+    console.error("Erreur lors de l'appel à Groq :", error);
+    throw error;
+  }
+}
+
+// Fonction pour gérer les erreurs génériques
+function handleGenericError(originalMessage) {
+  const errorMsg = document.createElement("div");
+  errorMsg.classList.add("message", "bot");
+  errorMsg.innerHTML = `
+    <div class="bot-message-content">
+      <div style="background: #ffe6e6; border: 1px solid #ffcccc; color: #cc0000; padding: 10px; border-radius: 8px; margin: 10px 0;">
+        <strong>Problème de connexion</strong><br>
+        Impossible de contacter le service pour le moment. 
+        Voici une réponse générée localement :<br><br>
+        <strong>En tant que Professeur ClassePro</strong>, je rencontre des difficultés techniques. 
+        ${generateFallbackResponse(originalMessage)}
+        <br><br>
+        <button class="retry-btn" onclick="retryLastMessage()" style="background: linear-gradient(135deg, #3D3B8E, #FF7E5F); color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; margin-top: 10px; font-weight: bold;">Réessayer</button>
+      </div>
+    </div>
+  `;
+  chatMessages.appendChild(errorMsg);
+  scrollToBottom();
+}
+
+// Fonction pour regénérer une réponse de secours
+function generateFallbackResponse(message) {
+  const taskTitles = {
+    cours: "cours complet",
+    explication: "explication simplifiée",
+    exercices: "exercices avec corrigés",
+    resume: "résumé",
+    qcm: "QCM interactif",
+    dissertation: "dissertation",
+    correction: "correction de texte",
+    maths: "exercices de maths",
+    fiche: "fiche de révision"
+  };
+  
+  return `Je prépare ${taskTitles[currentTaskType]} sur "${message}". Une fois le service rétabli, je pourrai vous fournir un contenu structuré et pédagogique. En attendant, vous pouvez reformuler votre demande ou essayer un autre type de contenu.`;
+}
+
+// Fonction pour réessayer le dernier message
+window.retryLastMessage = function() {
+  // Supprimer le message d'erreur
+  const lastMessage = chatMessages.lastChild;
+  if (lastMessage && lastMessage.querySelector('.error-message')) {
+    lastMessage.remove();
+  }
+  
+  // Réessayer d'envoyer le dernier message utilisateur
+  const lastUserMessage = messageHistory[messageHistory.length - 1];
+  if (lastUserMessage && lastUserMessage.role === 'user') {
+    sendMessageToAPI(lastUserMessage.content);
+  }
+};
+
+// Fonction pour envoyer un message à l'API (séparée pour la réutilisation)
+async function sendMessageToAPI(message) {
+  const typingIndicator = addTypingIndicator();
+  
+  try {
+    lastApiCall = Date.now();
+    const response = await callGroqAPI(message);
     
-    // Messages d'erreur plus clairs
-    if (error.message.includes('401')) {
-      throw new Error("🔐 Erreur d'authentification - Veuillez contacter le support");
-    } else if (error.message.includes('429')) {
-      throw new Error("⏳ Limite de requêtes atteinte - Réessayez dans quelques instants");
-    } else if (error.message.includes('network') || error.message.includes('fetch')) {
-      throw new Error("🌐 Problème de connexion - Vérifiez votre connexion internet");
-    } else {
-      throw new Error(`❌ Erreur: ${error.message}`);
+    if (typingIndicator && typingIndicator.parentNode) {
+      typingIndicator.parentNode.remove();
     }
+    
+    if (response) {
+      messageHistory.push({ role: "assistant", content: response });
+      addMessage(response, "bot");
+      apiErrorCount = 0;
+    } else {
+      throw new Error("Aucune réponse de l'API Groq");
+    }
+  } catch (error) {
+    console.error("Erreur lors de la nouvelle tentative:", error);
+    if (typingIndicator && typingIndicator.parentNode) {
+      typingIndicator.parentNode.remove();
+    }
+    handleGenericError(message);
   }
 }
 
@@ -641,7 +566,7 @@ function resetTextareaHeight() {
   messageInput.style.height = "auto";
 }
 
-// Fonction pour afficher un fichier dans la conversation (pour fichiers non-images)
+// Fonction pour afficher un fichier dans la conversation
 function displayFile(file) {
   const preview = document.createElement("div");
   preview.classList.add("message", "user", "file-preview");
@@ -760,7 +685,6 @@ function addMessage(text, sender) {
   
   chatMessages.appendChild(msg);
   scrollToBottom();
-  return msg;
 }
 
 // FONCTION SCROLLTOBOTTON AMÉLIORÉE - CORRECTION CRITIQUE
@@ -782,32 +706,9 @@ function scrollToBottom() {
   }, 100);
 }
 
-// 🧪 FONCTION DE TEST DE CONNECTIVITÉ
-async function testBackendConnectivity() {
-  try {
-    console.log("🧪 Test de connectivité backend...");
-    
-    const healthResponse = await fetch(`${BACKEND_URL}/api/health`);
-    const healthData = await healthResponse.json();
-    
-    console.log("Résultat health check:", healthData);
-    
-    if (healthData.status === "success") {
-      console.log("✅ Backend et Groq opérationnels");
-      return true;
-    } else {
-      console.error("❌ Problème backend:", healthData.message);
-      return false;
-    }
-  } catch (error) {
-    console.error("💥 Impossible de joindre le backend:", error);
-    return false;
-  }
-}
-
 // Initialisation au chargement de la page
 document.addEventListener('DOMContentLoaded', function() {
-  console.log("Professeur ClassePro initialisé avec backend sécurisé et OCR Tesseract.js");
+  console.log("Professeur ClassePro initialisé avec API Groq et LLaMA 4 Scout");
   
   // 🔄 INITIALISER L'AFFICHAGE DU FORFAIT
   mettreAJourAffichageForfait();
@@ -817,13 +718,4 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Forcer le scroll vers le bas au chargement initial
   setTimeout(scrollToBottom, 500);
-  
-  // 🧪 Test de connectivité (optionnel - pour débogage)
-  testBackendConnectivity().then(success => {
-    if (success) {
-      console.log("🎉 Système opérationnel");
-    } else {
-      console.error("🔧 Vérifiez la configuration du backend");
-    }
-  });
 });
