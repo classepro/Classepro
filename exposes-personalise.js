@@ -213,7 +213,7 @@ function afficherConfirmationSucces() {
   }).then((result) => {
     if (result.isConfirmed) {
       // Rediriger vers la page des exposés
-      window.location.href = 'exposes.html';
+      window.location.href = 'exposes-personalise.html';
     }
   });
 }
