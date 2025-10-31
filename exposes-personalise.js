@@ -18,7 +18,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // URL de votre backend (à adapter selon votre déploiement)
-const BACKEND_URL = "https://test-pehc.onrender.com"; // Remplace par ton URL de backend
+const BACKEND_URL = "https://ton-backend.herokuapp.com"; // Remplace par ton URL de backend
 
 // Références aux éléments du DOM
 const form = document.getElementById('expose-request-form');
@@ -45,6 +45,19 @@ const closePaymentModal = document.getElementById('close-payment-modal');
 // Variables pour stocker les données du formulaire
 let formData = {};
 let currentPaymentData = {};
+
+// Fonction pour marquer une demande comme payée dans le localStorage
+function markExposeAsPaid(exposeId) {
+  const paidExposes = JSON.parse(localStorage.getItem('paidExposes')) || {};
+  paidExposes[exposeId] = true;
+  localStorage.setItem('paidExposes', JSON.stringify(paidExposes));
+}
+
+// Fonction pour vérifier si une demande a été payée
+function isExposePaid(exposeId) {
+  const paidExposes = JSON.parse(localStorage.getItem('paidExposes')) || {};
+  return paidExposes[exposeId] === true;
+}
 
 // Gestion de la sélection du moyen de notification
 function selectNotificationOption(selectedOption) {
@@ -155,7 +168,9 @@ async function initierPaiement(email, montant, sourcePage, formData) {
         email: email,
         amount: montant,
         sourcePage: sourcePage,
-        formData: formData
+        formData: formData,
+        // Spécifier la page de retour explicite
+        callback_url: window.location.origin + '/exposes-personalise.html?paid=true'
       }),
     });
 
@@ -164,6 +179,9 @@ async function initierPaiement(email, montant, sourcePage, formData) {
     if (data.status && data.data.authorization_url) {
       // Stocker les données du formulaire dans le localStorage pour récupération après paiement
       localStorage.setItem('pendingExposeRequest', JSON.stringify(formData));
+      
+      // Sauvegarder l'ID temporaire pour référence
+      localStorage.setItem('lastExposeRequestId', 'expose_perso_' + Date.now());
       
       // Rediriger vers l'URL de paiement Paystack
       window.location.href = data.data.authorization_url;
@@ -202,9 +220,9 @@ async function enregistrerDemandeFirestore(donnees) {
 function afficherConfirmationSucces() {
   Swal.fire({
     title: '✅ Demande envoyée avec succès !',
-    text: 'Votre demande d\'exposé personnalisé a été reçue et sera traitée dans les plus brefs délais.',
+    text: 'Votre demande d\'exposé personnalisé a été reçue et sera traitée dans les plus brefs délais. Vous recevrez une confirmation par ' + (formData.notificationType === 'whatsapp' ? 'WhatsApp' : 'email') + ' sous peu.',
     icon: 'success',
-    confirmButtonText: 'OK',
+    confirmButtonText: 'Retour aux exposés',
     confirmButtonColor: '#3D3B8E',
     background: '#F9F9F9',
     customClass: {
@@ -213,9 +231,74 @@ function afficherConfirmationSucces() {
   }).then((result) => {
     if (result.isConfirmed) {
       // Rediriger vers la page des exposés
-      window.location.href = 'exposes-personalise.html';
+      window.location.href = 'exposes.html';
     }
   });
+}
+
+// Vérifier si un paiement vient d'être effectué
+async function verifierPaiementRecent() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const paid = urlParams.get('paid');
+  
+  if (paid === 'true') {
+    // Récupérer les données du formulaire depuis le localStorage
+    const pendingData = localStorage.getItem('pendingExposeRequest');
+    
+    if (pendingData) {
+      try {
+        const formData = JSON.parse(pendingData);
+        
+        // Afficher un indicateur de chargement
+        Swal.fire({
+          title: 'Traitement en cours...',
+          text: 'Enregistrement de votre demande',
+          icon: 'info',
+          showConfirmButton: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+        
+        // Enregistrer la demande dans Firestore
+        const docId = await enregistrerDemandeFirestore(formData);
+        
+        // Marquer comme payé dans le localStorage
+        markExposeAsPaid(docId);
+        
+        // Nettoyer le localStorage
+        localStorage.removeItem('pendingExposeRequest');
+        localStorage.removeItem('lastExposeRequestId');
+        
+        // Nettoyer l'URL et rediriger vers exposes-personalise.html
+        window.history.replaceState({}, document.title, 'exposes-personalise.html');
+        
+        // Afficher la confirmation de succès
+        Swal.close();
+        afficherConfirmationSucces();
+        
+      } catch (error) {
+        console.error("Erreur lors de l'enregistrement après paiement: ", error);
+        Swal.fire({
+          title: 'Erreur',
+          text: 'Une erreur est survenue lors de l\'enregistrement de votre demande. Veuillez nous contacter.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+    } else {
+      // Si pas de données dans le localStorage mais paiement réussi
+      Swal.fire({
+        title: 'Paiement réussi !',
+        text: 'Votre paiement a été traité avec succès.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        window.history.replaceState({}, document.title, 'exposes-personalise.html');
+      });
+    }
+  }
 }
 
 // Ouvrir la modale de paiement
@@ -350,57 +433,6 @@ paystackBtn.addEventListener('click', async function() {
   // Appeler la fonction de paiement
   await initierPaiement(email, amount, sourcePage, formData);
 });
-
-// Vérifier si un paiement vient d'être effectué
-async function verifierPaiementRecent() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const paid = urlParams.get('paid');
-  
-  if (paid === 'true') {
-    // Récupérer les données du formulaire depuis le localStorage
-    const pendingData = localStorage.getItem('pendingExposeRequest');
-    
-    if (pendingData) {
-      try {
-        const formData = JSON.parse(pendingData);
-        
-        // Afficher un indicateur de chargement
-        Swal.fire({
-          title: 'Traitement en cours...',
-          text: 'Enregistrement de votre demande',
-          icon: 'info',
-          showConfirmButton: false,
-          allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          }
-        });
-        
-        // Enregistrer la demande dans Firestore
-        const docId = await enregistrerDemandeFirestore(formData);
-        
-        // Nettoyer le localStorage
-        localStorage.removeItem('pendingExposeRequest');
-        
-        // Nettoyer l'URL
-        window.history.replaceState({}, document.title, window.location.pathname);
-        
-        // Afficher la confirmation de succès
-        Swal.close();
-        afficherConfirmationSucces();
-        
-      } catch (error) {
-        console.error("Erreur lors de l'enregistrement après paiement: ", error);
-        Swal.fire({
-          title: 'Erreur',
-          text: 'Une erreur est survenue lors de l\'enregistrement de votre demande. Veuillez nous contacter.',
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
-      }
-    }
-  }
-}
 
 // Gestion des événements de la modale de paiement
 closePaymentModal.addEventListener('click', closeModal);
