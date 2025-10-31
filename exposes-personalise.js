@@ -18,7 +18,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // URL de votre backend (à adapter selon votre déploiement)
-const BACKEND_URL = "https://ton-backend.herokuapp.com"; // Remplace par ton URL de backend
+const BACKEND_URL = "https://backend-lmxf.onrender.com"; // Remplace par ton URL de backend
 
 // Références aux éléments du DOM
 const form = document.getElementById('expose-request-form');
