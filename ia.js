@@ -1,5 +1,5 @@
 // Configuration Groq
-const GROQ_API_KEY = "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";
+const GROQ_API_KEY = "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";
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const MODEL = "meta-llama/llama-4-scout-17b-16e-instruct";
 
