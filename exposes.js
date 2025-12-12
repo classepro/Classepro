@@ -54,27 +54,53 @@ const exposesPerPage = 6;
 let currentExposeId = null;
 let currentExposePrice = 0;
 let currentExposeTitle = '';
+let currentPaymentReference = null;
 
 // Fonction pour vérifier si un paiement vient d'être effectué
-function verifierPaiementRecent() {
+async function verifierPaiementRecent() {
   const urlParams = new URLSearchParams(window.location.search);
-  const paid = urlParams.get('paid');
+  const reference = urlParams.get('reference');
+  const transactionId = urlParams.get('trxref');
   
-  if (paid === 'true') {
-    showSuccessMessage('🎉 Paiement réussi ! Votre exposé est maintenant débloqué.');
-
-    // ✅ Débloquer automatiquement l'exposé payé
-    const lastExposeId = localStorage.getItem('lastExposeId');
-    if (lastExposeId) {
-      markExposeAsPaid(lastExposeId);
-      localStorage.removeItem('lastExposeId');
-    }
-
-    // Optionnel: retirer le paramètre de l'URL sans recharger la page
-    window.history.replaceState({}, document.title, window.location.pathname);
+  // Utiliser la référence ou transactionId
+  const paymentRef = reference || transactionId;
+  
+  if (paymentRef) {
+    console.log(`🔍 Vérification du paiement avec référence: ${paymentRef}`);
     
-    // Recharger les exposés pour afficher le contenu débloqué
-    loadExposes();
+    try {
+      // Vérifier le statut du paiement avec notre backend
+      const response = await fetch(`${BACKEND_URL}/check-payment/${paymentRef}`);
+      const result = await response.json();
+      
+      if (result.status === 'success') {
+        showSuccessMessage('🎉 Paiement réussi ! Votre exposé est maintenant débloqué.');
+        
+        // Récupérer l'ID de l'exposé depuis le localStorage
+        const exposeId = localStorage.getItem(`pending_expose_${paymentRef}`);
+        
+        if (exposeId) {
+          markExposeAsPaid(exposeId);
+          // Nettoyer le localStorage
+          localStorage.removeItem(`pending_expose_${paymentRef}`);
+        }
+        
+        // Retirer les paramètres de l'URL sans recharger la page
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // Recharger les exposés pour afficher le contenu débloqué
+        loadExposes();
+      } else {
+        // Paiement échoué ou en attente
+        showErrorMessage(`❌ Paiement non confirmé. Statut: ${result.status || 'inconnu'}`);
+        
+        // Optionnel: retirer les paramètres de l'URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    } catch (error) {
+      console.error('Erreur lors de la vérification du paiement:', error);
+      showErrorMessage('⚠️ Impossible de vérifier le statut du paiement. Veuillez réessayer.');
+    }
   }
 }
 
@@ -82,19 +108,51 @@ function verifierPaiementRecent() {
 function showSuccessMessage(message) {
   // Créer une notification toast
   const toast = document.createElement('div');
-  toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50';
-  toast.textContent = message;
+  toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 animate-pulse';
+  toast.innerHTML = `
+    <div class="flex items-center">
+      <i class="fas fa-check-circle mr-2"></i>
+      <span>${message}</span>
+    </div>
+  `;
   document.body.appendChild(toast);
   
-  // Supprimer la notification après 3 secondes
+  // Supprimer la notification après 5 secondes
   setTimeout(() => {
-    document.body.removeChild(toast);
-  }, 3000);
+    if (toast.parentNode) {
+      document.body.removeChild(toast);
+    }
+  }, 5000);
+}
+
+// Fonction pour afficher un message d'erreur
+function showErrorMessage(message) {
+  // Créer une notification toast
+  const toast = document.createElement('div');
+  toast.className = 'fixed top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 animate-pulse';
+  toast.innerHTML = `
+    <div class="flex items-center">
+      <i class="fas fa-exclamation-triangle mr-2"></i>
+      <span>${message}</span>
+    </div>
+  `;
+  document.body.appendChild(toast);
+  
+  // Supprimer la notification après 5 secondes
+  setTimeout(() => {
+    if (toast.parentNode) {
+      document.body.removeChild(toast);
+    }
+  }, 5000);
 }
 
 // Fonction pour initier le paiement avec callback_url dynamique
-async function initierPaiement(email, montant, sourcePage) {
+async function initierPaiement(email, montant, sourcePage, exposeId) {
   try {
+    paymentStatus.textContent = "🔄 Initialisation du paiement...";
+    paymentStatus.className = "payment-status payment-processing";
+    paymentStatus.classList.remove('hidden');
+    
     const response = await fetch(`${BACKEND_URL}/create-payment`, {
       method: 'POST',
       headers: {
@@ -109,7 +167,11 @@ async function initierPaiement(email, montant, sourcePage) {
 
     const data = await response.json();
     
-    if (data.status && data.data.authorization_url) {
+    if (data.status && data.data.authorization_url && data.data.reference) {
+      // Stocker l'association entre la référence et l'ID de l'exposé
+      currentPaymentReference = data.data.reference;
+      localStorage.setItem(`pending_expose_${currentPaymentReference}`, exposeId);
+      
       // Rediriger vers l'URL de paiement Paystack
       window.location.href = data.data.authorization_url;
     } else {
@@ -214,11 +276,14 @@ function displayExposes() {
     // Générer le bouton d'action (téléchargement ou paiement)
     let actionButton = '';
     if (isAccessible) {
-      actionButton = `<a href="${expose.downloadUrl}" target="_blank" class="expose-download">
+      // Si l'exposé est accessible, afficher le bouton de téléchargement
+      const downloadUrl = expose.downloadUrl || `https://docs.google.com/document/d/${expose.id}/export?format=pdf`;
+      actionButton = `<a href="${downloadUrl}" target="_blank" class="expose-download" onclick="event.stopPropagation();">
         <i class="fas fa-download mr-2"></i>Télécharger
       </a>`;
     } else {
-      actionButton = `<button class="payment-btn" onclick="openPaymentModal('${expose.id}', ${expose.prix}, '${expose.titre.replace(/'/g, "\\'")}')">
+      // Sinon, afficher le bouton de paiement
+      actionButton = `<button class="payment-btn" onclick="event.stopPropagation(); openPaymentModal('${expose.id}', ${expose.prix}, '${expose.titre.replace(/'/g, "\\'")}')">
         <i class="fas fa-lock mr-1"></i>Accéder à l'exposé
         <span class="price-tag">${expose.prix} CFA</span>
       </button>`;
@@ -226,8 +291,9 @@ function displayExposes() {
     
     // Générer le bouton d'aperçu (uniquement pour les exposés accessibles avec previewUrl)
     let previewButton = '';
-    if (isAccessible && expose.previewUrl) {
-      previewButton = `<a href="${expose.previewUrl}" target="_blank" class="preview-btn" title="Voir l'exposé">
+    if (isAccessible && (expose.previewUrl || expose.downloadUrl)) {
+      const previewUrl = expose.previewUrl || expose.downloadUrl || '#';
+      previewButton = `<a href="${previewUrl}" target="_blank" class="preview-btn" title="Voir l'exposé" onclick="event.stopPropagation();">
         <i class="fas fa-eye"></i> Voir l'exposé
       </a>`;
     }
@@ -265,9 +331,6 @@ window.openPaymentModal = function(exposeId, price, exposeTitle) {
   currentExposePrice = price;
   currentExposeTitle = exposeTitle;
   
-  // ✅ AJOUT: Sauvegarde temporaire de l'exposé payé
-  localStorage.setItem('lastExposeId', exposeId);
-  
   // Remplir les informations de la modale
   paymentEmail.value = localStorage.getItem('userEmail') || '';
   exposeTitleElement.textContent = exposeTitle;
@@ -290,6 +353,8 @@ function closeModal() {
   currentExposeId = null;
   currentExposePrice = 0;
   currentExposeTitle = '';
+  paymentStatus.textContent = '';
+  paymentStatus.className = 'payment-status hidden';
 }
 
 // Fonction pour initier le paiement avec redirection
@@ -300,6 +365,17 @@ async function initiatePayment() {
     paymentStatus.textContent = "⚠️ Veuillez entrer un email valide.";
     paymentStatus.className = "payment-status payment-error";
     paymentStatus.classList.remove('hidden');
+    paymentEmail.focus();
+    return;
+  }
+
+  // Validation basique de l'email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    paymentStatus.textContent = "❌ Format d'email invalide.";
+    paymentStatus.className = "payment-status payment-error";
+    paymentStatus.classList.remove('hidden');
+    paymentEmail.focus();
     return;
   }
 
@@ -308,12 +384,22 @@ async function initiatePayment() {
   // Déterminer la page source (pour exposes.html, c'est "exposes")
   const sourcePage = "exposes";
   
-  paymentStatus.textContent = "🔄 Redirection vers Paystack...";
+  paymentStatus.textContent = "🔄 Initialisation du paiement...";
   paymentStatus.className = "payment-status payment-processing";
   paymentStatus.classList.remove('hidden');
   
-  // Appeler la nouvelle fonction de paiement
-  await initierPaiement(email, currentExposePrice, sourcePage);
+  // Désactiver le bouton pendant le traitement
+  paystackBtn.disabled = true;
+  paystackBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Traitement...';
+  
+  try {
+    // Appeler la fonction de paiement avec l'ID de l'exposé
+    await initierPaiement(email, currentExposePrice, sourcePage, currentExposeId);
+  } finally {
+    // Réactiver le bouton en cas d'erreur
+    paystackBtn.disabled = false;
+    paystackBtn.innerHTML = '<i class="fas fa-credit-card mr-2"></i><span>Payer maintenant</span>';
+  }
 }
 
 // Mettre à jour la pagination
