@@ -458,23 +458,210 @@ footer {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-/* Styles pour le statut de paiement */
-.payment-success {
-  background-color: #f0fff4;
-  border: 1px solid #9ae6b4;
-  color: #2d774a;
+/* Styles pour les notifications toast */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.payment-error {
-  background-color: #fed7d7;
-  border: 1px solid #feb2b2;
-  color: #c53030;
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
-.payment-processing {
-  background-color: #ebf8ff;
-  border: 1px solid #90cdf4;
-  color: #2c5aa0;
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.z-50 {
+  z-index: 50;
+}
+
+/* Animation pour les boutons désactivés */
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Amélioration du focus pour accessibilité */
+button:focus, input:focus, select:focus {
+  outline: 2px solid #6883BA;
+  outline-offset: 2px;
+}
+
+/* Styles pour le statut de paiement dans la modale */
+.payment-status {
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-top: 15px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.payment-status.success {
+  background-color: #d1fae5;
+  border: 1px solid #10b981;
+  color: #065f46;
+}
+
+.payment-status.error {
+  background-color: #fee2e2;
+  border: 1px solid #ef4444;
+  color: #7f1d1d;
+}
+
+.payment-status.processing {
+  background-color: #dbeafe;
+  border: 1px solid #3b82f6;
+  color: #1e3a8a;
+}
+
+.payment-status i {
+  margin-right: 8px;
+}
+
+/* Style pour le spinner dans les boutons */
+.fa-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Styles supplémentaires pour les notifications */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1001;
+  animation: fadeInUp 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 400px;
+}
+
+.notification.success {
+  background-color: #10b981;
+}
+
+.notification.error {
+  background-color: #ef4444;
+}
+
+.notification.warning {
+  background-color: #f59e0b;
+}
+
+.notification.info {
+  background-color: #3b82f6;
+}
+
+/* Amélioration de la scrollbar pour la modale */
+.payment-modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.payment-modal-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.payment-modal-content::-webkit-scrollbar-thumb {
+  background: #c7d2fe;
+  border-radius: 10px;
+}
+
+.payment-modal-content::-webkit-scrollbar-thumb:hover {
+  background: #a5b4fc;
+}
+
+/* Style pour le bouton de fermeture de la modale */
+#close-payment-modal {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 5px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#close-payment-modal:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Amélioration des transitions pour les cartes fiches */
+.fiche-image {
+  transition: all 0.3s ease;
+}
+
+.fiche-card:hover .fiche-image {
+  transform: scale(1.05);
+}
+
+/* Style pour les indicateurs de chargement supplémentaires */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.loading-overlay .spinner {
+  border-width: 5px;
+  width: 60px;
+  height: 60px;
+}
+
+/* Support pour les navigateurs qui ne supportent pas backdrop-filter */
+@supports not (backdrop-filter: blur(5px)) {
+  .payment-modal {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Amélioration de l'accessibilité pour les lecteurs d'écran */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Media Queries pour la responsivité */
@@ -515,6 +702,12 @@ footer {
     margin: 20px;
     width: calc(100% - 40px);
   }
+  
+  .notification {
+    left: 20px;
+    right: 20px;
+    max-width: calc(100% - 40px);
+  }
 }
 
 @media (max-width: 480px) {
@@ -526,5 +719,18 @@ footer {
   .payment-btn, .fiche-download-btn {
     padding: 0.5rem 0.8rem;
     font-size: 0.75rem;
+  }
+  
+  .filter-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+    margin-right: 0.3rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .payment-modal-content {
+    padding: 15px;
+    margin: 15px;
+    width: calc(100% - 30px);
   }
 }
