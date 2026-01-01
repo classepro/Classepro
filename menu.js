@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
     menuToggle.addEventListener('click', function() {
       navLinks.classList.toggle('active');
       
-      // Animation des lignes du hamburger
       const spans = this.querySelectorAll('span');
       if (navLinks.classList.contains('active')) {
         spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
@@ -20,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
-    // Fermer le menu en cliquant à l'extérieur
     document.addEventListener('click', function(e) {
       if (!e.target.closest('.navbar')) {
         navLinks.classList.remove('active');
@@ -30,8 +28,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       }
     });
+    
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', function() {
+        navLinks.classList.remove('active');
+        document.querySelectorAll('.menu-toggle span').forEach(span => {
+          span.style.transform = 'none';
+          span.style.opacity = '1';
+        });
+      });
+    });
   }
-
+  
   // Gestion du diaporama
   const carousel = document.querySelector('.carousel');
   const inner = document.querySelector('.carousel-inner');
@@ -42,13 +50,11 @@ document.addEventListener('DOMContentLoaded', function() {
   
   let currentIndex = 0;
   let intervalId = null;
-  const intervalTime = 5000; // 5 secondes
+  const intervalTime = 5000;
   
-  // Fonction pour mettre à jour le diaporama
   function updateCarousel() {
     inner.style.transform = `translateX(-${currentIndex * 100}%)`;
     
-    // Mettre à jour les indicateurs
     indicators.forEach((indicator, index) => {
       if (index === currentIndex) {
         indicator.classList.add('active');
@@ -58,29 +64,24 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Fonction pour passer à la diapositive suivante
   function nextSlide() {
     currentIndex = (currentIndex + 1) % items.length;
     updateCarousel();
   }
   
-  // Fonction pour passer à la diapositive précédente
   function prevSlide() {
     currentIndex = (currentIndex - 1 + items.length) % items.length;
     updateCarousel();
   }
   
-  // Démarrer le défilement automatique
   function startAutoSlide() {
     intervalId = setInterval(nextSlide, intervalTime);
   }
   
-  // Arrêter le défilement automatique
   function stopAutoSlide() {
     clearInterval(intervalId);
   }
   
-  // Événements pour les boutons de navigation
   nextBtn.addEventListener('click', () => {
     stopAutoSlide();
     nextSlide();
@@ -93,7 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
     startAutoSlide();
   });
   
-  // Événements pour les indicateurs
   indicators.forEach(indicator => {
     indicator.addEventListener('click', () => {
       stopAutoSlide();
@@ -103,12 +103,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Arrêter le défilement automatique quand la souris est sur le diaporama
   carousel.addEventListener('mouseenter', stopAutoSlide);
-  
-  // Redémarrer le défilement automatique quand la souris quitte le diaporama
   carousel.addEventListener('mouseleave', startAutoSlide);
   
-  // Démarrer le diaporama
   startAutoSlide();
+  
+  // Animation des cartes
+  const cards = document.querySelectorAll('.card');
+  cards.forEach((card, index) => {
+    card.style.animationDelay = `${index * 0.1}s`;
+  });
 });

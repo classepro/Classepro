@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ClassePro - Plateforme Éducative</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Menu - ClassePro</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="menu.css">
 </head>
-<body class="min-h-screen flex flex-col">
-
-  <!-- Navigation du deuxième fichier -->
+<body>
+  <!-- Navigation -->
   <header>
     <nav class="navbar">
       <div class="logo">
@@ -25,18 +23,17 @@
       <ul class="nav-links">
         <li><a href="index.html">Accueil</a></li>
         <li><a href="#" class="active">Menu</a></li>
+        <li><a href="cours-exercices.html">Cours & Exercices</a></li>
         <li><a href="support.html">Support</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- Contenu principal du premier fichier -->
-  <main class="flex-grow container mx-auto px-4 pt-2 pb-6">
-    <!-- Diaporama intégré à la place de la barre de recherche -->
-    <div class="carousel mb-8">
+  <!-- Diaporama - ÉTIRÉ DE GAUCHE À DROITE -->
+  <div class="carousel-container">
+    <div class="carousel">
       <div class="carousel-inner">
-        <!-- Carte 1: Accueil originale -->
-        <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1522881193457-37ae97c905bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+        <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1522881193457-37ae97c905bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80');">
           <div class="carousel-content">
             <h2>Bienvenue sur ClassePro</h2>
             <p>Votre plateforme éducative pour accéder à des exposés de qualité et obtenir de l'aide pour vos devoirs</p>
@@ -44,53 +41,23 @@
           </div>
         </div>
         
-        <!-- Carte 2: Rapports de stage -->
-        <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+        <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80');">
           <div class="carousel-content">
             <h2>Rapports de Stage Professionnels</h2>
-            <p>ClassePro est également spécialisé dans le traitement des rapports de stage. Obtenez un rapport structuré et professionnel.</p>
+            <p>ClassePro est également spécialisé dans le traitement des rapports de stage</p>
             <a href="support.html?service=rapport-stage" class="btn">Contacter le support</a>
           </div>
         </div>
         
-        <!-- Carte 3: Exposés sur mesure -->
-        <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+        <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80');">
           <div class="carousel-content">
             <h2>Exposés Sur Mesure</h2>
-            <p>Vous souhaitez réaliser un exposé, quel que soit le thème? Notre équipe est à votre disposition pour vous accompagner.</p>
+            <p>Vous souhaitez réaliser un exposé, quel que soit le thème?</p>
             <a href="support.html?service=expose" class="btn">Contacter le support</a>
-          </div>
-        </div>
-        
-        <!-- Carte 4: Outil éducatif sérieux -->
-        <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1591123120675-133d0a4dc34d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwa90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80');">
-          <div class="carousel-content">
-            <h2>Outil Éducatif Complet</h2>
-            <p>ClassePro est un outil éducatif sérieux conçu pour aider les élèves à accroître leurs connaissances et réussir leurs études.</p>
-            <a href="support.html?service=outil-educatif" class="btn">En savoir plus</a>
-          </div>
-        </div>
-        
-        <!-- Carte 5: Mise en forme de rapports -->
-        <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1589652717521-10c0d092dea9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
-          <div class="carousel-content">
-            <h2>Mise en Forme Professionnelle</h2>
-            <p>Nous sommes spécialisés dans la mise en forme de rapports de mémoire et de rapports de stage selon les normes académiques.</p>
-            <a href="support.html?service=mise-en-forme" class="btn">Contacter le support</a>
-          </div>
-        </div>
-        
-        <!-- Carte 6: Conception de documents professionnels -->
-        <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
-          <div class="carousel-content">
-            <h2>Documents Professionnels</h2>
-            <p>ClassePro vous aide également dans la conception de CV professionnels, lettres de motivation, demandes de stage et rédactions de discours.</p>
-            <a href="support.html?service=conception-cv" class="btn">Contacter le support</a>
           </div>
         </div>
       </div>
       
-      <!-- Contrôles de navigation du diaporama -->
       <button class="carousel-nav carousel-prev">
         <i class="fas fa-chevron-left"></i>
       </button>
@@ -98,149 +65,104 @@
         <i class="fas fa-chevron-right"></i>
       </button>
       
-      <!-- Indicateurs de diapositive -->
       <div class="carousel-controls">
         <div class="carousel-indicator active" data-index="0"></div>
         <div class="carousel-indicator" data-index="1"></div>
         <div class="carousel-indicator" data-index="2"></div>
-        <div class="carousel-indicator" data-index="3"></div>
-        <div class="carousel-indicator" data-index="4"></div>
-        <div class="carousel-indicator" data-index="5"></div>
       </div>
     </div>
+  </div>
 
+  <div class="container">
     <!-- Rubriques scolaires -->
-    <section class="mb-8" id="rubriques">
-      <div class="flex items-center mb-4">
-        <div class="card-icon-container">
-          <i class="fas fa-book card-icon"></i>
+    <section class="section" id="rubriques">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-book"></i>
         </div>
-        <h2 class="text-lg font-semibold ml-2">Rubriques <span class="text-secondary">scolaires</span></h2>
+        <h2 class="section-title">Rubriques <span>scolaires</span></h2>
       </div>
       
-      <div class="grid grid-cols-2 gap-3">
-        <a href="cours-exercices.html" class="compact-card rounded-lg shadow p-4 cursor-pointer flex flex-col items-center justify-center">
-          <div class="card-icon-container">
-            <i class="fas fa-graduation-cap card-icon"></i>
+      <div class="cards-grid">
+        <a href="cours-exercices.html" class="card" style="animation-delay: 0.1s;">
+          <div class="card-icon">
+            <i class="fas fa-graduation-cap"></i>
           </div>
-          <h3 class="card-title">Cours & Exercices</h3>
+          <div class="card-title">Cours & Exercices</div>
         </a>
         
-        <a href="exposes.html" class="compact-card rounded-lg shadow p-4 cursor-pointer flex flex-col items-center justify-center">
-          <div class="card-icon-container">
-            <i class="fas fa-chalkboard-teacher card-icon"></i>
+        <a href="exposes.html" class="card" style="animation-delay: 0.2s;">
+          <div class="card-icon">
+            <i class="fas fa-chalkboard-teacher"></i>
           </div>
-          <h3 class="card-title">Exposés</h3>
+          <div class="card-title">Exposés</div>
         </a>
         
-        <!-- Nouvelle rubrique Mon prof virtuel -->
-        <a href="classepro-ia.html" class="compact-card rounded-lg shadow p-4 cursor-pointer flex flex-col items-center justify-center">
-          <div class="card-icon-container">
-            <i class="fas fa-user-graduate card-icon"></i>
+        <a href="prof-virtuel.html" class="card" style="animation-delay: 0.3s;">
+          <div class="card-icon">
+            <i class="fas fa-user-graduate"></i>
           </div>
-          <h3 class="card-title">ClassePro IA</h3>
+          <div class="card-title">Mon prof virtuel</div>
         </a>
         
-        <a href="rapports-stage.html" class="compact-card rounded-lg shadow p-4 cursor-pointer flex flex-col items-center justify-center">
-          <div class="card-icon-container">
-            <i class="fas fa-briefcase card-icon"></i>
+        <a href="rapports-stage.html" class="card" style="animation-delay: 0.4s;">
+          <div class="card-icon">
+            <i class="fas fa-briefcase"></i>
           </div>
-          <h3 class="card-title">Rapports de stage</h3>
+          <div class="card-title">Rapports de stage</div>
         </a>
         
-        <a href="fiches-revision.html" class="compact-card rounded-lg shadow p-4 cursor-pointer flex flex-col items-center justify-center">
-          <div class="card-icon-container">
-            <i class="fas fa-file-alt card-icon"></i>
+        <a href="fiches-revision.html" class="card" style="animation-delay: 0.5s;">
+          <div class="card-icon">
+            <i class="fas fa-file-alt"></i>
           </div>
-          <h3 class="card-title">Fiches de révision</h3>
+          <div class="card-title">Fiches de révision</div>
         </a>
       </div>
     </section>
 
     <!-- Rubriques professionnelles -->
-    <section class="mb-8">
-      <div class="flex items-center mb-4">
-        <div class="card-icon-container">
-          <i class="fas fa-briefcase card-icon"></i>
+    <section class="section">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-briefcase"></i>
         </div>
-        <h2 class="text-lg font-semibold ml-2">Rubriques <span class="text-secondary">professionnelles</span></h2>
+        <h2 class="section-title">Rubriques <span>professionnelles</span></h2>
       </div>
       
-      <div class="grid grid-cols-2 gap-3">
-        <a href="cv.html" class="compact-card rounded-lg shadow p-4 cursor-pointer flex flex-col items-center justify-center">
-          <div class="card-icon-container">
-            <i class="fas fa-id-card card-icon"></i>
+      <div class="cards-grid">
+        <a href="cv.html" class="card" style="animation-delay: 0.6s;">
+          <div class="card-icon">
+            <i class="fas fa-id-card"></i>
           </div>
-          <h3 class="card-title">CV</h3>
+          <div class="card-title">CV</div>
         </a>
         
-        <a href="demande-emploi.html" class="compact-card rounded-lg shadow p-4 cursor-pointer flex flex-col items-center justify-center">
-          <div class="card-icon-container">
-            <i class="fas fa-envelope-open-text card-icon"></i>
+        <a href="demande-emploi.html" class="card" style="animation-delay: 0.7s;">
+          <div class="card-icon">
+            <i class="fas fa-envelope-open-text"></i>
           </div>
-          <h3 class="card-title">Demande d'emploi</h3>
+          <div class="card-title">Demande d'emploi</div>
         </a>
         
-        <a href="demande-stage.html" class="compact-card rounded-lg shadow p-4 cursor-pointer flex flex-col items-center justify-center">
-          <div class="card-icon-container">
-            <i class="fas fa-building card-icon"></i>
+        <a href="demande-stage.html" class="card" style="animation-delay: 0.8s;">
+          <div class="card-icon">
+            <i class="fas fa-building"></i>
           </div>
-          <h3 class="card-title">Demande de stage</h3>
+          <div class="card-title">Demande de stage</div>
         </a>
         
-        <a href="lettre-motivation.html" class="compact-card rounded-lg shadow p-4 cursor-pointer flex flex-col items-center justify-center">
-          <div class="card-icon-container">
-            <i class="fas fa-pen-fancy card-icon"></i>
+        <a href="lettre-motivation.html" class="card" style="animation-delay: 0.9s;">
+          <div class="card-icon">
+            <i class="fas fa-pen-fancy"></i>
           </div>
-          <h3 class="card-title">Lettre de motivation</h3>
+          <div class="card-title">Lettre de motivation</div>
         </a>
       </div>
     </section>
+  </div>
 
-    <!-- Section documents récents -->
-    <section class="mb-8">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-lg font-semibold">Documents récents</h2>
-        <a href="documents.html" class="text-xs text-secondary font-medium">Voir tout</a>
-      </div>
-      
-      <div class="scroll-container overflow-x-auto pb-2">
-        <div class="flex space-x-3">
-          <a href="guide-cv.html" class="bg-white rounded-lg shadow p-3 min-w-[160px] hover:shadow-md transition-shadow">
-            <div class="flex items-center mb-2">
-              <div class="bg-indigo-100 p-1 rounded mr-2">
-                <i class="fas fa-file-pdf text-secondary text-xs"></i>
-              </div>
-              <span class="text-xs font-medium">Guide CV moderne</span>
-            </div>
-            <p class="text-[10px] text-gray-500">Ajouté aujourd'hui</p>
-          </a>
-          
-          <a href="modele-lettre.html" class="bg-white rounded-lg shadow p-3 min-w-[160px] hover:shadow-md transition-shadow">
-            <div class="flex items-center mb-2">
-              <div class="bg-indigo-100 p-1 rounded mr-2">
-                <i class="fas fa-file-word text-secondary text-xs"></i>
-              </div>
-              <span class="text-xs font-medium">Modèle lettre</span>
-            </div>
-            <p class="text-[10px] text-gray-500">Ajouté hier</p>
-          </a>
-          
-          <a href="tableau-competences.html" class="bg-white rounded-lg shadow p-3 min-w-[160px] hover:shadow-md transition-shadow">
-            <div class="flex items-center mb-2">
-              <div class="bg-indigo-100 p-1 rounded mr-2">
-                <i class="fas fa-file-excel text-secondary text-xs"></i>
-              </div>
-              <span class="text-xs font-medium">Tableau compétences</span>
-            </div>
-            <p class="text-[10px] text-gray-500">Ajouté il y a 2 jours</p>
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer du deuxième fichier -->
+  <!-- Footer -->
   <footer>
     <div class="footer-content">
       <h3>ClassePro - Votre réussite, notre priorité</h3>
@@ -251,4 +173,3 @@
   <script src="menu.js"></script>
 </body>
 </html>
-
