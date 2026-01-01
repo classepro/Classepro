@@ -1,173 +1,233 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cours & Exercices - ClassePro</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="cours-exercices.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours & Exercices - ClassePro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="cours-exercices.css">
 </head>
-<body class="min-h-screen flex flex-col">
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>ClassePro</span>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="cours-exercices.html" class="active">Cours & Exercices</a></li>
+                <li><a href="support.html">Support</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <!-- Navigation -->
-  <header>
-    <nav class="navbar">
-      <div class="logo">
-        <i class="fas fa-graduation-cap"></i>
-        <span>ClassePro</span>
-      </div>
-      <button class="menu-toggle" aria-label="Toggle navigation menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <ul class="nav-links">
-        <li><a href="index.html">Accueil</a></li>
-        <li><a href="menu.html">Menu</a></li>
-        <li><a href="cours-exercices.html" class="active">Cours & Exercices</a></li>
-        <li><a href="support.html">Support</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- Contenu principal -->
-  <main class="flex-grow">
-    <!-- Section Hero -->
-    <section class="hero-section">
-      <div class="hero-content">
-        <h1>Cours & Exercices</h1>
-        <p>ClassePro - Votre passerelle vers les ressources pédagogiques officielles du Ministère de l'Éducation Nationale de Côte d'Ivoire.</p>
-      </div>
-    </section>
-
-    <div class="container mx-auto px-4 py-6">
-      <!-- Avantages de la plateforme -->
-      <section class="mb-12">
-        <div class="section-title">
-          <h2>Avantages de notre plateforme</h2>
-          <p>Découvrez pourquoi ClassePro est le choix idéal pour votre réussite académique</p>
+    <div class="container">
+        <div class="header">
+            <h1>Cours & Exercices</h1>
+            <p class="subtitle">Sélectionnez un niveau pour voir les classes disponibles</p>
         </div>
         
-        <div class="features-grid">
-          <div class="feature-card">
-            <div class="feature-icon">
-              <i class="fas fa-book-open"></i>
+        <!-- Niveau Primaire -->
+        <div class="level-category">
+            <div class="level-header" data-level="primaire">
+                <div class="level-title">
+                    <i class="fas fa-child"></i>
+                    Primaire
+                </div>
+                <div class="toggle-icon">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
             </div>
-            <h3>Accès aux Ressources Officielles</h3>
-            <p>ClassePro vous donne un accès direct aux cours et exercices officiels du Ministère de l'Éducation Nationale, couvrant tous les niveaux du préscolaire à la terminale.</p>
-          </div>
-          
-          <div class="feature-card">
-            <div class="feature-icon">
-              <i class="fas fa-clock"></i>
+            <div class="level-classes" id="primaire-classes">
+                <div class="classes-grid">
+                    <a href="matiere-cp1.html" class="class-card">
+                        <div class="class-icon">
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
+                        <div class="class-name">CP1</div>
+                    </a>
+                    
+                    <a href="matiere-cp2.html" class="class-card">
+                        <div class="class-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="class-name">CP2</div>
+                    </a>
+                    
+                    <a href="matiere-ce1.html" class="class-card">
+                        <div class="class-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="class-name">CE1</div>
+                    </a>
+                    
+                    <a href="matiere-ce2.html" class="class-card">
+                        <div class="class-icon">
+                            <i class="fas fa-globe-africa"></i>
+                        </div>
+                        <div class="class-name">CE2</div>
+                    </a>
+                    
+                    <a href="matiere-cm1.html" class="class-card">
+                        <div class="class-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <div class="class-name">CM1</div>
+                    </a>
+                    
+                    <a href="matiere-cm2.html" class="class-card">
+                        <div class="class-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="class-name">CM2</div>
+                    </a>
+                </div>
             </div>
-            <h3>Apprentissage à Son Rythme</h3>
-            <p>Accédez aux contenus pédagogiques 24h/24 et 7j/7 selon votre disponibilité. Apprenez où vous voulez, quand vous voulez, sans contrainte horaire.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Pour les Élèves -->
-      <section class="student-benefits mb-12">
-        <div class="section-title">
-          <h2>Pour les Élèves</h2>
-          <p>Des ressources adaptées à vos besoins pour exceller dans vos études</p>
         </div>
         
-        <div class="benefits-grid">
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <i class="fas fa-tachometer-alt"></i>
+        <!-- Niveau Collège -->
+        <div class="level-category">
+            <div class="level-header" data-level="college">
+                <div class="level-title">
+                    <i class="fas fa-school"></i>
+                    Collège
+                </div>
+                <div class="toggle-icon">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
             </div>
-            <h3>Prenez de l'Avance</h3>
-            <p>Accédez aux contenus des chapitres à venir et préparez-vous à l'avance pour les cours. Arrivez en classe avec une meilleure compréhension des concepts qui seront abordés.</p>
-          </div>
-          
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <i class="fas fa-brain"></i>
+            <div class="level-classes" id="college-classes">
+                <div class="classes-grid">
+                    <a href="matiere-6e.html" class="class-card">
+                        <div class="class-icon">
+                            <i class="fas fa-school"></i>
+                        </div>
+                        <div class="class-name">Classe de 6e</div>
+                    </a>
+                    
+                    <a href="matiere-5e.html" class="class-card">
+                        <div class="class-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="class-name">Classe de 5e</div>
+                    </a>
+                    
+                    <a href="matiere-4e.html" class="class-card">
+                        <div class="class-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <div class="class-name">Classe de 4e</div>
+                    </a>
+                    
+                    <a href="matiere-3e.html" class="class-card">
+                        <div class="class-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="class-name">Classe de 3e</div>
+                    </a>
+                </div>
             </div>
-            <h3>Approfondissez Vos Connaissances</h3>
-            <p>Complétez vos apprentissages scolaires avec des ressources supplémentaires, des exercices interactifs et des explications détaillées pour chaque notion au programme.</p>
-          </div>
-          
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <i class="fas fa-graduation-cap"></i>
-            </div>
-            <h3>Préparez Vos Examens</h3>
-            <p>Bénéficiez de ressources spécifiques pour vous préparer efficacement au BAC et autres examens. Tests blancs, annales corrigées et conseils méthodologiques à votre disposition.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Ressources officielles -->
-      <section class="official-resources mb-12">
-        <div class="official-resources-icon">
-          <i class="fas fa-school"></i>
-        </div>
-        <h2>Ressources Pédagogiques Officielles</h2>
-        <p>ClassePro met à votre disposition un accès direct aux cours et exercices publiés par le Ministère de l'Éducation Nationale de Côte d'Ivoire.</p>
-        <p>Ces ressources couvrent tous les niveaux, du préscolaire à la terminale, et sont disponibles sur le portail officiel.</p>
-        <a href="https://ecole-ci.org" target="_blank" class="official-link">
-          Accéder aux ressources sur ecole-ci.org
-        </a>
-      </section>
-
-      <!-- Section documents récents -->
-      <section class="mb-8">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="text-lg font-semibold">Documents récents</h2>
-          <a href="documents.html" class="text-xs text-secondary font-medium">Voir tout</a>
         </div>
         
-        <div class="scroll-container overflow-x-auto pb-2">
-          <div class="flex space-x-3">
-            <div class="bg-white rounded-lg shadow p-3 min-w-[160px]">
-              <div class="flex items-center mb-2">
-                <div class="bg-indigo-100 p-1 rounded mr-2">
-                  <i class="fas fa-file-pdf text-secondary text-xs"></i>
+        <!-- Niveau Lycée -->
+        <div class="level-category">
+            <div class="level-header" data-level="lycee">
+                <div class="level-title">
+                    <i class="fas fa-university"></i>
+                    Lycée
                 </div>
-                <span class="text-xs font-medium">Cours d'algèbre</span>
-              </div>
-              <p class="text-[10px] text-gray-500">Terminale C</p>
-            </div>
-            
-            <div class="bg-white rounded-lg shadow p-3 min-w-[160px]">
-              <div class="flex items-center mb-2">
-                <div class="bg-indigo-100 p-1 rounded mr-2">
-                  <i class="fas fa-file-word text-secondary text-xs"></i>
+                <div class="toggle-icon">
+                    <i class="fas fa-chevron-down"></i>
                 </div>
-                <span class="text-xs font-medium">Exercices physique</span>
-              </div>
-              <p class="text-[10px] text-gray-500">1ère D</p>
             </div>
-            
-            <div class="bg-white rounded-lg shadow p-3 min-w-[160px]">
-              <div class="flex items-center mb-2">
-                <div class="bg-indigo-100 p-1 rounded mr-2">
-                  <i class="fas fa-file-excel text-secondary text-xs"></i>
+            <div class="level-classes" id="lycee-classes">
+                <!-- Classe de Seconde -->
+                <h3 class="sub-level-title">Seconde</h3>
+                <div class="classes-grid">
+                    <a href="matiere-seconde-a.html" class="class-card">
+                        <div class="class-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="class-name">Seconde A</div>
+                    </a>
+                    
+                    <a href="matiere-seconde-c.html" class="class-card">
+                        <div class="class-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <div class="class-name">Seconde C</div>
+                    </a>
                 </div>
-                <span class="text-xs font-medium">Fiche révision</span>
-              </div>
-              <p class="text-[10px] text-gray-500">Philosophie</p>
+                
+                <!-- Classe de Première -->
+                <h3 class="sub-level-title">Première</h3>
+                <div class="classes-grid">
+                    <a href="matiere-premiere-a.html" class="class-card">
+                        <div class="class-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="class-name">Première A</div>
+                    </a>
+                    
+                    <a href="matiere-premiere-c.html" class="class-card">
+                        <div class="class-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <div class="class-name">Première C</div>
+                    </a>
+                    
+                    <a href="matiere-premiere-d.html" class="class-card">
+                        <div class="class-icon">
+                            <i class="fas fa-dna"></i>
+                        </div>
+                        <div class="class-name">Première D</div>
+                    </a>
+                </div>
+                
+                <!-- Classe de Terminale -->
+                <h3 class="sub-level-title">Terminale</h3>
+                <div class="classes-grid">
+                    <a href="matiere-terminale-a.html" class="class-card">
+                        <div class="class-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div class="class-name">Terminale A</div>
+                    </a>
+                    
+                    <a href="matiere-terminale-d.html" class="class-card">
+                        <div class="class-icon">
+                            <i class="fas fa-dna"></i>
+                        </div>
+                        <div class="class-name">Terminale D</div>
+                    </a>
+                    
+                    <a href="matiere-terminale-c.html" class="class-card">
+                        <div class="class-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <div class="class-name">Terminale C</div>
+                    </a>
+                </div>
             </div>
-          </div>
         </div>
-      </section>
     </div>
-  </main>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-content">
-      <h3>ClassePro - Votre réussite, notre priorité</h3>
-      <p> </p>
-      <p>&copy; 2025 ClassePro. Tous droits réservés.</p>
-    </div>
-  </footer>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3>ClassePro - Votre réussite, notre priorité</h3>
+            <p>&copy; 2025 ClassePro. Tous droits réservés.</p>
+        </div>
+    </footer>
 
-  <script src="cours-exercices.js"></script>
+    <script src="cours-exercices.js"></script>
 </body>
 </html>
