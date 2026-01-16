@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Règles de la Circulation Routière et la Sécurité des Usagers - 6ème - ClassePro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="regles-de-la-circulation-edhc-6e.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>ClassePro</span>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="cours-exercices.html">Cours & Exercices</a></li>
+                <li><a href="support.html">Support</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="header">
+            <h1>Les Règles de la Circulation Routière et la Sécurité des Usagers</h1>
+            <p class="subtitle">Cours d'EDHC - Niveau 6ème - Côte d'Ivoire - Leçon 7</p>
+        </div>
+        
+        <!-- Onglets -->
+        <div class="tabs-container">
+            <button class="tab active" onclick="switchTab('lecon')">Leçon</button>
+            <button class="tab" onclick="switchTab('exercices')">Exercices</button>
+            <button class="tab" onclick="switchTab('astuces')">Astuces</button>
+            <button class="tab" onclick="switchTab('evaluation')">Évaluation</button>
+        </div>
+        
+        <!-- Onglet Leçon -->
+        <div id="lecon" class="tab-content active">
+            <!-- Section 1 : Introduction -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-exclamation-triangle"></i> Introduction : Pourquoi parler des règles de circulation ?</h2>
+                
+                <div class="lesson-content definition-box">
+                    <p>Les <span class="highlight">règles de la circulation routière</span> sont des normes établies pour assurer la sécurité de tous les usagers de la route : piétons, cyclistes, motocyclistes et automobilistes. Ces règles existent pour éviter les accidents et permettre à chacun de se déplacer en toute sécurité.</p>
+                    
+                    <div class="key-point">
+                        <h4>Situation d'apprentissage modifiée :</h4>
+                        <p>Depuis le début de l'année scolaire, plusieurs élèves de ton établissement ont été victimes d'accidents de la circulation en allant ou revenant de l'école. Certains ont été légèrement blessés, d'autres plus gravement. Face à cette situation inquiétante, les élèves de ta classe décident de s'informer sur les règles de la circulation routière pour comprendre leur importance et surtout les appliquer au quotidien.</p>
+                        <p>Cette situation nous amène à nous interroger : <strong>Quelles sont les règles de la circulation routière ? Comment reconnaître la signalisation ? Pourquoi est-il vital de les respecter ?</strong></p>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">À retenir :</div>
+                        <p>La route est un espace partagé par différents usagers. Pour que cette cohabitation se passe bien, des règles précises ont été établies. Ces règles sont matérialisées par une <span class="term">signalisation routière</span> que tout le monde doit connaître et respecter.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 2 : Les éléments de la signalisation -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-road"></i> I. Les Marques, Panneaux et Autres Éléments de la Circulation Routière</h2>
+                
+                <div class="lesson-content">
+                    <h3>1. Les marques sur la chaussée</h3>
+                    
+                    <p>Ce sont des tracés peints directement sur la route qui donnent des informations importantes aux conducteurs.</p>
+                    
+                    <div class="image-grid">
+                        <div class="image-grid-item">
+                            <img src="https://evs-strapi-images.s3.eu-west-3.amazonaws.com/0062c_B_d5835be0c3.jpg" alt="Ligne continue" class="image-box">
+                            <p class="image-caption"><strong>Ligne continue</strong></p>
+                        </div>
+                        <div class="image-grid-item">
+                            <img src="https://evs-strapi-images-prod.imgix.net/0062c_D_f1d375a52b.jpg?w=3840&q=75" alt="Ligne discontinue" class="image-box">
+                            <p class="image-caption"><strong>Ligne discontinue</strong></p>
+                        </div>
+                        <div class="image-grid-item">
+                            <img src="https://www.codeenpoche.fr/static/2f1ceaeb12797609d9c00dafc67c3eb7/52612/passage_pieton.jpg" alt="Passage piéton" class="image-box">
+                            <p class="image-caption"><strong>Passage piéton (bandes blanches)</strong></p>
+                        </div>
+                    </div>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Type de marque</th>
+                                <th>Signification</th>
+                                <th>Explication simple</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="highlight">Ligne continue</span></td>
+                                <td>Interdiction de dépasser</td>
+                                <td>Tu ne peux pas traverser cette ligne pour doubler un autre véhicule</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Ligne discontinue</span></td>
+                                <td>Autorisation de dépasser</td>
+                                <td>Tu peux traverser cette ligne pour doubler si la voie est libre</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Passage piéton (bandes blanches)</span></td>
+                                <td>Traversée réservée aux piétons</td>
+                                <td>Les piétons doivent traverser ici, les véhicules doivent s'arrêter</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="tip-box">
+                        <div class="tip-title">Astuce pour mémoriser :</div>
+                        <p><strong>Continue = Interdiction</strong> (la ligne ne s'arrête pas, toi non plus tu ne dois pas la franchir)</p>
+                        <p><strong>Discontinue = Autorisation</strong> (la ligne s'arrête et reprend, toi aussi tu peux t'arrêter pour dépasser)</p>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>2. Les panneaux de signalisation</h3>
+                    
+                    <p>Les panneaux sont des signaux verticaux placés au bord des routes pour donner des informations aux usagers.</p>
+                    
+                    <div class="image-grid">
+                        <div class="image-grid-item">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoAE-0mrah7wNmXZGSLDqo5LFQ1s_DzWbBgLKfW0t-qIm546gSaa0xlmtB&s=10" alt="Panneau de danger" class="image-box">
+                            <p class="image-caption"><strong>Panneau de danger</strong></p>
+                        </div>
+                        <div class="image-grid-item">
+                            <img src="https://www.direct-collectivites.com/7003-home_default/panneau-acier-de-signalisation-d-interdiction-b2c-cl-1-850-mm.jpg" alt="Panneau d'interdiction" class="image-box">
+                            <p class="image-caption"><strong>Panneau d'interdiction</strong></p>
+                        </div>
+                        <div class="image-grid-item">
+                            <img src="https://www.signalisation.com/pub/media/catalog/product/cache/58fe7f40bca7260b13c89987647db48f/I/m/Image_1282.jpeg" alt="Panneau d'obligation" class="image-box">
+                            <p class="image-caption"><strong>Panneau d'obligation</strong></p>
+                        </div>
+                        <div class="image-grid-item">
+                            <img src="https://www.virages.com/Images/Categorie_A1/C2_Zoom.gif" alt="Panneau d'indication" class="image-box">
+                            <p class="image-caption"><strong>Panneau d'indication</strong></p>
+                        </div>
+                    </div>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Type de panneau</th>
+                                <th>Forme et couleur</th>
+                                <th>Signification</th>
+                                <th>Exemple concret</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="highlight">Panneau de danger</span></td>
+                                <td>Triangle rouge</td>
+                                <td>Avertit d'un danger sur la route</td>
+                                <td>Virage dangereux, passage d'écoliers, dos d'âne</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Panneau d'interdiction</span></td>
+                                <td>Rond rouge</td>
+                                <td>Interdit quelque chose</td>
+                                <td>Interdiction de stationner, sens interdit, limite de vitesse</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Panneau d'obligation</span></td>
+                                <td>Rond bleu</td>
+                                <td>Oblige à faire quelque chose</td>
+                                <td>Direction obligatoire, piste cyclable, port du casque</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Panneau d'indication</span></td>
+                                <td>Carré ou rectangle</td>
+                                <td>Donne une information utile</td>
+                                <td>Parking, hôpital, station-service, arrêt de bus</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">✓</span> Comment retenir les différents panneaux ?</h4>
+                        <ul>
+                            <li><strong>Danger = Triangle</strong> (comme un triangle d'avertissement)</li>
+                            <li><strong>Interdiction = Rond rouge</strong> (comme un "stop" définitif)</li>
+                            <li><strong>Obligation = Rond bleu</strong> (le bleu évoque la directive)</li>
+                            <li><strong>Information = Carré</strong> (comme une carte d'information)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>3. Les feux tricolores</h3>
+                    
+                    <div class="image-container">
+                        <img src="https://static.passetoncode.fr/img1/theme/img/cours/feux-feutricolore.gif" alt="Feu tricolore" class="image-box" style="max-height: 250px;">
+                        <p class="image-caption"><strong>Feu tricolore</strong></p>
+                    </div>
+                    
+                    <div class="grid-2">
+                        <div class="grid-item">
+                            <h4 style="color: #ff3333;">🛑 ROUGE</h4>
+                            <p><strong>Signification :</strong> ARRÊT COMPLET</p>
+                            <ul>
+                                <li>Pour les véhicules : interdiction absolue de passer</li>
+                                <li>Pour les piétons : autorisation de traverser (quand le petit bonhomme est vert)</li>
+                            </ul>
+                            <div class="tip-box" style="margin-top: 1rem;">
+                                <p><strong>Pense à :</strong> "Rouge = Danger, je m'arrange"</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid-item">
+                            <h4 style="color: #ff9900;">🟠 ORANGE</h4>
+                            <p><strong>Signification :</strong> PRÉPARATION</p>
+                            <ul>
+                                <li>Pour les véhicules : s'arrêter (sauf si on est trop près)</li>
+                                <li>Pour les piétons : ne pas commencer à traverser</li>
+                            </ul>
+                            <div class="tip-box" style="margin-top: 1rem;">
+                                <p><strong>Pense à :</strong> "Orange = Attention, je me prépare"</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid-2" style="margin-top: 1.5rem;">
+                        <div class="grid-item">
+                            <h4 style="color: #33cc33;">🟢 VERT</h4>
+                            <p><strong>Signification :</strong> AUTORISATION</p>
+                            <ul>
+                                <li>Pour les véhicules : autorisation de passer</li>
+                                <li>Pour les piétons : interdiction de traverser (sauf passage piéton)</li>
+                            </ul>
+                            <div class="tip-box" style="margin-top: 1rem;">
+                                <p><strong>Pense à :</strong> "Vert = C'est ouvert, je peux y aller"</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid-item">
+                            <h4>👮‍♂️ Les agents de la circulation</h4>
+                            <p><strong>Priorité absolue :</strong> Quand un agent est présent, ses indications priment sur tous les autres signaux.</p>
+                            <ul>
+                                <li><strong>Face à vous :</strong> Interdiction de passer</li>
+                                <li><strong>De profil :</strong> Autorisation de passer</li>
+                                <li><strong>Bras levé :</strong> Arrêt pour tous</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 3 : Les règles de circulation -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-traffic-light"></i> II. Les Règles de la Circulation Routière</h2>
+                
+                <div class="lesson-content">
+                    <h3>1. Définition des règles de circulation</h3>
+                    
+                    <div class="definition-box">
+                        <div class="definition-title">Définition</div>
+                        <p>Les <span class="highlight">règles de la circulation routière</span> sont des attitudes et comportements que doivent observer les piétons, les automobilistes et les conducteurs d'engins à deux roues sur la route pour garantir la sécurité de tous.</p>
+                    </div>
+                    
+                    <div class="important-box">
+                        <h4>Attention !</h4>
+                        <p>Les règles de la circulation ne concernent pas seulement les conducteurs ! Les piétons aussi ont des règles à respecter pour leur propre sécurité et celle des autres.</p>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>2. Les principales règles à connaître</h3>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">1</span> Le respect de la signalisation routière</h4>
+                        <p>C'est la règle fondamentale : respecter tous les panneaux, marques et feux.</p>
+                        <ul>
+                            <li>S'arrêter au feu rouge et au stop</li>
+                            <li>Respecter les limitations de vitesse</li>
+                            <li>Ne pas stationner là où c'est interdit</li>
+                            <li>Traverser uniquement sur les passages piétons</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">2</span> La priorité à droite</h4>
+                        <p>Quand il n'y a pas de signalisation, on doit laisser passer les véhicules venant de la droite.</p>
+                        <div class="example-box">
+                            <div class="example-title">Exemple concret :</div>
+                            <p>Tu es en voiture à une intersection sans feux ni panneaux. Une voiture arrive sur ta droite. Tu dois t'arrêter et la laisser passer avant de t'engager.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">3</span> La conduite à droite pour les cyclistes</h4>
+                        <p>Les vélos et motos doivent circuler sur le côté droit de la chaussée.</p>
+                        <ul>
+                            <li>Ne jamais rouler à contresens</li>
+                            <li>Rester le plus à droite possible</li>
+                            <li>Signaler ses changements de direction avec le bras</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">4</span> La visibilité et le port du casque</h4>
+                        <div class="grid-2">
+                            <div class="grid-item">
+                                <h5>👁️ La visibilité</h5>
+                                <ul>
+                                    <li>Porter des vêtements clairs la nuit</li>
+                                    <li>Utiliser des dispositifs réfléchissants</li>
+                                    <li>Allumer ses phares dès la tombée de la nuit</li>
+                                    <li>Vérifier que tous les feux fonctionnent</li>
+                                </ul>
+                            </div>
+                            <div class="grid-item">
+                                <h5>🛡️ Le port du casque</h5>
+                                <ul>
+                                    <li>Obligatoire pour les motocyclistes</li>
+                                    <li>Recommandé pour les cyclistes</li>
+                                    <li>Doit être bien attaché</li>
+                                    <li>Peut réduire de 70% les risques de blessures graves</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">5</span> Les règles spécifiques aux piétons</h4>
+                        <ul>
+                            <li>Traverser toujours aux passages piétons</li>
+                            <li>Regarder à gauche, à droite, puis à gauche avant de traverser</li>
+                            <li>Ne pas traverser en courant</li>
+                            <li>Marcher sur les trottoirs quand ils existent</li>
+                            <li>Sur les routes sans trottoir, marcher à gauche face à la circulation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 4 : L'importance du respect des règles -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-shield-alt"></i> III. Pourquoi Respecter les Règles de la Circulation ?</h2>
+                
+                <div class="lesson-content">
+                    <h3>1. Au niveau individuel : pour ta sécurité personnelle</h3>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">✓</span> Le respect des règles permet de :</h4>
+                        <ul>
+                            <li><strong>Éviter les accidents</strong> : La plupart des accidents sont dus au non-respect des règles</li>
+                            <li><strong>Préserver ta vie et ta santé</strong> : Un accident peut causer des blessures graves ou la mort</li>
+                            <li><strong>Éviter les amendes et poursuites</strong> : Ne pas respecter les règles coûte cher (amendes) et peut mener en prison</li>
+                            <li><strong>Arriver à destination en sécurité</strong> : Le but premier est d'arriver vivant et en bonne santé</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">Exemple concret :</div>
+                        <p>Un élève qui traverse la route en dehors du passage piéton pour rattraper son bus risque :</p>
+                        <ul>
+                            <li>D'être renversé par une voiture qu'il n'a pas vue</li>
+                            <li>De provoquer un accident si un véhicule freine brusquement pour l'éviter</li>
+                            <li>De subir des blessures graves nécessitant une hospitalisation longue</li>
+                            <li>De ne plus pouvoir aller à l'école pendant des mois</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>2. Au niveau familial : pour la tranquillité de ta famille</h3>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Avantages du respect des règles</th>
+                                <th>Conséquences positives pour la famille</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="highlight">Sécurité des membres</span></td>
+                                <td>Les parents sont rassurés quand leurs enfants respectent les règles</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Économie financière</span></td>
+                                <td>Pas d'amendes à payer, pas de frais médicaux après un accident</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Harmonie familiale</span></td>
+                                <td>Moins de stress et d'inquiétude dans la famille</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Exemple pour les plus jeunes</span></td>
+                                <td>Les frères et sœurs apprennent en te voyant respecter les règles</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="important-box">
+                        <p><strong>Pense à tes parents :</strong> Quand tu respectes les règles de circulation, tu évites à tes parents de passer des nuits blanches à l'hôpital, de dépenser de l'argent pour soigner tes blessures, ou pire, de te perdre dans un accident mortel.</p>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>3. Au niveau de l'État et de la société</h3>
+                    
+                    <div class="grid-2">
+                        <div class="grid-item">
+                            <h4 style="color: var(--info);">Avantages pour l'État</h4>
+                            <ul>
+                                <li>Moins de dépenses pour les hôpitaux (soins aux accidentés)</li>
+                                <li>Moins de travail pour la police et les tribunaux</li>
+                                <li>Une population en meilleure santé et plus productive</li>
+                                <li>Moins de dépenses pour réparer les routes endommagées par les accidents</li>
+                                <li>Une meilleure image internationale</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid-item">
+                            <h4 style="color: var(--success);">Avantages pour la société</h4>
+                            <ul>
+                                <li>Moins d'embouteillages causés par les accidents</li>
+                                <li>Une ambiance plus sereine sur les routes</li>
+                                <li>Plus de confiance entre les usagers de la route</li>
+                                <li>Un développement économique plus rapide (les gens arrivent à l'heure au travail)</li>
+                                <li>Une société plus responsable et civique</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-content important-box">
+                        <h3>Conclusion : La sécurité routière, une responsabilité collective</h3>
+                        <p>La sécurité sur les routes est l'affaire de tous :</p>
+                        <ul>
+                            <li><span class="term">Les piétons</span> doivent traverser aux passages prévus et être vigilants</li>
+                            <li><span class="term">Les cyclistes et motocyclistes</span> doivent respecter le code de la route et porter un casque</li>
+                            <li><span class="term">Les automobilistes</span> doivent être patients, respectueux et vigilants</li>
+                            <li><span class="term">L'État</span> doit entretenir les routes et faire respecter les règles</li>
+                            <li><span class="term">Les écoles</span> doivent éduquer les enfants aux règles de sécurité routière</li>
+                        </ul>
+                        <p>En Côte d'Ivoire, le Code de la Route définit toutes ces règles. Les transgresser peut entraîner des amendes, le retrait du permis de conduire, ou des peines de prison en cas d'accident grave.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onglet Exercices -->
+        <div id="exercices" class="tab-content">
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-pen"></i> Exercices d'application</h2>
+                
+                <div class="progress-text">Progression : <span id="progressPercent">0%</span></div>
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                
+                <!-- Activité 1 -->
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Activité d'application 1 : Vrai ou Faux</div>
+                    
+                    <div class="question">
+                        <p><strong>Instructions</strong> : Coche la bonne réponse.</p>
+                        
+                        <div class="question">
+                            <p>1. Une ligne continue sur la route autorise le dépassement.</p>
+                            <div style="margin: 1rem 0;">
+                                <input type="radio" name="q1-1" id="q1-1a" value="vrai">
+                                <label for="q1-1a">Vrai</label>
+                                <input type="radio" name="q1-1" id="q1-1b" value="faux">
+                                <label for="q1-1b">Faux</label>
+                                <button class="show-answer" onclick="checkRadio('q1-1', 'faux')">Vérifier</button>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>2. Les panneaux de danger sont de forme triangulaire et de fond rouge.</p>
+                            <div style="margin: 1rem 0;">
+                                <input type="radio" name="q1-2" id="q1-2a" value="vrai">
+                                <label for="q1-2a">Vrai</label>
+                                <input type="radio" name="q1-2" id="q1-2b" value="faux">
+                                <label for="q1-2b">Faux</label>
+                                <button class="show-answer" onclick="checkRadio('q1-2', 'vrai')">Vérifier</button>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>3. Le feu vert signifie "arrêt" pour les piétons.</p>
+                            <div style="margin: 1rem 0;">
+                                <input type="radio" name="q1-3" id="q1-3a" value="vrai">
+                                <label for="q1-3a">Vrai</label>
+                                <input type="radio" name="q1-3" id="q1-3b" value="faux">
+                                <label for="q1-3b">Faux</label>
+                                <button class="show-answer" onclick="checkRadio('q1-3', 'vrai')">Vérifier</button>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>4. La priorité à droite s'applique quand il n'y a pas de signalisation.</p>
+                            <div style="margin: 1rem 0;">
+                                <input type="radio" name="q1-4" id="q1-4a" value="vrai">
+                                <label for="q1-4a">Vrai</label>
+                                <input type="radio" name="q1-4" id="q1-4b" value="faux">
+                                <label for="q1-4b">Faux</label>
+                                <button class="show-answer" onclick="checkRadio('q1-4', 'vrai')">Vérifier</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Activité 2 -->
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Activité d'application 2 : Relier les éléments</div>
+                    
+                    <div class="question">
+                        <p><strong>Instructions</strong> : Relie mentalement les marques de circulation de la colonne A à leur signification dans la colonne B.</p>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+                            <div>
+                                <h4>Colonne A : Les marques de la circulation routière</h4>
+                                <ol>
+                                    <li>Les traits continus</li>
+                                    <li>Les traits discontinus</li>
+                                    <li>Le passage clouté (bandes blanches)</li>
+                                </ol>
+                            </div>
+                            <div>
+                                <h4>Colonne B : La signification des marques</h4>
+                                <ul>
+                                    <li>a) Réservé à la traversée des piétons</li>
+                                    <li>b) Dépassement autorisé</li>
+                                    <li>c) Dépassement interdit</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 1.5rem;">
+                            <p><strong>Tes réponses :</strong></p>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                                <div>
+                                    <label for="rel1">1 correspond à :</label>
+                                    <select id="rel1" style="width: 100%; padding: 0.5rem;">
+                                        <option value="">Choisis...</option>
+                                        <option value="a">a</option>
+                                        <option value="b">b</option>
+                                        <option value="c">c</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="rel2">2 correspond à :</label>
+                                    <select id="rel2" style="width: 100%; padding: 0.5rem;">
+                                        <option value="">Choisis...</option>
+                                        <option value="a">a</option>
+                                        <option value="b">b</option>
+                                        <option value="c">c</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="rel3">3 correspond à :</label>
+                                    <select id="rel3" style="width: 100%; padding: 0.5rem;">
+                                        <option value="">Choisis...</option>
+                                        <option value="a">a</option>
+                                        <option value="b">b</option>
+                                        <option value="c">c</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="show-answer" onclick="checkRelier()" style="margin-top: 1rem;">Vérifier</button>
+                    </div>
+                </div>
+                
+                <!-- Activité 3 -->
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Activité d'application 3 : Cas pratique</div>
+                    
+                    <div class="question">
+                        <p><strong>Instructions</strong> : Lis la situation suivante et réponds aux questions.</p>
+                        
+                        <div class="lesson-content" style="background: rgba(104, 131, 186, 0.1);">
+                            <p><strong>Situation :</strong> Après les cours, toi et tes camarades devez traverser la route pour vous rendre à l'arrêt de l'autobus. Alors que vous n'êtes pas encore arrivés au niveau du passage clouté, vous voyez l'autobus en train de charger. L'un d'entre vous propose alors de traverser la voie en courant pour ne pas le manquer.</p>
+                        </div>
+                        
+                        <div style="margin-top: 1.5rem;">
+                            <div class="question">
+                                <p><strong>1. Identifie le problème posé dans cette situation.</strong></p>
+                                <textarea id="q3-1" rows="2" placeholder="Votre réponse..."></textarea>
+                            </div>
+                            
+                            <div class="question">
+                                <p><strong>2. Cite trois règles de la circulation routière que vous devriez respecter dans ce cas.</strong></p>
+                                <textarea id="q3-2" rows="3" placeholder="Votre réponse..."></textarea>
+                            </div>
+                            
+                            <div class="question">
+                                <p><strong>3. Justifie pourquoi tu refuserais la proposition de ton camarade.</strong></p>
+                                <textarea id="q3-3" rows="3" placeholder="Votre réponse..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <button class="show-answer" onclick="checkCasPratique()" style="margin-top: 1rem;">Vérifier</button>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <button class="show-answer" onclick="showAllAnswers()" style="width: 100%; margin-top: 1rem;">Voir toutes les corrections</button>
+                    
+                    <div id="allAnswers" class="answer-box">
+                        <h3>Corrections des exercices</h3>
+                        
+                        <div class="question">
+                            <p><strong>Activité 1 : Vrai ou Faux</strong></p>
+                            <p>1. <span class="highlight">FAUX</span> - Une ligne continue interdit le dépassement.</p>
+                            <p>2. <span class="highlight">VRAI</span> - Les panneaux de danger sont bien triangulaires avec fond rouge.</p>
+                            <p>3. <span class="highlight">VRAI</span> - Le feu vert signifie que les véhicules peuvent passer, donc les piétons doivent s'arrêter.</p>
+                            <p>4. <span class="highlight">VRAI</span> - La priorité à droite s'applique effectivement en l'absence de signalisation.</p>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>Activité 2 : Relier les éléments</strong></p>
+                            <p>Les bonnes associations sont :</p>
+                            <ul>
+                                <li>1 (Les traits continus) → <span class="highlight">c</span> (Dépassement interdit)</li>
+                                <li>2 (Les traits discontinus) → <span class="highlight">b</span> (Dépassement autorisé)</li>
+                                <li>3 (Le passage clouté) → <span class="highlight">a</span> (Réservé à la traversée des piétons)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>Activité 3 : Cas pratique</strong></p>
+                            <p><strong>1. Problème posé :</strong> Risque d'accident de la circulation en traversant en dehors du passage piéton et en courant.</p>
+                            <p><strong>2. Trois règles à respecter :</strong></p>
+                            <ul>
+                                <li>Traverser uniquement sur les passages piétons</li>
+                                <li>Ne pas traverser en courant</li>
+                                <li>Regarder à gauche et à droite avant de traverser</li>
+                                <li>Attendre que le feu piéton soit vert si disponible</li>
+                            </ul>
+                            <p><strong>3. Justification du refus :</strong> Je refuserais cette proposition parce que traverser en dehors du passage piéton et en courant augmente considérablement le risque d'accident. Un véhicule pourrait ne pas me voir à temps et me renverser. Mieux vaut manquer un bus (il y en aura un autre) que de risquer sa vie. La sécurité prime toujours sur la rapidité.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onglet Astuces -->
+        <div id="astuces" class="tab-content">
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-lightbulb"></i> Astuces pour retenir</h2>
+                
+                <div class="tip-box">
+                    <div class="tip-title">Mémoriser les marques sur la route</div>
+                    <p><strong>Astuce 1 :</strong> Imagine que la ligne continue est comme un mur - tu ne peux pas le franchir pour dépasser.</p>
+                    <p><strong>Astuce 2 :</strong> La ligne discontinue ressemble à des petits bâtons alignés - tu peux les enjamber pour dépasser.</p>
+                    <p><strong>Astuce 3 :</strong> Les bandes blanches du passage piéton ressemblent à une "échelle de sécurité" pour traverser.</p>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title">Reconnaître les panneaux facilement</div>
+                    <p><strong>Danger = Triangle</strong> : "Attention triangle !" - comme un triangle d'avertissement.</p>
+                    <p><strong>Interdiction = Rond rouge</strong> : "Stop rond !" - comme un stop définitif.</p>
+                    <p><strong>Obligation = Rond bleu</strong> : "Bleu = obligatoire" - le bleu évoque une directive.</p>
+                    <p><strong>Information = Carré</strong> : "Carré d'info" - comme une carte ou un écran d'information.</p>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title">Retenir les couleurs des feux</div>
+                    <p><strong>Phrase mnémotechnique :</strong> "ROUGE je m'arrête, ORANGE je me prépare, VERT je passe."</p>
+                    <p><strong>Association avec les fruits :</strong></p>
+                    <ul>
+                        <li>Rouge comme la fraise qu'il faut cueillir doucement (donc s'arrêter)</li>
+                        <li>Orange comme l'orange qu'on pèle avant de manger (donc se préparer)</li>
+                        <li>Vert comme le kiwi qu'on mange directement (donc passer)</li>
+                    </ul>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>Grille d'analyse rapide en situation</h3>
+                    
+                    <div class="example-box" style="text-align: center;">
+                        <div class="example-title">Quand tu es sur la route, pose-toi ces questions :</div>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1rem; text-align: left;">
+                            <div class="step-box">
+                                <h4><span class="step-number">1</span> Où suis-je ?</h4>
+                                <p>Sur un trottoir ? Sur la chaussée ? Près d'un passage piéton ? → <strong>Identifier ma position</strong></p>
+                            </div>
+                            <div class="step-box">
+                                <h4><span class="step-number">2</span> Que disent les signaux ?</h4>
+                                <p>Y a-t-il des panneaux ? Des feux ? Des marques au sol ? → <strong>Lire la signalisation</strong></p>
+                            </div>
+                            <div class="step-box">
+                                <h4><span class="step-number">3</span> Que font les autres ?</h4>
+                                <p>Les véhicules ralentissent-ils ? Les autres piétons attendent-ils ? → <strong>Observer l'environnement</strong></p>
+                            </div>
+                            <div class="step-box">
+                                <h4><span class="step-number">4</span> Suis-je en sécurité ?</h4>
+                                <p>Ai-je bien regardé des deux côtés ? Suis-je visible ? → <strong>Assurer ma sécurité</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-chart-line"></i> Comment bien circuler sur la route</h2>
+                
+                <div class="lesson-content">
+                    <h3>Les 5 règles d'or du piéton</h3>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">1</span> Marcher sur les trottoirs</h4>
+                        <p>Quand il y a un trottoir, utilise-le toujours. S'il n'y en a pas, marche à gauche face à la circulation.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">2</span> Traverser aux passages</h4>
+                        <p>Ne traverse jamais en dehors des passages piétons, même si c'est plus court.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">3</span> Regarder avant de traverser</h4>
+                        <p>La technique : regarder à GAUCHE, à DROITE, puis à GAUCHE à nouveau avant de traverser.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">4</span> Être visible</h4>
+                        <p>Porte des vêtements clairs la nuit, et si possible des bandes réfléchissantes.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">5</span> Rester attentif</h4>
+                        <p>Ne traverse pas en écoutant de la musique trop fort ou en regardant ton téléphone.</p>
+                    </div>
+                </div>
+                
+                <div class="important-box">
+                    <h3>Ce qu'il ne faut jamais faire</h3>
+                    <ul>
+                        <li><strong>Ne jamais traverser en courant</strong> : Les conducteurs pourraient ne pas te voir</li>
+                        <li><strong>Ne jamais traverser entre deux véhicules stationnés</strong> : Tu n'es pas visible</li>
+                        <li><strong>Ne jamais traverser au feu rouge piéton</strong> : Même si la route semble libre</li>
+                        <li><strong>Ne jamais jouer sur la route ou près de la chaussée</strong> : C'est extrêmement dangereux</li>
+                        <li><strong>Ne jamais descendre d'un bus sans regarder</strong> : Attends qu'il soit parti pour traverser</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onglet Évaluation -->
+        <div id="evaluation" class="tab-content">
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-flag-checkered"></i> Situation d'évaluation</h2>
+                
+                <div class="important-box">
+                    <p><strong>Durée estimée : 20-25 minutes</strong></p>
+                    <p>Cette évaluation reprend l'ensemble des connaissances acquises dans cette leçon.</p>
+                </div>
+                
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Situation d'évaluation 1</div>
+                    
+                    <div class="question">
+                        <div class="lesson-content">
+                            <p>Le week-end, ton père fait des courses en voiture avec ton frère cadet et toi. Arrivé à un carrefour où il y a un feu tricolore qui indique la couleur rouge, votre père marque un arrêt. Ton frère cadet ne comprend rien à cet arrêt parce que la voie est libre. Il demande alors au père de rouler.</p>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>1. Identifie le problème posé dans cette situation.</strong></p>
+                            <textarea id="eval1" rows="3" placeholder="Votre réponse..."></textarea>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>2. Énumère les couleurs du feu tricolore et donne la signification de chacune.</strong></p>
+                            <textarea id="eval2" rows="5" placeholder="Votre réponse..."></textarea>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>3. Justifie l'arrêt de ton père. Pourquoi a-t-il bien fait de s'arrêter ?</strong></p>
+                            <textarea id="eval3" rows="5" placeholder="Votre réponse..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="exercise-box" style="margin-top: 2rem;">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Situation d'évaluation 2</div>
+                    
+                    <div class="question">
+                        <p><strong>Instructions :</strong> Complète le tableau suivant en associant chaque type de panneau à sa forme et sa signification.</p>
+                        
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Type de panneau</th>
+                                    <th>Forme et couleur</th>
+                                    <th>Signification</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" id="tab1-1" placeholder="Type de panneau..." style="width: 100%;"></td>
+                                    <td><input type="text" id="tab1-2" placeholder="Forme et couleur..." style="width: 100%;"></td>
+                                    <td><input type="text" id="tab1-3" placeholder="Signification..." style="width: 100%;"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" id="tab2-1" placeholder="Type de panneau..." style="width: 100%;"></td>
+                                    <td><input type="text" id="tab2-2" placeholder="Forme et couleur..." style="width: 100%;"></td>
+                                    <td><input type="text" id="tab2-3" placeholder="Signification..." style="width: 100%;"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" id="tab3-1" placeholder="Type de panneau..." style="width: 100%;"></td>
+                                    <td><input type="text" id="tab3-2" placeholder="Forme et couleur..." style="width: 100%;"></td>
+                                    <td><input type="text" id="tab3-3" placeholder="Signification..." style="width: 100%;"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" id="tab4-1" placeholder="Type de panneau..." style="width: 100%;"></td>
+                                    <td><input type="text" id="tab4-2" placeholder="Forme et couleur..." style="width: 100%;"></td>
+                                    <td><input type="text" id="tab4-3" placeholder="Signification..." style="width: 100%;"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <p style="margin-top: 1rem; font-style: italic;">Indice : Les 4 types de panneaux à identifier sont : Danger, Interdiction, Obligation, Indication/Localisation</p>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <button class="show-answer" onclick="submitEvaluation()" style="width: 100%; background: linear-gradient(to right, var(--success), #27ae60); margin-top: 1.5rem;">
+                        Soumettre l'évaluation
+                    </button>
+                    
+                    <div id="evalResults" class="answer-box" style="display: none; margin-top: 1.5rem;">
+                        <h3>Corrections suggérées</h3>
+                        <div id="evalScore" style="text-align: center; font-size: 1.3rem; margin: 1rem 0;"></div>
+                        <div id="evalCorrections"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Fiche de révision -->
+        <div class="lesson-section">
+            <h2 class="section-title"><i class="fas fa-clipboard-list"></i> Fiche de révision</h2>
+            
+            <div class="lesson-content" style="background: linear-gradient(135deg, rgba(61, 59, 142, 0.03), rgba(104, 131, 186, 0.1));">
+                <h3 class="definition-title"><i class="fas fa-graduation-cap"></i> À retenir : Les Règles de la Circulation Routière</h3>
+                
+                <div class="grid-2">
+                    <div class="grid-item">
+                        <h4 style="color: var(--primary);">Marques sur la chaussée</h4>
+                        <ul>
+                            <li><span class="term">Ligne continue</span> : Dépassement interdit</li>
+                            <li><span class="term">Ligne discontinue</span> : Dépassement autorisé</li>
+                            <li><span class="term">Passage piéton</span> : Traversée réservée aux piétons</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="grid-item">
+                        <h4 style="color: var(--secondary);">Feux tricolores</h4>
+                        <ul>
+                            <li><span style="color: #ff3333;">🔴 ROUGE</span> : Arrêt absolu</li>
+                            <li><span style="color: #ff9900;">🟠 ORANGE</span> : Préparation à l'arrêt</li>
+                            <li><span style="color: #33cc33;">🟢 VERT</span> : Passage autorisé</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="grid-2" style="margin-top: 1.5rem;">
+                    <div class="grid-item">
+                        <h4 style="color: var(--info);">Types de panneaux</h4>
+                        <ul>
+                            <li><span class="term">Danger</span> : Triangle rouge (avertit)</li>
+                            <li><span class="term">Interdiction</span> : Rond rouge (interdit)</li>
+                            <li><span class="term">Obligation</span> : Rond bleu (oblige)</li>
+                            <li><span class="term">Indication</span> : Carré/rectangle (informe)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="grid-item">
+                        <h4 style="color: var(--success);">Règles fondamentales</h4>
+                        <ul>
+                            <li>Respecter toute la signalisation</li>
+                            <li>Priorité à droite (sans signalisation)</li>
+                            <li>Conduite à droite pour cyclistes</li>
+                            <li>Visibilité et port du casque</li>
+                            <li>Traverser aux passages piétons</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="grid-2" style="margin-top: 1.5rem;">
+                    <div class="grid-item">
+                        <h4 style="color: var(--warning);">Pourquoi respecter les règles ?</h4>
+                        <ul>
+                            <li><strong>Individuel</strong> : Éviter accidents, blessures, amendes</li>
+                            <li><strong>Familial</strong> : Sécurité, tranquillité, économies</li>
+                            <li><strong>Sociétal</strong> : Moins d'accidents, routes plus fluides</li>
+                            <li><strong>État</strong> : Moins de dépenses, population en santé</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="grid-item">
+                        <h4 style="color: var(--accent);">Conseils de sécurité piétons</h4>
+                        <ul>
+                            <li>Regarder à GAUCHE-DROITE-GAUCHE avant de traverser</li>
+                            <li>Traverser uniquement sur les passages</li>
+                            <li>Ne jamais traverser en courant</li>
+                            <li>Être visible (vêtements clairs la nuit)</li>
+                            <li>Rester attentif (pas de téléphone en traversant)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(104, 131, 186, 0.1); border-radius: 8px;">
+                    <h4 style="color: var(--secondary); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Message important à retenir
+                    </h4>
+                    <p><strong>La route ne pardonne pas !</strong> Un simple moment d'inattention peut avoir des conséquences graves. Mieux vaut arriver 5 minutes en retard que ne jamais arriver. Ta vie et celle des autres valent plus que quelques minutes gagnées.</p>
+                    <p style="margin-top: 0.8rem;"><strong>Devise de sécurité :</strong> "Je vois, je suis vu, je suis prudent"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3>ClassePro - EDHC</h3>
+            <p>Leçon 7 : Les Règles de la Circulation Routière et la Sécurité des Usagers - Niveau 6ème</p>
+            <p>&copy; 2025 ClassePro. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Modales overlay (structure HTML pour les modales) -->
+    <div id="modalOverlay" class="modal-overlay">
+        <div id="feedbackModal" class="modal">
+            <div class="modal-header">
+                <div id="modalIcon" class="modal-icon"></div>
+                <h3 id="modalTitle" class="modal-title"></h3>
+            </div>
+            <div class="modal-content">
+                <p id="modalMessage"></p>
+                <div id="modalDetails" style="margin-top: 15px; display: none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="modalButton" class="modal-btn">Continuer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="regles-de-la-circulation-edhc-6e.js"></script>
+</body>
+</html>

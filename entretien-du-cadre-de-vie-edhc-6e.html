@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Entretien du Cadre de Vie et la Santé - 6ème - ClassePro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="entretien-du-cadre-de-vie-edhc-6e.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>ClassePro</span>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="cours-exercices.html">Cours & Exercices</a></li>
+                <li><a href="support.html">Support</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="header">
+            <h1>L'Entretien du Cadre de Vie et la Santé des Populations</h1>
+            <p class="subtitle">Cours d'EDHC - Niveau 6ème - Côte d'Ivoire</p>
+        </div>
+        
+        <!-- Onglets -->
+        <div class="tabs-container">
+            <button class="tab active" onclick="switchTab('lecon')">Leçon</button>
+            <button class="tab" onclick="switchTab('exercices')">Exercice</button>
+            <button class="tab" onclick="switchTab('astuces')">Astuces</button>
+            <button class="tab" onclick="switchTab('evaluation')">Évaluation</button>
+        </div>
+        
+        <!-- Onglet Leçon -->
+        <div id="lecon" class="tab-content active">
+            <!-- Section 1 : Introduction -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-star"></i> Introduction : Pourquoi entretenir notre cadre de vie ?</h2>
+                
+                <div class="lesson-content definition-box">
+                    <p>Un jour, des élèves de ta classe rendent visite à un camarade qui ne se sent pas bien. En arrivant chez lui, ils remarquent que la maison n'est pas propre : les toilettes sont sales et des déchets sont jetés autour de la maison. Cela attire beaucoup de mouches.</p>
+                    
+                    <div class="key-point">
+                        <h4>Situation d'apprentissage :</h4>
+                        <p>Face à cette situation, les élèves comprennent qu'il est important de vivre dans un environnement propre. Ils décident alors d'apprendre comment entretenir le cadre de vie, de connaître son utilité et de mettre en pratique les bonnes règles d'hygiène.</p>
+                        <p>Cette situation nous amène à nous interroger : <strong>Qu'est-ce qu'un cadre de vie ? Pourquoi est-il important de l'entretenir ? Quelles sont les conséquences d'un cadre de vie insalubre sur notre santé ?</strong></p>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">À retenir :</div>
+                        <p>Notre cadre de vie est l'espace où nous vivons, étudions et jouons. Son entretien est essentiel pour notre santé et notre bien-être. Un cadre de vie propre nous protège des maladies, tandis qu'un cadre de vie sale peut nous rendre malades.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 2 : Définitions -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-book-open"></i> I. Le Cadre de Vie : Définition et Types</h2>
+                
+                <div class="lesson-content">
+                    <h3>1. Qu'est-ce qu'un cadre de vie ?</h3>
+                    <div class="definition-box">
+                        <div class="definition-title">Définition du cadre de vie</div>
+                        <p>Le <span class="highlight">cadre de vie</span> est un espace aménagé par l'homme pour la satisfaction de ses besoins fondamentaux.</p>
+                    </div>
+                    
+                    <p>Cette définition nous montre que :</p>
+                    <ul>
+                        <li>C'est l'homme qui organise cet espace selon ses besoins</li>
+                        <li>Il sert à répondre à nos besoins quotidiens</li>
+                        <li>Il peut être à la maison, à l'école, dans le quartier</li>
+                    </ul>
+                    
+                    <div class="example-box">
+                        <div class="example-title">Exemples de cadre de vie :</div>
+                        <ul>
+                            <li>Notre maison ou appartement</li>
+                            <li>La cour de l'école</li>
+                            <li>Les sanitaires (toilettes, douches)</li>
+                            <li>Les espaces verts et jardins</li>
+                            <li>Les aires de jeux et terrains de sport</li>
+                            <li>Les rues et places publiques</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>2. Les deux types de cadre de vie</h3>
+                    <div class="definition-box">
+                        <div class="definition-title">Deux types existent</div>
+                        <p>Il existe deux types de cadre de vie : le <span class="highlight">cadre de vie sain</span> et le <span class="highlight">cadre de vie insalubre</span>.</p>
+                    </div>
+                    
+                    <div class="image-comparison">
+                        <div class="image-card healthy">
+                            <img src="https://www.shutterstock.com/image-photo/portrait-happy-asian-parent-little-600nw-2329771837.jpg" alt="Cadre de vie sain">
+                            <div class="image-caption" style="color: var(--success);">
+                                <i class="fas fa-check-circle"></i> Cadre de vie SAIN
+                            </div>
+                        </div>
+                        
+                        <div class="image-card unhealthy">
+                            <img src="https://www.fratmat.info/media/k2/items/cache/91950ba908dc1916b73b7cd87309e494_XL.jpg" alt="Cadre de vie insalubre">
+                            <div class="image-caption" style="color: var(--warning);">
+                                <i class="fas fa-exclamation-triangle"></i> Cadre de vie INSALUBRE
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid-2">
+                        <div class="grid-item">
+                            <h4 style="color: var(--success);">Cadre de vie SAIN</h4>
+                            <p>Dans un cadre de vie propre et sain :</p>
+                            <ul>
+                                <li>Les éléments sont bien entretenus</li>
+                                <li>Il n'y a pas de saletés ni de déchets</li>
+                                <li>L'air est pur et agréable</li>
+                                <li>Les installations fonctionnent bien</li>
+                                <li>Ça protège des infections et maladies</li>
+                            </ul>
+                            <div class="tip-box" style="margin-top: 1rem;">
+                                <p><strong>Signes d'un cadre sain :</strong> Propreté, bonne odeur, pas d'insectes, espace organisé</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid-item">
+                            <h4 style="color: var(--warning);">Cadre de vie INSALUBRE</h4>
+                            <p>Dans un cadre de vie insalubre :</p>
+                            <ul>
+                                <li>Les éléments sont mal entretenus</li>
+                                <li>Il y a des saletés et des déchets</li>
+                                <li>L'air sent mauvais</li>
+                                <li>Les installations sont sales ou cassées</li>
+                                <li>Ça expose aux infections et maladies</li>
+                            </ul>
+                            <div class="tip-box" style="margin-top: 1rem;">
+                                <p><strong>Signes d'un cadre insalubre :</strong> Saleté, mauvaises odeurs, présence d'insectes, désordre</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 3 : Les mauvaises pratiques -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-ban"></i> II. Les Pratiques qui Rendent le Cadre de Vie Insalubre</h2>
+                
+                <div class="lesson-content">
+                    <h3>Les mauvaises habitudes à éviter</h3>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">1</span> Les ordures ménagères déversées partout</h4>
+                        <p>Quand on jette les déchets n'importe où au lieu de les mettre dans les poubelles :</p>
+                        <ul>
+                            <li>Les déchets s'accumulent</li>
+                            <li>Ça attire les mouches, moustiques et rats</li>
+                            <li>Ça dégage de mauvaises odeurs</li>
+                            <li>Ça pollue l'environnement</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">2</span> Les eaux usées déversées partout</h4>
+                        <p>Quand on vide l'eau sale (de vaisselle, de lessive, etc.) dans la rue ou la cour :</p>
+                        <ul>
+                            <li>Ça crée des flaques d'eau stagnante</li>
+                            <li>Les moustiques y pondent leurs œufs</li>
+                            <li>Ça peut causer des glissements</li>
+                            <li>Ça favorise la propagation des maladies</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">3</span> L'absence ou le mauvais état des latrines</h4>
+                        <p>Quand il n'y a pas de toilettes ou qu'elles sont sales :</p>
+                        <ul>
+                            <li>Les gens font leurs besoins dehors</li>
+                            <li>Les excréments contaminent le sol</li>
+                            <li>Les maladies se propagent plus facilement</li>
+                            <li>C'est dangereux pour la santé publique</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">4</span> Le manque d'entretien des espaces</h4>
+                        <p>Quand on ne nettoie pas régulièrement :</p>
+                        <ul>
+                            <li>La cour familiale ou scolaire</li>
+                            <li>Les rues et caniveaux</li>
+                            <li>Les espaces communs</li>
+                            <li>Les abords des maisons</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="important-box">
+                        <h4>Attention !</h4>
+                        <p>Une seule personne qui a de mauvaises habitudes peut rendre tout un quartier insalubre. C'est pourquoi chacun doit faire des efforts pour garder son environnement propre.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 4 : Les conséquences -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-exclamation-triangle"></i> III. Les Conséquences d'un Cadre de Vie Insalubre</h2>
+                
+                <div class="lesson-content">
+                    <h3>1. Au niveau individuel et communautaire</h3>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Conséquence</th>
+                                <th>Explication</th>
+                                <th>Exemple concret</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="highlight">Apparition de maladies</span></td>
+                                <td>L'insalubrité favorise le développement de nombreux microbes et parasites</td>
+                                <td>Paludisme (moustiques), choléra (eau contaminée), typhoïde</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Augmentation des dépenses</span></td>
+                                <td>Quand on est malade, il faut payer les médicaments et les soins</td>
+                                <td>Une famille pauvre doit dépenser son argent pour soigner un enfant malade</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Baisse de la productivité</span></td>
+                                <td>Un malade ne peut pas bien travailler ou étudier</td>
+                                <td>Un élève souvent malade rate des cours et a des difficultés scolaires</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Réduction du pouvoir d'achat</span></td>
+                                <td>L'argent utilisé pour les soins n'est plus disponible pour d'autres besoins</td>
+                                <td>Au lieu d'acheter de la nourriture, on achète des médicaments</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="tip-box">
+                        <div class="tip-title">Les maladies liées à l'insalubrité</div>
+                        <p><strong>Maladies courantes :</strong> Paludisme, bilharziose, choléra, fièvre typhoïde, diarrhées, infections cutanées.</p>
+                        <p><strong>Transmission :</strong> Par l'eau sale, les aliments contaminés, les piqûres d'insectes, le contact avec des surfaces sales.</p>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>2. Au niveau de l'État et de la société</h3>
+                    
+                    <div class="grid-2">
+                        <div class="grid-item">
+                            <h4 style="color: var(--info);">Conséquences pour l'État</h4>
+                            <ul>
+                                <li><strong>Gros investissements</strong> pour traiter les maladies liées à l'insalubrité</li>
+                                <li><strong>Construction d'hôpitaux</strong> et centres de santé supplémentaires</li>
+                                <li><strong>Campagnes de vaccination</strong> et de sensibilisation coûteuses</li>
+                                <li><strong>Réduction des budgets</strong> pour d'autres projets (écoles, routes)</li>
+                                <li><strong>Baisse de la main-d'œuvre</strong> en bonne santé pour le développement</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid-item">
+                            <h4 style="color: var(--warning);">Conséquences pour la société</h4>
+                            <ul>
+                                <li><strong>Qualité de vie réduite</strong> pour tous les habitants</li>
+                                <li><strong>Environnement dégradé</strong> et peu attractif</li>
+                                <li><strong>Risques sanitaires</strong> permanents pour la population</li>
+                                <li><strong>Image négative</strong> du quartier ou de la ville</li>
+                                <li><strong>Conflits sociaux</strong> liés aux problèmes d'hygiène</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">Exemple concret :</div>
+                        <p>Dans un quartier insalubre où les déchets s'accumulent :</p>
+                        <ol>
+                            <li>Les moustiques se multiplient dans les eaux stagnantes</li>
+                            <li>Plusieurs personnes attrapent le paludisme</li>
+                            <li>Elles doivent dépenser de l'argent pour se soigner</li>
+                            <li>Les enfants manquent l'école, les adultes manquent le travail</li>
+                            <li>La famille s'appauvrit, le quartier devient moins attractif</li>
+                            <li>L'État doit intervenir pour nettoyer et soigner les malades</li>
+                        </ol>
+                        <p>C'est un cercle vicieux qu'il faut absolument éviter !</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 5 : Les mesures d'entretien -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-broom"></i> IV. Comment Entretenir le Cadre de Vie ?</h2>
+                
+                <div class="lesson-content">
+                    <h3>1. Les mesures d'entretien essentielles</h3>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">✓</span> Balayer régulièrement</h4>
+                        <p>Nettoyer les sols (maison, cour, école) pour enlever la poussière et les débris.</p>
+                        <p><strong>Fréquence :</strong> Tous les jours à la maison, chaque semaine à l'école</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">✓</span> Traiter correctement les ordures</h4>
+                        <ul>
+                            <li>Utiliser les poubelles pour tous les déchets</li>
+                            <li>Fermer les sacs poubelles avant de les jeter</li>
+                            <li>Participer aux collectes d'ordures organisées</li>
+                            <li>Éviter de brûler les déchets (c'est polluant)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">✓</span> Désinfecter et assainir les latrines</h4>
+                        <p>Nettoyer les toilettes avec des produits adaptés pour tuer les microbes.</p>
+                        <p><strong>Astuce :</strong> Tirer la chasse après chaque utilisation, laver régulièrement</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">✓</span> Curer les caniveaux</h4>
+                        <p>Enlever les déchets qui bloquent l'écoulement de l'eau dans les caniveaux.</p>
+                        <p><strong>Pourquoi :</strong> Pour éviter les eaux stagnantes et les inondations</p>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>2. Les règles de propreté à observer</h3>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Règle</th>
+                                <th>Explication</th>
+                                <th>Bénéfice</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="highlight">Utiliser les poubelles</span></td>
+                                <td>Jeter tous les déchets dans les poubelles appropriées</td>
+                                <td>Évite l'accumulation des ordures</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Utiliser les toilettes</span></td>
+                                <td>Toujours utiliser les toilettes pour faire ses besoins</td>
+                                <td>Prévient la contamination du sol</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Élaguer les arbres</span></td>
+                                <td>Couper les branches trop longues des grands arbres</td>
+                                <td>Évite les chutes de branches dangereuses</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Tondre les pelouses</span></td>
+                                <td>Couper régulièrement l'herbe des jardins et espaces verts</td>
+                                <td>Élimine les cachettes pour les insectes</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>3. Le matériel d'entretien</h3>
+                    
+                    <div class="grid-2">
+                        <div class="grid-item">
+                            <h4 style="color: var(--primary);">Matériel de nettoyage</h4>
+                            <ul>
+                                <li><strong>Balai</strong> : Pour balayer les sols</li>
+                                <li><strong>Pelle</strong> : Pour ramasser les déchets</li>
+                                <li><strong>Poubelle</strong> : Pour collecter les ordures</li>
+                                <li><strong>Plumeau</strong> : Pour enlever la poussière</li>
+                                <li><strong>Brosse</strong> : Pour frotter les surfaces</li>
+                                <li><strong>Sceau</strong> : Pour transporter l'eau</li>
+                                <li><strong>Serpillère</strong> : Pour laver et essuyer le sol</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid-item">
+                            <h4 style="color: var(--secondary);">Matériel d'entretien extérieur</h4>
+                            <ul>
+                                <li><strong>Gants</strong> : Pour protéger les mains</li>
+                                <li><strong>Produits d'entretien</strong> : Savon, détergent, désinfectant</li>
+                                <li><strong>Machette</strong> : Pour couper les herbes hautes</li>
+                                <li><strong>Daba</strong> : Pour travailler la terre</li>
+                                <li><strong>Sécateur</strong> : Pour couper les petites branches</li>
+                                <li><strong>Râteau</strong> : Pour ramasser les feuilles mortes</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="important-box">
+                        <p><strong>Astuce sécurité :</strong> Toujours porter des gants quand on nettoie, surtout pour manipuler les produits chimiques ou les déchets. Se laver les mains après chaque activité de nettoyage.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 6 : Les bienfaits -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-heart"></i> V. Les Bienfaits d'un Cadre de Vie Sain</h2>
+                
+                <div class="lesson-content">
+                    <h3>Pourquoi entretenir notre environnement ?</h3>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">1</span> Vivre dans un environnement sain</h4>
+                        <p>Un cadre de vie propre nous permet de :</p>
+                        <ul>
+                            <li>Respirer un air pur</li>
+                            <li>Évoluer dans un espace agréable</li>
+                            <li>Être fier de notre maison/école/quartier</li>
+                            <li>Inviter des amis sans gêne</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">2</span> Préserver la santé des populations</h4>
+                        <p>Moins de maladies signifie :</p>
+                        <ul>
+                            <li>Moins de visites à l'hôpital</li>
+                            <li>Moins d'argent dépensé en médicaments</li>
+                            <li>Plus d'énergie pour travailler et étudier</li>
+                            <li>Une meilleure qualité de vie pour tous</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">3</span> Réaliser des économies</h4>
+                        <p>Quand on évite les maladies :</p>
+                        <ul>
+                            <li>On dépense moins en soins médicaux</li>
+                            <li>On manque moins l'école ou le travail</li>
+                            <li>On a plus d'argent pour d'autres besoins</li>
+                            <li>L'État économise sur les dépenses de santé</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="grid-2">
+                        <div class="grid-item">
+                            <h4 style="color: var(--success);">Bénéfices pour l'individu</h4>
+                            <ul>
+                                <li>Meilleure santé physique</li>
+                                <li>Bien-être psychologique</li>
+                                <li>Économies financières</li>
+                                <li>Meilleure estime de soi</li>
+                                <li>Plus d'énergie au quotidien</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid-item">
+                            <h4 style="color: var(--info);">Bénéfices pour la communauté</h4>
+                            <ul>
+                                <li>Quartier plus attractif</li>
+                                <li>Relations sociales améliorées</li>
+                                <li>Sécurité renforcée</li>
+                                <li>Développement local</li>
+                                <li>Image positive</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-content important-box">
+                        <h3>Conclusion : Une responsabilité collective</h3>
+                        <p>L'entretien du cadre de vie est l'affaire de tous :</p>
+                        <ul>
+                            <li><span class="term">Chaque individu</span> doit maintenir propre son espace personnel</li>
+                            <li><span class="term">Les familles</span> doivent éducher les enfants aux bonnes pratiques</li>
+                            <li><span class="term">L'école</span> doit enseigner l'hygiène et organiser le nettoyage</li>
+                            <li><span class="term">La communauté</span> doit organiser des actions collectives</li>
+                            <li><span class="term">L'État</span> doit fournir les infrastructures nécessaires</li>
+                        </ul>
+                        <p>En Côte d'Ivoire, plusieurs initiatives existent pour promouvoir la propreté. Chacun peut participer aux "journées de salubrité" organisées dans les quartiers et les écoles.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onglet Exercices -->
+        <div id="exercices" class="tab-content">
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-pen"></i> Exercices d'application</h2>
+                
+                <div class="progress-text">Progression : <span id="progressPercent">0%</span></div>
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                
+                <!-- Activité 1 -->
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Activité 1 : Vrai ou Faux</div>
+                    
+                    <div class="question">
+                        <p><strong>Instructions</strong> : Coche la bonne réponse.</p>
+                        
+                        <div class="question">
+                            <p>1. Un cadre de vie insalubre protège des maladies.</p>
+                            <div style="margin: 1rem 0;">
+                                <input type="radio" name="q1-1" id="q1-1a" value="vrai">
+                                <label for="q1-1a">Vrai</label>
+                                <input type="radio" name="q1-1" id="q1-1b" value="faux">
+                                <label for="q1-1b">Faux</label>
+                                <button class="show-answer" onclick="checkRadio('q1-1', 'faux')">Vérifier</button>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>2. L'entretien du cadre de vie permet de réaliser des économies.</p>
+                            <div style="margin: 1rem 0;">
+                                <input type="radio" name="q1-2" id="q1-2a" value="vrai">
+                                <label for="q1-2a">Vrai</label>
+                                <input type="radio" name="q1-2" id="q1-2b" value="faux">
+                                <label for="q1-2b">Faux</label>
+                                <button class="show-answer" onclick="checkRadio('q1-2', 'vrai')">Vérifier</button>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>3. Jeter les ordures dans les caniveaux est une bonne pratique.</p>
+                            <div style="margin: 1rem 0;">
+                                <input type="radio" name="q1-3" id="q1-3a" value="vrai">
+                                <label for="q1-3a">Vrai</label>
+                                <input type="radio" name="q1-3" id="q1-3b" value="faux">
+                                <label for="q1-3b">Faux</label>
+                                <button class="show-answer" onclick="checkRadio('q1-3', 'faux')">Vérifier</button>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>4. Le paludisme est une maladie liée à l'insalubrité.</p>
+                            <div style="margin: 1rem 0;">
+                                <input type="radio" name="q1-4" id="q1-4a" value="vrai">
+                                <label for="q1-4a">Vrai</label>
+                                <input type="radio" name="q1-4" id="q1-4b" value="faux">
+                                <label for="q1-4b">Faux</label>
+                                <button class="show-answer" onclick="checkRadio('q1-4', 'vrai')">Vérifier</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Activité 2 -->
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Activité 2 : Classification des pratiques</div>
+                    
+                    <div class="question">
+                        <p><strong>Instructions</strong> : Classe les pratiques suivantes dans la bonne catégorie.</p>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+                            <div>
+                                <h4>Pratiques SALUBRES (S)</h4>
+                                <textarea id="salubre" rows="4" placeholder="Écrivez ici les pratiques qui rendent le cadre de vie sain..."></textarea>
+                            </div>
+                            <div>
+                                <h4>Pratiques INSALUBRES (I)</h4>
+                                <textarea id="insalubre" rows="4" placeholder="Écrivez ici les pratiques qui rendent le cadre de vie insalubre..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <p style="margin-top: 1rem;"><strong>Liste des pratiques à classer :</strong></p>
+                        <ul>
+                            <li>Balayer la cour tous les jours</li>
+                            <li>Jeter les ordures dans les caniveaux</li>
+                            <li>Utiliser les poubelles</li>
+                            <li>Laisser les eaux usées stagner dans la cour</li>
+                            <li>Curer régulièrement les caniveaux</li>
+                            <li>Faire ses besoins dans la nature</li>
+                        </ul>
+                        
+                        <button class="show-answer" onclick="checkClassification()" style="margin-top: 1rem;">Vérifier</button>
+                    </div>
+                </div>
+                
+                <!-- Activité 3 -->
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Activité 3 : Cas pratique - Les maladies</div>
+                    
+                    <div class="question">
+                        <p><strong>Instructions</strong> : Dans la liste suivante de maladies, coche celles qui sont liées à l'insalubrité du cadre de vie.</p>
+                        
+                        <div style="margin-top: 1.5rem;">
+                            <div class="question">
+                                <p><input type="checkbox" id="maladie1" value="bilharziose"> 1. La bilharziose</p>
+                            </div>
+                            
+                            <div class="question">
+                                <p><input type="checkbox" id="maladie2" value="carie"> 2. La carie dentaire</p>
+                            </div>
+                            
+                            <div class="question">
+                                <p><input type="checkbox" id="maladie3" value="paludisme"> 3. Le paludisme</p>
+                            </div>
+                            
+                            <div class="question">
+                                <p><input type="checkbox" id="maladie4" value="diabete"> 4. Le diabète</p>
+                            </div>
+                            
+                            <div class="question">
+                                <p><input type="checkbox" id="maladie5" value="typhoide"> 5. La fièvre typhoïde</p>
+                            </div>
+                        </div>
+                        
+                        <button class="show-answer" onclick="checkMaladies()" style="margin-top: 1rem;">Vérifier</button>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <button class="show-answer" onclick="showAllAnswers()" style="width: 100%; margin-top: 1rem;">Voir toutes les corrections</button>
+                    
+                    <div id="allAnswers" class="answer-box">
+                        <h3>Corrections des exercices</h3>
+                        
+                        <div class="question">
+                            <p><strong>Activité 1 : Vrai ou Faux</strong></p>
+                            <p>1. <span class="highlight">FAUX</span> - Un cadre de vie insalubre expose aux maladies, il ne protège pas.</p>
+                            <p>2. <span class="highlight">VRAI</span> - En évitant les maladies, on dépense moins en soins médicaux.</p>
+                            <p>3. <span class="highlight">FAUX</span> - Jeter les ordures dans les caniveaux est une mauvaise pratique qui les bouche.</p>
+                            <p>4. <span class="highlight">VRAI</span> - Le paludisme est transmis par les moustiques qui se reproduisent dans les eaux stagnantes (insalubrité).</p>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>Activité 2 : Classification des pratiques</strong></p>
+                            <p><strong>Pratiques SALUBRES (S) :</strong></p>
+                            <ul>
+                                <li>Balayer la cour tous les jours</li>
+                                <li>Utiliser les poubelles</li>
+                                <li>Curer régulièrement les caniveaux</li>
+                            </ul>
+                            <p><strong>Pratiques INSALUBRES (I) :</strong></p>
+                            <ul>
+                                <li>Jeter les ordures dans les caniveaux</li>
+                                <li>Laisser les eaux usées stagner dans la cour</li>
+                                <li>Faire ses besoins dans la nature</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>Activité 3 : Maladies liées à l'insalubrité</strong></p>
+                            <p><strong>Maladies à cocher :</strong></p>
+                            <ul>
+                                <li>✓ La bilharziose (transmise par l'eau contaminée)</li>
+                                <li>✓ Le paludisme (transmis par les moustiques des eaux stagnantes)</li>
+                                <li>✓ La fièvre typhoïde (transmise par l'eau ou les aliments contaminés)</li>
+                            </ul>
+                            <p><strong>Maladies NON liées directement :</strong></p>
+                            <ul>
+                                <li>La carie dentaire (liée à l'hygiène buccale et l'alimentation)</li>
+                                <li>Le diabète (maladie métabolique, pas liée à l'insalubrité)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onglet Astuces -->
+        <div id="astuces" class="tab-content">
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-lightbulb"></i> Astuces pour retenir</h2>
+                
+                <div class="tip-box">
+                    <div class="tip-title">Mémoriser les définitions</div>
+                    <p><strong>Astuce 1 :</strong> Associe chaque définition à un exemple de ton quartier ou de ton école.</p>
+                    <p><strong>Astuce 2 :</strong> Utilise des oppositions : "SALUBRE = SAIN" et "INSALUBRE = MALSAIN".</p>
+                    <p><strong>Astuce 3 :</strong> Imagine-toi comme un super-nettoyeur : ta mission = éliminer la saleté pour protéger la santé.</p>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title">Distinguer salubre et insalubre</div>
+                    <p><strong>Cadre SALUBRE :</strong> "Propre, sain, agréable, pas de maladies"</p>
+                    <p><strong>Cadre INSALUBRE :</strong> "Sale, malsain, désagréable, plein de maladies"</p>
+                    <p><strong>Question clé :</strong> Pour savoir si c'est salubre, demande-toi : "Est-ce que je serais content d'habiter là ?"</p>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title">Retenir les maladies liées à l'insalubrité</div>
+                    <p><strong>Phrase mnémotechnique :</strong> "PBF-CT : Paludisme, Bilharziose, Fièvre typhoïde - Choléra, Typhoïde"</p>
+                    <p><strong>Association par vecteur :</strong></p>
+                        <ul>
+                            <li>Eau sale → Choléra, Typhoïde, Bilharziose</li>
+                            <li>Moustiques (eaux stagnantes) → Paludisme</li>
+                            <li>Mouches (déchets) → Diarrhées, Infections</li>
+                        </ul>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>Grille d'analyse rapide</h3>
+                    
+                    <div class="example-box" style="text-align: center;">
+                        <div class="example-title">Quand tu observes un environnement, pose-toi ces questions :</div>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1rem; text-align: left;">
+                            <div class="step-box">
+                                <h4><span class="step-number">1</span> Y a-t-il des déchets par terre ?</h4>
+                                <p>Oui → Cadre probablement insalubre</p>
+                            </div>
+                            <div class="step-box">
+                                <h4><span class="step-number">2</span> L'air sent-il mauvais ?</h4>
+                                <p>Oui → Cadre probablement insalubre</p>
+                            </div>
+                            <div class="step-box">
+                                <h4><span class="step-number">3</span> Y a-t-il beaucoup d'insectes ?</h4>
+                                <p>Oui → Cadre probablement insalubre</p>
+                            </div>
+                            <div class="step-box">
+                                <h4><span class="step-number">4</span> Les installations sont-elles propres ?</h4>
+                                <p>Non → Cadre probablement insalubre</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-chart-line"></i> Comment agir pour un cadre de vie sain</h2>
+                
+                <div class="lesson-content">
+                    <h3>Les étapes à suivre</h3>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">1</span> Commencer par soi-même</h4>
+                        <p>Nettoyer son espace personnel (chambre, bureau) et adopter de bonnes habitudes.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">2</span> Sensibiliser son entourage</h4>
+                        <p>Expliquer à sa famille, ses amis l'importance de la propreté.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">3</span> Participer aux actions collectives</h4>
+                        <p>Rejoindre les journées de salubrité à l'école ou dans le quartier.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">4</span> Signaler les problèmes</h4>
+                        <p>Si tu vois un dépôt d'ordures sauvage ou un problème d'insalubrité public, en parler à un adulte responsable.</p>
+                    </div>
+                </div>
+                
+                <div class="important-box">
+                    <h3>Ce qu'il ne faut pas faire</h3>
+                    <ul>
+                        <li><strong>Ne pas jeter les déchets par terre</strong> : Toujours chercher une poubelle</li>
+                        <li><strong>Ne pas laisser stagner l'eau</strong> : Éliminer les flaques d'eau</li>
+                        <li><strong>Ne pas utiliser les toilettes comme poubelle</strong> : Ça peut les boucher</li>
+                        <li><strong>Ne pas brûler les déchets n'importe où</strong> : Ça pollue l'air</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onglet Évaluation -->
+        <div id="evaluation" class="tab-content">
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-flag-checkered"></i> Situation d'évaluation</h2>
+                
+                <div class="important-box">
+                    <p><strong>Durée estimée : 20-25 minutes</strong></p>
+                    <p>Cette évaluation reprend l'ensemble des connaissances acquises dans cette leçon.</p>
+                </div>
+                
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Situation d'évaluation 1</div>
+                    
+                    <div class="question">
+                        <div class="lesson-content">
+                            <p>Une campagne de salubrité a lieu dans ton quartier. Tu décides de mobiliser les jeunes pour y participer car il y va de la santé des populations. Cependant, l'un de tes camarades te conseille de laisser tomber cette activité car pour lui l'assainissement de la voirie est l'affaire des agents de la mairie et non celle des jeunes.</p>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>1. Indique le problème posé.</strong></p>
+                            <textarea id="eval1" rows="3" placeholder="Votre réponse..."></textarea>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>2. Cite trois conséquences du conseil de ton camarade.</strong></p>
+                            <textarea id="eval2" rows="4" placeholder="Votre réponse..."></textarea>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>3. Justifie ton refus de suivre le conseil de ton camarade.</strong></p>
+                            <textarea id="eval3" rows="4" placeholder="Votre réponse..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="exercise-box" style="margin-top: 2rem;">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Situation d'évaluation 2</div>
+                    
+                    <div class="question">
+                        <div class="lesson-content">
+                            <p>A l'occasion d'une visite rendue à votre camarade de classe malade, un groupe d'élève constate que les toilettes dégagent de mauvaises odeurs, les alentours de maisons servent de dépotoirs aux habitants du quartier, ce qui attire beaucoup de mouches dans la maison. Préoccupés, ces élèves et toi décidez de sensibiliser la population scolaire sur la question.</p>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>1. Identifie le problème posé.</strong></p>
+                            <textarea id="eval4" rows="3" placeholder="Votre réponse..."></textarea>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>2. Cite deux pratiques qui rendent le cadre de vie insalubre.</strong></p>
+                            <textarea id="eval5" rows="3" placeholder="Votre réponse..."></textarea>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>3. Justifie ta décision de sensibiliser.</strong></p>
+                            <textarea id="eval6" rows="4" placeholder="Votre réponse..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <button class="show-answer" onclick="submitEvaluation()" style="width: 100%; background: linear-gradient(to right, var(--success), #27ae60);">
+                        Soumettre l'évaluation
+                    </button>
+                    
+                    <div id="evalResults" class="answer-box" style="display: none; margin-top: 1.5rem;">
+                        <h3>Corrections suggérées</h3>
+                        <div id="evalScore" style="text-align: center; font-size: 1.3rem; margin: 1rem 0;"></div>
+                        <div id="evalCorrections"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Fiche de révision -->
+        <div class="lesson-section">
+            <h2 class="section-title"><i class="fas fa-clipboard-list"></i> Fiche de révision</h2>
+            
+            <div class="lesson-content" style="background: linear-gradient(135deg, rgba(61, 59, 142, 0.03), rgba(104, 131, 186, 0.1));">
+                <h3 class="definition-title"><i class="fas fa-graduation-cap"></i> À retenir : L'Entretien du Cadre de Vie</h3>
+                
+                <div class="grid-2">
+                    <div class="grid-item">
+                        <h4 style="color: var(--primary);">Définitions clés</h4>
+                        <ul>
+                            <li><span class="term">Cadre de vie</span> : Espace aménagé par l'homme pour ses besoins</li>
+                            <li><span class="term">Cadre de vie sain</span> : Propre, bien entretenu, protège des maladies</li>
+                            <li><span class="term">Cadre de vie insalubre</span> : Sale, mal entretenu, expose aux maladies</li>
+                            <li><span class="term">Salubrité</span> : État de ce qui est sain et propre</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="grid-item">
+                        <h4 style="color: var(--secondary);">Pratiques insalubres</h4>
+                        <ul>
+                            <li>Ordures déversées partout</li>
+                            <li>Eaux usées stagnantes</li>
+                            <li>Absence/mauvais état des latrines</li>
+                            <li>Manque d'entretien des espaces</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="grid-2" style="margin-top: 1.5rem;">
+                    <div class="grid-item">
+                        <h4 style="color: var(--info);">Maladies liées à l'insalubrité</h4>
+                        <ul>
+                            <li>Paludisme (moustiques)</li>
+                            <li>Bilharziose (eau contaminée)</li>
+                            <li>Choléra (eau/aliments contaminés)</li>
+                            <li>Fièvre typhoïde (eau/aliments contaminés)</li>
+                            <li>Diarrhées (aliments contaminés)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="grid-item">
+                        <h4 style="color: var(--success);">Mesures d'entretien</h4>
+                        <ul>
+                            <li>Balayer régulièrement</li>
+                            <li>Utiliser les poubelles</li>
+                            <li>Désinfecter les toilettes</li>
+                            <li>Curer les caniveaux</li>
+                            <li>Élaguer les arbres</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(104, 131, 186, 0.1); border-radius: 8px;">
+                    <h4 style="color: var(--secondary); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-hands-helping"></i>
+                        Les bienfaits d'un cadre de vie sain
+                    </h4>
+                    <ul>
+                        <li><strong>Santé préservée</strong> : Moins de maladies</li>
+                        <li><strong>Économies réalisées</strong> : Moins de dépenses en soins</li>
+                        <li><strong>Qualité de vie améliorée</strong> : Environnement agréable</li>
+                        <li><strong>Productivité accrue</strong> : Moins d'absences à l'école/au travail</li>
+                        <li><strong>Développement facilité</strong> : Population en bonne santé</li>
+                    </ul>
+                </div>
+                
+                <div style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(255, 126, 95, 0.1); border-radius: 8px;">
+                    <h4 style="color: var(--primary); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-users"></i>
+                        Notre responsabilité à tous
+                    </h4>
+                    <p>L'entretien du cadre de vie est une <strong>responsabilité collective</strong> :</p>
+                    <ul>
+                        <li>Chacun doit maintenir propre son espace</li>
+                        <li>Les familles doivent éducher les enfants</li>
+                        <li>Les écoles doivent organiser le nettoyage</li>
+                        <li>Les communautés doivent agir ensemble</li>
+                        <li>L'État doit fournir les infrastructures</li>
+                    </ul>
+                    <p style="margin-top: 1rem; font-style: italic;">"Un environnement propre, c'est une population en bonne santé !"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3>ClassePro - EDHC</h3>
+            <p>Leçon : L'Entretien du Cadre de Vie et la Santé des Populations - Niveau 6ème</p>
+            <p>&copy; 2025 ClassePro. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Modales overlay (structure HTML pour les modales) -->
+    <div id="modalOverlay" class="modal-overlay">
+        <div id="feedbackModal" class="modal">
+            <div class="modal-header">
+                <div id="modalIcon" class="modal-icon"></div>
+                <h3 id="modalTitle" class="modal-title"></h3>
+            </div>
+            <div class="modal-content">
+                <p id="modalMessage"></p>
+                <div id="modalDetails" style="margin-top: 15px; display: none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="modalButton" class="modal-btn">Continuer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="entretien-du-cadre-de-vie-edhc-6e.js"></script>
+</body>
+</html>

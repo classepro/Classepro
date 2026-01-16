@@ -1,0 +1,527 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary: #FF7E5F;
+    --secondary: #3D3B8E;
+    --accent: #6883BA;
+    --light: #F9F9F9;
+    --dark: #2F2F2F;
+    --success: #4BB543;
+    --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+    --card-shadow: 0 4px 12px rgba(61, 59, 142, 0.1);
+    --hover-shadow: 0 8px 20px rgba(61, 59, 142, 0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html {
+    font-size: 14px;
+}
+
+body {
+    background-color: var(--light);
+    color: var(--dark);
+    min-height: 100vh;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style pour la navbar */
+header {
+    background: var(--gradient);
+    color: white;
+    padding: 0.8rem 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.logo {
+    font-size: 1.3rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    z-index: 101;
+}
+
+.logo i {
+    margin-right: 8px;
+    font-size: 1.5rem;
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 28px;
+    height: 22px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 101;
+}
+
+.menu-toggle span {
+    width: 100%;
+    height: 2.5px;
+    background-color: white;
+    border-radius: 5px;
+    transition: all 0.3s linear;
+    transform-origin: center;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 1.2rem;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    display: block;
+    font-size: 0.9rem;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Style pour le footer */
+footer {
+    background: var(--dark);
+    color: white;
+    padding: 1.2rem 1rem;
+    text-align: center;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-content h3 {
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+}
+
+.footer-content p {
+    font-size: 0.8rem;
+}
+
+/* Styles pour le contenu principal */
+.container {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    width: 95%;
+    max-width: 1200px;
+    margin: 1.5rem auto;
+    padding: 25px 20px;
+    flex: 1;
+}
+
+.header {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+h1 {
+    color: var(--secondary);
+    margin-bottom: 10px;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.subtitle {
+    color: var(--dark);
+    font-size: 0.95rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.competence-section {
+    margin-bottom: 35px;
+}
+
+.competence-title {
+    color: var(--primary);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 18px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--accent);
+}
+
+.competence-description {
+    background-color: rgba(104, 131, 186, 0.08);
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    color: var(--dark);
+    border-left: 4px solid var(--accent);
+}
+
+.lessons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.lesson-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px 18px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid rgba(61, 59, 142, 0.1);
+    box-shadow: var(--card-shadow);
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+}
+
+.lesson-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--hover-shadow);
+}
+
+.lesson-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: white;
+    margin-bottom: 12px;
+    background: var(--gradient);
+}
+
+.lesson-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin-bottom: 10px;
+}
+
+.lesson-description {
+    color: var(--dark);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    flex: 1;
+    line-height: 1.4;
+}
+
+.skill-badge {
+    display: inline-block;
+    background-color: rgba(104, 131, 186, 0.1);
+    color: var(--accent);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+/* Animation d'entrée */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.lesson-card {
+    animation: fadeInUp 0.4s ease-out forwards;
+    opacity: 0;
+}
+
+/* Styles responsifs améliorés */
+@media (min-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+    
+    body {
+        background: var(--gradient);
+        padding: 20px 10px;
+    }
+    
+    .container {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        padding: 35px 25px;
+        width: 92%;
+        margin: 0 auto;
+    }
+    
+    h1 {
+        font-size: 1.9rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .competence-title {
+        font-size: 1.4rem;
+    }
+    
+    .lessons-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (min-width: 1024px) {
+    html {
+        font-size: 16px;
+    }
+    
+    .container {
+        max-width: 1200px;
+    }
+    
+    .lessons-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .lessons-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Media Queries pour la responsivité mobile */
+@media (max-width: 767px) {
+    html {
+        font-size: 13px;
+    }
+    
+    body {
+        padding: 0;
+    }
+    
+    .container {
+        width: 100%;
+        border-radius: 0;
+        margin: 0;
+        padding: 20px 15px;
+        min-height: calc(100vh - 120px);
+    }
+    
+    .menu-toggle {
+        display: flex;
+    }
+    
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 75%;
+        max-width: 300px;
+        flex-direction: column;
+        background: var(--gradient);
+        padding: 5rem 1.5rem 1.5rem;
+        transition: right 0.3s ease-in-out;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.15);
+    }
+    
+    .nav-links.active {
+        right: 0;
+    }
+    
+    .nav-links li {
+        margin: 1.2rem 0;
+    }
+    
+    .nav-links a {
+        padding: 0.7rem;
+        font-size: 1rem;
+    }
+    
+    .header {
+        margin-bottom: 20px;
+    }
+    
+    h1 {
+        font-size: 1.4rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .competence-section {
+        margin-bottom: 20px;
+    }
+    
+    .competence-title {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+    
+    .lessons-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .lesson-card {
+        padding: 18px 15px;
+        min-height: 150px;
+    }
+    
+    .lesson-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+    
+    .lesson-title {
+        font-size: 1rem;
+    }
+    
+    .lesson-description {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px 10px;
+    }
+    
+    h1 {
+        font-size: 1.3rem;
+    }
+    
+    .subtitle {
+        font-size: 0.85rem;
+    }
+    
+    .competence-title {
+        font-size: 1.1rem;
+    }
+    
+    .lesson-card {
+        padding: 15px 12px;
+        min-height: 140px;
+    }
+    
+    .lesson-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+    
+    .lesson-title {
+        font-size: 0.95rem;
+    }
+    
+    .lesson-description {
+        font-size: 0.8rem;
+    }
+    
+    .skill-badge {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+    }
+}
+
+/* Pour les très petits écrans (moins de 360px) */
+@media (max-width: 359px) {
+    .lesson-card {
+        min-height: 130px;
+        padding: 12px 10px;
+    }
+    
+    .lesson-icon {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* Pour les tablettes en mode portrait */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .lessons-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Pour les hauteurs d'écran limitées */
+@media (max-height: 600px) and (orientation: landscape) {
+    .container {
+        padding: 15px;
+    }
+    
+    .competence-section {
+        margin-bottom: 15px;
+    }
+    
+    .competence-title {
+        margin-bottom: 12px;
+    }
+    
+    .lessons-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+    
+    .lesson-card {
+        min-height: 140px;
+        padding: 15px 12px;
+    }
+}
