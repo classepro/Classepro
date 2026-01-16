@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Ordures Ménagères - 5ème - ClassePro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="lecon-14-edhc-5e.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>ClassePro</span>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="cours-exercices.html">Cours & Exercices</a></li>
+                <li><a href="support.html">Support</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="header">
+            <h1>Leçon 14 : La Gestion des Ordures Ménagères et la Préservation du Cadre de Vie</h1>
+            <p class="subtitle">Cours d'EDHC - Niveau 5ème - Assainissement et protection de l'environnement</p>
+        </div>
+        
+        <!-- Onglets -->
+        <div class="tabs-container">
+            <button class="tab active" onclick="switchTab('lecon')">Leçon</button>
+            <button class="tab" onclick="switchTab('exercices')">Exercice</button>
+            <button class="tab" onclick="switchTab('astuces')">Astuces</button>
+            <button class="tab" onclick="switchTab('evaluation')">Évaluation</button>
+        </div>
+        
+        <!-- Onglet Leçon -->
+        <div id="lecon" class="tab-content active">
+            <!-- Section 1 : Introduction -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-star"></i> Introduction : Pourquoi bien gérer nos déchets ?</h2>
+                
+                <div class="lesson-content definition-box">
+                    <p>La <span class="highlight">gestion des ordures ménagères</span> est un enjeu crucial pour notre santé et notre environnement. Une mauvaise gestion des déchets peut avoir des conséquences graves sur notre vie quotidienne.</p>
+                    
+                    <div class="key-point">
+                        <h4>Situation d'apprentissage modifiée :</h4>
+                        <p>Dans le marché de leur commune, des déchets sont souvent détruits par le feu, ce qui produit une fumée épaisse nuisible à la santé des populations. Témoins de cette situation, des élèves souhaitent contribuer à la protection de l'environnement et de la santé publique. Ils décident alors de se renseigner auprès des agents de l'institut d'hygiène afin d'apprendre les bonnes méthodes de gestion des ordures ménagères, d'en comprendre l'importance et de les mettre en pratique.</p>
+                        <p>Cette situation nous amène à nous interroger : <strong>Que sont exactement les ordures ménagères ? Comment faut-il les gérer correctement ? Pourquoi est-il si important de bien les gérer ?</strong></p>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">À retenir :</div>
+                        <p>Chaque personne produit en moyenne 0,5 à 1 kg de déchets par jour. Multiplié par le nombre d'habitants d'une ville, cela représente des tonnes de déchets qui doivent être gérés correctement pour préserver notre santé et notre environnement.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 2 : Définitions -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-book-open"></i> I. Les Ordures Ménagères : Qu'est-ce que c'est ?</h2>
+                
+                <div class="lesson-content">
+                    <h3>1. Définition des ordures ménagères</h3>
+                    <div class="definition-box">
+                        <div class="definition-title">Définition des ordures ménagères</div>
+                        <p>Les <span class="highlight">ordures ménagères</span> sont constituées par des déchets alimentaires et vestimentaires produits par les ménages.</p>
+                    </div>
+                    
+                    <p>Cette définition est importante parce qu'elle nous permet de comprendre :</p>
+                    <ul>
+                        <li>Que les ordures ménagères viennent principalement de nos maisons (ménages)</li>
+                        <li>Qu'elles sont liées à notre consommation quotidienne</li>
+                        <li>Que nous en sommes tous responsables, en tant que producteurs de déchets</li>
+                        <li>Qu'elles doivent être distinguées des déchets industriels ou médicaux</li>
+                    </ul>
+                    
+                    <div class="example-box">
+                        <div class="example-title">Exemples concrets d'ordures ménagères :</div>
+                        <p>Voici ce qui constitue généralement les ordures ménagères dans un foyer :</p>
+                        <ul>
+                            <li><span class="term">Les emballages perdus</span> : Sachets plastiques, boîtes de conserve, bouteilles en plastique</li>
+                            <li><span class="term">Les papiers usés</span> : Journaux, magazines, cartons d'emballage</li>
+                            <li><span class="term">Les restes de nourriture</span> : Épluchures de légumes, restes de repas, os, coquilles d'œufs</li>
+                            <li><span class="term">Autres déchets domestiques</span> : Vieux vêtements, objets cassés, piles usagées</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>2. Ce qui n'est PAS une ordure ménagère</h3>
+                    
+                    <div class="important-box">
+                        <h4>Attention à la confusion !</h4>
+                        <p>Certains déchets ne sont PAS des ordures ménagères et nécessitent un traitement spécial :</p>
+                        <ul>
+                            <li><strong>Les déchets industriels</strong> : Produits par les usines et ateliers</li>
+                            <li><strong>Les déchets médicaux</strong> : Seringues, médicaments périmés, pansements</li>
+                            <li><strong>Les déchets dangereux</strong> : Piles, batteries, produits chimiques</li>
+                            <li><strong>Les déchets de construction</strong> : Gravats, ciment, matériaux de construction</li>
+                        </ul>
+                        <p>Ces déchets doivent être apportés dans des lieux spécifiques de collecte.</p>
+                    </div>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Type de déchet</th>
+                                <th>Exemples</th>
+                                <th>Où les jeter ?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="highlight">Ordures ménagères</span></td>
+                                <td>Restes de nourriture, emballages, papiers</td>
+                                <td>Poubelle domestique → Site de pré-collecte</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Déchets recyclables</span></td>
+                                <td>Bouteilles en plastique, cartons, métaux</td>
+                                <td>Poubelle de tri → Centre de recyclage</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Déchets dangereux</span></td>
+                                <td>Piles, batteries, produits chimiques</td>
+                                <td>Points de collecte spécifiques</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Déchets verts</span></td>
+                                <td>Feuilles mortes, branches, tonte de gazon</td>
+                                <td>Compost ou déchetterie</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Section 3 : Les règles de gestion -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-puzzle-piece"></i> II. Les Règles de Gestion des Ordures Ménagères</h2>
+                
+                <div class="lesson-content">
+                    <h3>1. Le processus de gestion en 3 étapes</h3>
+                    <div class="definition-box">
+                        <div class="definition-title">La gestion responsable des déchets</div>
+                        <p>La <span class="highlight">gestion des ordures ménagères</span> suit un processus organisé en plusieurs étapes pour assurer un traitement sûr et efficace des déchets.</p>
+                    </div>
+                    
+                    <p>Voici les trois étapes principales à respecter :</p>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">1</span> Étape 1 : La collecte des déchets domestiques</h4>
+                        <p>Il faut d'abord <strong>collecter</strong> proprement les déchets dans son foyer :</p>
+                        <ul>
+                            <li>Utiliser une poubelle avec couvercle pour éviter les mauvaises odeurs</li>
+                            <li>Mettre les déchets dans des sacs poubelle fermés</li>
+                            <li>Séparer les déchets recyclables si possible</li>
+                            <li>Ne pas mélanger les déchets dangereux avec les ordures ménagères</li>
+                        </ul>
+                        <p class="tip-title">Conseil pratique :</p>
+                        <p>Utilisez deux poubelles : une pour les déchets organiques (restes de nourriture) et une pour les autres déchets. Les déchets organiques peuvent être compostés.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">2</span> Étape 2 : Le dépôt sur les sites de pré-collecte</h4>
+                        <p>Les déchets doivent être <strong>déposés</strong> aux endroits prévus :</p>
+                        <ul>
+                            <li>Utiliser les bacs à ordures publics mis à disposition</li>
+                            <li>Déposer les sacs aux heures de collecte (généralement tôt le matin)</li>
+                            <li>Ne pas laisser les sacs à même le sol pour éviter que les animaux les déchirent</li>
+                            <li>Respecter les jours de collecte fixés par la commune</li>
+                        </ul>
+                        <div class="important-box">
+                            <h4>Ce qu'il ne faut PAS faire :</h4>
+                            <p>❌ Ne pas déverser les ordures dans les caniveaux, ravins ou rivières<br>
+                            ❌ Ne pas brûler les déchets à l'air libre<br>
+                            ❌ Ne pas abandonner les sacs n'importe où</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">3</span> Étape 3 : Le traitement final au dépotoir public</h4>
+                        <p>Les services municipaux transportent les déchets vers <strong>le dépotoir public</strong> pour :</p>
+                        <ul>
+                            <li>Un traitement adapté (enfouissement, incinération contrôlée)</li>
+                            <li>Le recyclage des matériaux valorisables</li>
+                            <li>La transformation en compost pour les déchets organiques</li>
+                            <li>La production d'énergie dans certains cas (biogaz)</li>
+                        </ul>
+                        <p class="tip-title">Bon à savoir :</p>
+                        <p>Les dépotoirs modernes sont aménagés pour éviter la pollution des sols et des nappes phréatiques. Ils sont aussi appelés "centres d'enfouissement technique" (CET).</p>
+                    </div>
+                    
+                    <div class="lesson-content">
+                        <h3>2. Règles de base à respecter au quotidien</h3>
+                        
+                        <div class="grid-2">
+                            <div class="grid-item">
+                                <h4 style="color: var(--success);">Les BONNES pratiques</h4>
+                                <ul>
+                                    <li>✔️ Utiliser une poubelle avec couvercle</li>
+                                    <li>✔️ Vider la poubelle régulièrement</li>
+                                    <li>✔️ Trier les déchets (recyclables/organiques)</li>
+                                    <li>✔️ Composter les déchets alimentaires</li>
+                                    <li>✔️ Utiliser les bacs à ordures publics</li>
+                                    <li>✔️ Respecter les jours de collecte</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="grid-item">
+                                <h4 style="color: var(--warning);">Les MAUVAISES pratiques</h4>
+                                <ul>
+                                    <li>❌ Brûler les déchets à l'air libre</li>
+                                    <li>❌ Jeter dans les caniveaux ou ravins</li>
+                                    <li>❌ Abandonner les sacs n'importe où</li>
+                                    <li>❌ Mélanger tous les déchets</li>
+                                    <li>❌ Utiliser des sacs troués ou ouverts</li>
+                                    <li>❌ Attendre que la poubelle déborde</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>3. Pourquoi ces règles sont-elles importantes ?</h3>
+                    
+                    <div class="definition-box">
+                        <div class="definition-title">L'importance de bien gérer les ordures</div>
+                        <p>Le respect des règles de gestion des ordures ménagères est crucial pour deux raisons principales :</p>
+                    </div>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Avantage</th>
+                                <th>Explication détaillée</th>
+                                <th>Conséquences positives</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="highlight">Prévenir les endémies locales</span></td>
+                                <td>Les déchets mal gérés attirent les moustiques, rats et mouches qui propagent des maladies</td>
+                                <td>Réduction du paludisme, choléra, typhoïde, diarrhées</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Prévenir la dégradation du cadre de vie</span></td>
+                                <td>Les déchets abandonnés polluent l'environnement et rendent les lieux insalubres</td>
+                                <td>Villes plus propres, air moins pollué, eau plus saine</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Protéger l'environnement</span></td>
+                                <td>Les déchets dans la nature polluent les sols et les cours d'eau</td>
+                                <td>Préservation de la biodiversité, sols fertiles</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Économiser des ressources</span></td>
+                                <td>Le recyclage permet de réutiliser des matériaux au lieu d'en produire de nouveaux</td>
+                                <td>Moins de pollution, économie d'énergie, réduction des coûts</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="tip-box">
+                        <div class="tip-title">Le saviez-vous ?</div>
+                        <p>Une mauvaise gestion des déchets coûte cher à la société :</p>
+                        <ul>
+                            <li>Dépenses de santé pour soigner les maladies liées à l'insalubrité</li>
+                            <li>Coûts de nettoyage des rues et caniveaux</li>
+                            <li>Perte de valeur des propriétés dans les quartiers insalubres</li>
+                            <li>Impact négatif sur le tourisme</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 4 : Les conséquences d'une mauvaise gestion -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-heart"></i> III. Pourquoi est-ce si important ?</h2>
+                
+                <div class="lesson-content">
+                    <h3>1. Les dangers de la mauvaise gestion des déchets</h3>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">⚠️</span> Danger n°1 : Les maladies</h4>
+                        <p>Les déchets mal gérés sont des nids à microbes et parasites :</p>
+                        <ul>
+                            <li><strong>Les moustiques</strong> se reproduisent dans les eaux stagnantes des déchets et transmettent le paludisme</li>
+                            <li><strong>Les rats et souris</strong> trouvent de la nourriture et propagent des maladies</li>
+                            <li><strong>Les mouches</strong> transportent des microbes des déchets vers notre nourriture</li>
+                            <li><strong>Les bactéries</strong> se développent dans les déchets en décomposition</li>
+                        </ul>
+                        <p><strong>Maladies courantes :</strong> Paludisme, choléra, typhoïde, diarrhées, infections cutanées.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">⚠️</span> Danger n°2 : La pollution</h4>
+                        <p>Les déchets non traités polluent notre environnement :</p>
+                        <ul>
+                            <li><strong>Pollution de l'air :</strong> Brûler des déchets libère des fumées toxiques</li>
+                            <li><strong>Pollution de l'eau :</strong> Les déchets jetés dans les rivières contaminent l'eau</li>
+                            <li><strong>Pollution des sols :</strong> Les déchets enfouis polluent la terre pendant des années</li>
+                            <li><strong>Pollution visuelle :</strong> Les paysages défigurés par les déchets</li>
+                        </ul>
+                        <p><strong>Exemple :</strong> La fumée noire du brûlage des déchets contient des particules fines dangereuses pour les poumons.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">⚠️</span> Danger n°3 : Les accidents</h4>
+                        <p>Les déchets mal gérés peuvent causer des accidents :</p>
+                        <ul>
+                            <li>Glissades sur des déchets humides</li>
+                            <li>Coupures avec du verre cassé</li>
+                            <li>Blessures avec des objets tranchants</li>
+                            <li>Incendies causés par le brûlage incontrôlé</li>
+                            <li>Inondations quand les caniveaux sont bouchés par les déchets</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>2. Les bénéfices d'une bonne gestion</h3>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Bénéfices</th>
+                                <th>Pour la santé</th>
+                                <th>Pour l'environnement</th>
+                                <th>Pour la communauté</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="highlight">Moins de maladies</span></td>
+                                <td>✓ Réduction des infections<br>✓ Moins de visites à l'hôpital</td>
+                                <td>✓ Moins de microbes dans l'air<br>✓ Eau plus propre</td>
+                                <td>✓ Population en meilleure santé<br>✓ Moins de dépenses médicales</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Cadre de vie agréable</span></td>
+                                <td>✓ Moins de stress<br>✓ Meilleure qualité de vie</td>
+                                <td>✓ Paysages propres<br>✓ Air plus sain</td>
+                                <td>✓ Quartiers attrayants<br>✓ Sentiment de fierté</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Économie de ressources</span></td>
+                                <td>✓ Moins de soins médicaux nécessaires</td>
+                                <td>✓ Recyclage possible<br>✓ Moins de pollution</td>
+                                <td>✓ Coûts de nettoyage réduits<br>✓ Création d'emplois verts</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="example-box">
+                        <div class="example-title">Exemple concret :</div>
+                        <p>Dans un quartier où les déchets sont bien gérés :</p>
+                        <ul>
+                            <li>Les enfants jouent dehors sans risque de se blesser</li>
+                            <li>Les familles tombent moins souvent malades</li>
+                            <li>Les rues sont propres et agréables à parcourir</li>
+                            <li>Les commerces attirent plus de clients</li>
+                            <li>La valeur des maisons augmente</li>
+                        </ul>
+                        <p>C'est pourquoi chaque geste compte !</p>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>3. Le rôle de chacun dans la gestion des déchets</h3>
+                    
+                    <div class="grid-2">
+                        <div class="grid-item">
+                            <h4 style="color: var(--primary);">Mon rôle en tant qu'élève</h4>
+                            <ul>
+                                <li>Jeter mes déchets dans les poubelles</li>
+                                <li>Participer au nettoyage de l'école</li>
+                                <li>Sensibiliser ma famille et mes amis</li>
+                                <li>Rapporter mes déchets si je n'ai pas de poubelle</li>
+                                <li>Respecter les consignes de tri</li>
+                                <li>Signaler les dépôts sauvages</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid-item">
+                            <h4 style="color: var(--secondary);">Notre rôle en tant que communauté</h4>
+                            <ul>
+                                <li>Organiser des journées de nettoyage</li>
+                                <li>Utiliser les bacs à ordures collectifs</li>
+                                <li>Respecter les horaires de collecte</li>
+                                <li>Encourager le tri sélectif</li>
+                                <li>Soutenir les initiatives écologiques</li>
+                                <li>Éduquer les plus jeunes</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-content important-box">
+                        <h3>Conclusion : Une responsabilité partagée</h3>
+                        <p>La bonne gestion des ordures ménagères est l'affaire de tous :</p>
+                        <ul>
+                            <li><span class="term">Chaque citoyen</span> doit jeter ses déchets correctement</li>
+                            <li><span class="term">Les ménages</span> doivent trier et utiliser les poubelles</li>
+                            <li><span class="term">La commune</span> doit organiser la collecte et le traitement</li>
+                            <li><span class="term">L'État</span> doit faire respecter les lois et financer les infrastructures</li>
+                            <li><span class="term">Les écoles</span> doivent éduquer les jeunes générations</li>
+                        </ul>
+                        <p>En Côte d'Ivoire, plusieurs lois et règlements existent pour protéger l'environnement. Le non-respect des règles de gestion des déchets peut être sanctionné par des amendes. Mais plus que la peur de la sanction, c'est l'amour de notre pays et le souci de notre santé qui doivent nous motiver à bien gérer nos déchets.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onglet Exercices -->
+        <div id="exercices" class="tab-content">
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-pen"></i> Exercices d'application</h2>
+                
+                <div class="progress-text">Progression : <span id="progressPercent">0%</span></div>
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                
+                <!-- Activité 1 -->
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Activité d'application 1 : Compléter la définition</div>
+                    
+                    <div class="question">
+                        <p><strong>Instructions</strong> : Utilise les mots et groupes de mots ci-dessous pour compléter la définition de "ordures ménagères".</p>
+                        
+                        <div style="background: rgba(104, 131, 186, 0.1); padding: 15px; border-radius: 8px; margin: 1rem 0;">
+                            <p><strong>Mots à utiliser :</strong></p>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                <span style="background: white; padding: 0.5rem 1rem; border-radius: 5px; box-shadow: var(--card-shadow);">ménages</span>
+                                <span style="background: white; padding: 0.5rem 1rem; border-radius: 5px; box-shadow: var(--card-shadow);">déchets alimentaires</span>
+                                <span style="background: white; padding: 0.5rem 1rem; border-radius: 5px; box-shadow: var(--card-shadow);">vestimentaires</span>
+                                <span style="background: white; padding: 0.5rem 1rem; border-radius: 5px; box-shadow: var(--card-shadow);">sont constituées</span>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>Les ordures ménagères <input type="text" id="q1-1" style="width: 150px; display: inline;" placeholder="..."> par des <input type="text" id="q1-2" style="width: 150px; display: inline;" placeholder="..."> et <input type="text" id="q1-3" style="width: 150px; display: inline;" placeholder="..."> produits par les <input type="text" id="q1-4" style="width: 150px; display: inline;" placeholder="...">.</p>
+                            
+                            <button class="show-answer" onclick="checkDefinition()" style="margin-top: 1rem;">Vérifier</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Activité 2 -->
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Activité d'application 2 : Vrai ou Faux</div>
+                    
+                    <div class="question">
+                        <p><strong>Instructions</strong> : Coche la bonne réponse.</p>
+                        
+                        <div class="question">
+                            <p>1. Les ordures ménagères sont uniquement les restes de nourriture.</p>
+                            <div style="margin: 1rem 0;">
+                                <input type="radio" name="q2-1" id="q2-1a" value="vrai">
+                                <label for="q2-1a">Vrai</label>
+                                <input type="radio" name="q2-1" id="q2-1b" value="faux">
+                                <label for="q2-1b">Faux</label>
+                                <button class="show-answer" onclick="checkRadio('q2-1', 'faux')">Vérifier</button>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>2. Brûler les ordures à l'air libre est une bonne méthode de gestion.</p>
+                            <div style="margin: 1rem 0;">
+                                <input type="radio" name="q2-2" id="q2-2a" value="vrai">
+                                <label for="q2-2a">Vrai</label>
+                                <input type="radio" name="q2-2" id="q2-2b" value="faux">
+                                <label for="q2-2b">Faux</label>
+                                <button class="show-answer" onclick="checkRadio('q2-2', 'faux')">Vérifier</button>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>3. Une bonne gestion des ordures permet de prévenir les maladies.</p>
+                            <div style="margin: 1rem 0;">
+                                <input type="radio" name="q2-3" id="q2-3a" value="vrai">
+                                <label for="q2-3a">Vrai</label>
+                                <input type="radio" name="q2-3" id="q2-3b" value="faux">
+                                <label for="q2-3b">Faux</label>
+                                <button class="show-answer" onclick="checkRadio('q2-3', 'vrai')">Vérifier</button>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>4. Il faut déposer les ordures directement au dépotoir public.</p>
+                            <div style="margin: 1rem 0;">
+                                <input type="radio" name="q2-4" id="q2-4a" value="vrai">
+                                <label for="q2-4a">Vrai</label>
+                                <input type="radio" name="q2-4" id="q2-4b" value="faux">
+                                <label for="q2-4b">Faux</label>
+                                <button class="show-answer" onclick="checkRadio('q2-4', 'faux')">Vérifier</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Activité 3 -->
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Activité d'application 3 : Classement</div>
+                    
+                    <div class="question">
+                        <p><strong>Instructions</strong> : Classe les éléments suivants dans la bonne catégorie.</p>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+                            <div>
+                                <h4 style="color: var(--success);">Bonne pratique (B)</h4>
+                                <textarea id="bonnes" rows="6" placeholder="Écrivez ici les bonnes pratiques..."></textarea>
+                            </div>
+                            <div>
+                                <h4 style="color: var(--warning);">Mauvaise pratique (M)</h4>
+                                <textarea id="mauvaises" rows="6" placeholder="Écrivez ici les mauvaises pratiques..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <p style="margin-top: 1rem;"><strong>Liste des pratiques à classer :</strong></p>
+                        <ul>
+                            <li>Utiliser une poubelle avec couvercle</li>
+                            <li>Brûler les déchets dans son jardin</li>
+                            <li>Déposer les ordures aux sites de pré-collecte</li>
+                            <li>Jeter les déchets dans le caniveau</li>
+                            <li>Composter les déchets alimentaires</li>
+                            <li>Laisser les sacs poubelle dehors plusieurs jours</li>
+                        </ul>
+                        
+                        <button class="show-answer" onclick="checkClassement()" style="margin-top: 1rem;">Vérifier</button>
+                    </div>
+                </div>
+                
+                <!-- Activité 4 -->
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Activité d'application 4 : Cas pratique</div>
+                    
+                    <div class="question">
+                        <p><strong>Instructions</strong> : Lis la situation suivante et réponds aux questions.</p>
+                        
+                        <div class="lesson-content" style="background: rgba(104, 131, 186, 0.1);">
+                            <p><strong>Situation :</strong> Pour se faire de l'argent de poche, ton cousin a décidé de collecter des ordures ménagères afin de les mettre à la décharge du quartier. Une nuit, alors que tu l'accompagnes, il te demande de l'aider à déverser ces ordures dans le ravin qui traverse le quartier.</p>
+                        </div>
+                        
+                        <div style="margin-top: 1.5rem;">
+                            <div class="question">
+                                <p><strong>1. Identifie le problème posé.</strong></p>
+                                <textarea id="q4-1" rows="2" placeholder="Votre réponse..."></textarea>
+                            </div>
+                            
+                            <div class="question">
+                                <p><strong>2. Énumère deux (2) règles de gestion des ordures ménagères.</strong></p>
+                                <textarea id="q4-2" rows="3" placeholder="Votre réponse..."></textarea>
+                            </div>
+                            
+                            <div class="question">
+                                <p><strong>3. Justifie ton refus de déverser les ordures dans le ravin du quartier.</strong></p>
+                                <textarea id="q4-3" rows="4" placeholder="Votre réponse..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <button class="show-answer" onclick="checkCasPratique()" style="margin-top: 1rem;">Vérifier</button>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <button class="show-answer" onclick="showAllAnswers()" style="width: 100%; margin-top: 1rem;">Voir toutes les corrections</button>
+                    
+                    <div id="allAnswers" class="answer-box">
+                        <h3>Corrections des exercices</h3>
+                        
+                        <div class="question">
+                            <p><strong>Activité 1 : Compléter la définition</strong></p>
+                            <p>Les ordures ménagères <span class="highlight">sont constituées</span> par des <span class="highlight">déchets alimentaires</span> et <span class="highlight">vestimentaires</span> produits par les <span class="highlight">ménages</span>.</p>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>Activité 2 : Vrai ou Faux</strong></p>
+                            <p>1. <span class="highlight">FAUX</span> - Les ordures ménagères comprennent aussi les emballages, papiers, et autres déchets domestiques.</p>
+                            <p>2. <span class="highlight">FAUX</span> - Brûler les ordures à l'air libre est dangereux pour la santé et l'environnement.</p>
+                            <p>3. <span class="highlight">VRAI</span> - Une bonne gestion des ordures réduit la propagation des maladies.</p>
+                            <p>4. <span class="highlight">FAUX</span> - Il faut d'abord déposer les ordures sur les sites de pré-collecte.</p>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>Activité 3 : Classement</strong></p>
+                            <p><strong>Bonnes pratiques (B) :</strong></p>
+                            <ul>
+                                <li>Utiliser une poubelle avec couvercle</li>
+                                <li>Déposer les ordures aux sites de pré-collecte</li>
+                                <li>Composter les déchets alimentaires</li>
+                            </ul>
+                            <p><strong>Mauvaises pratiques (M) :</strong></p>
+                            <ul>
+                                <li>Brûler les déchets dans son jardin</li>
+                                <li>Jeter les déchets dans le caniveau</li>
+                                <li>Laisser les sacs poubelle dehors plusieurs jours</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>Activité 4 : Cas pratique</strong></p>
+                            <p><strong>1. Le problème posé :</strong></p>
+                            <p>La proposition de déverser les ordures ménagères dans le ravin du quartier au lieu de les porter à la décharge.</p>
+                            
+                            <p><strong>2. Deux règles de gestion des ordures ménagères :</strong></p>
+                            <ul>
+                                <li>Collecter les déchets domestiques</li>
+                                <li>Les déposer sur les sites de la pré-collecte (ou les porter à la décharge publique)</li>
+                            </ul>
+                            
+                            <p><strong>3. Justification du refus :</strong></p>
+                            <p>Il ne faut pas déverser les ordures ménagères dans les ravins. Refuser de le faire permet de :</p>
+                            <ul>
+                                <li>Prévenir la dégradation du cadre de vie</li>
+                                <li>Protéger et préserver l'environnement</li>
+                                <li>Prévenir les endémies locales (maladies)</li>
+                                <li>Éviter la pollution de l'eau et des sols</li>
+                                <li>Respecter les règles d'hygiène publique</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onglet Astuces -->
+        <div id="astuces" class="tab-content">
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-lightbulb"></i> Astuces pour retenir</h2>
+                
+                <div class="tip-box">
+                    <div class="tip-title">Mémoriser les définitions</div>
+                    <p><strong>Astuce 1 :</strong> Utilise l'acronyme "DEV" pour Déchets Et Vestimentaires. Les ordures ménagères sont des DEchets Vestimentaires et alimentaires.</p>
+                    <p><strong>Astuce 2 :</strong> Associe chaque type d'ordure ménagère à un exemple de ta maison : emballages = sachets de biscuits, restes de nourriture = épluchures, papiers = cahiers usés.</p>
+                    <p><strong>Astuce 3 :</strong> Pense à la règle des 3 C : Collecter, Concentrer (sur les sites), Convoyer (vers le dépotoir).</p>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title">Distinguer bonnes et mauvaises pratiques</div>
+                    <p><strong>Les 3 PAS :</strong> Pas dans les caniveaux, Pas dans la nature, Pas brûlés à l'air libre.</p>
+                    <p><strong>Les 3 OUI :</strong> Oui aux poubelles couvertes, Oui aux sites de collecte, Oui au tri sélectif.</p>
+                    <p><strong>Question clé :</strong> Pour savoir si c'est une bonne pratique, demande-toi : "Est-ce que cette action protège ma santé et mon environnement ?"</p>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title">Retenir l'importance de la gestion</div>
+                    <p><strong>Phrase mnémotechnique :</strong> "Des déchets bien gérés, c'est la santé préservée et l'environnement protégé."</p>
+                    <p><strong>Association d'images :</strong> Imagine une balance :</p>
+                        <ul>
+                        <li>Côté négatif : déchets mal gérés = maladies + pollution</li>
+                        <li>Côté positif : déchets bien gérés = santé + cadre de vie agréable</li>
+                    </ul>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>Grille d'analyse rapide</h3>
+                    
+                    <div class="example-box" style="text-align: center;">
+                        <div class="example-title">Quand tu rencontres une situation, pose-toi ces questions :</div>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1rem; text-align: left;">
+                            <div class="step-box">
+                                <h4><span class="step-number">1</span> Est-ce que cette pratique met en danger la santé ?</h4>
+                                <p>(fumées toxiques, microbes, accidents) → <strong>À éviter</strong></p>
+                            </div>
+                            <div class="step-box">
+                                <h4><span class="step-number">2</span> Est-ce que cette pratique pollue l'environnement ?</h4>
+                                <p>(dans l'eau, l'air, les sols) → <strong>À éviter</strong></p>
+                            </div>
+                            <div class="step-box">
+                                <h4><span class="step-number">3</span> Est-ce que cette pratique suit les règles établies ?</h4>
+                                <p>(poubelles, sites de collecte, horaires) → <strong>À suivre</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-chart-line"></i> Comment agir pour mieux gérer les déchets</h2>
+                
+                <div class="lesson-content">
+                    <h3>Les étapes à suivre au quotidien</h3>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">1</span> Réduire la production de déchets</h4>
+                        <p>La meilleure gestion, c'est de produire moins de déchets :</p>
+                        <ul>
+                            <li>Acheter en vrac plutôt qu'en sachets individuels</li>
+                            <li>Utiliser des sacs réutilisables pour les courses</li>
+                            <li>Éviter les produits avec trop d'emballages</li>
+                            <li>Préférer les produits durables aux jetables</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">2</span> Trier correctement</h4>
+                        <p>Facilite le recyclage et le traitement :</p>
+                        <ul>
+                            <li>Séparer les déchets organiques (compostables)</li>
+                            <li>Isoler les déchets recyclables (plastique, papier, métal)</li>
+                            <li>Mettre de côté les déchets dangereux (piles, médicaments)</li>
+                            <li>Utiliser des poubelles différentes pour chaque type</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">3</span> Stocker proprement</h4>
+                        <p>Évite les nuisances avant la collecte :</p>
+                        <ul>
+                            <li>Utiliser des poubelles avec couvercle</li>
+                            <li>Fermer les sacs poubelle</li>
+                            <li>Nettoyer régulièrement les poubelles</li>
+                            <li>Sortir les poubelles aux heures de collecte</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">4</span> Participer à l'amélioration</h4>
+                        <p>Contribue à un meilleur système de gestion :</p>
+                        <ul>
+                            <li>Participer aux journées de nettoyage</li>
+                            <li>Sensibiliser son entourage</li>
+                            <li>Signaler les dépôts sauvages aux autorités</li>
+                            <li>Soutenir les initiatives de recyclage</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="important-box">
+                    <h3>Ce qu'il ne faut pas faire</h3>
+                    <ul>
+                        <li><strong>Ne pas brûler les déchets</strong> : Les fumées sont toxiques pour toi et tes voisins</li>
+                        <li><strong>Ne pas jeter dans la nature</strong> : Ça pollue et ça attire les animaux nuisibles</li>
+                        <li><strong>Ne pas boucher les caniveaux</strong> : Ça provoque des inondations</li>
+                        <li><strong>Ne pas mélanger tous les déchets</strong> : Ça empêche le recyclage</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onglet Évaluation -->
+        <div id="evaluation" class="tab-content">
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-flag-checkered"></i> Situation d'évaluation</h2>
+                
+                <div class="important-box">
+                    <p><strong>Durée estimée : 20-25 minutes</strong></p>
+                    <p>Cette évaluation reprend l'ensemble des connaissances acquises dans cette leçon.</p>
+                </div>
+                
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Situation d'évaluation</div>
+                    
+                    <div class="question">
+                        <div class="lesson-content">
+                            <p>Tu es témoin d'une scène dans ton quartier : un commerçant brûle ses déchets devant sa boutique, produisant une fumée épaisse qui incommode les passants. Des enfants jouent à proximité et respirent cette fumée. Tu décides d'intervenir pour expliquer les dangers de cette pratique et proposer des solutions.</p>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>1. Donne une définition complète des "ordures ménagères" en citant trois exemples.</strong></p>
+                            <textarea id="eval1" rows="4" placeholder="Votre réponse..."></textarea>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>2. Explique pourquoi brûler les ordures à l'air libre est dangereux. Donne au moins deux raisons.</strong></p>
+                            <textarea id="eval2" rows="5" placeholder="Votre réponse..."></textarea>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>3. Présente trois règles de gestion des ordures ménagères que le commerçant devrait respecter.</strong></p>
+                            <textarea id="eval3" rows="5" placeholder="Votre réponse..."></textarea>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>4. Explique en quoi une bonne gestion des déchets contribue à préserver la santé de la communauté.</strong></p>
+                            <textarea id="eval4" rows="5" placeholder="Votre réponse..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <button class="show-answer" onclick="submitEvaluation()" style="width: 100%; background: linear-gradient(to right, var(--success), #27ae60);">
+                        Soumettre l'évaluation
+                    </button>
+                    
+                    <div id="evalResults" class="answer-box" style="display: none; margin-top: 1.5rem;">
+                        <h3>Corrections suggérées</h3>
+                        <div id="evalScore" style="text-align: center; font-size: 1.3rem; margin: 1rem 0;"></div>
+                        <div id="evalCorrections"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Fiche de révision -->
+        <div class="lesson-section">
+            <h2 class="section-title"><i class="fas fa-clipboard-list"></i> Fiche de révision</h2>
+            
+            <div class="lesson-content" style="background: linear-gradient(135deg, rgba(61, 59, 142, 0.03), rgba(104, 131, 186, 0.1));">
+                <h3 class="definition-title"><i class="fas fa-graduation-cap"></i> À retenir : La Gestion des Ordures Ménagères</h3>
+                
+                <div class="grid-2">
+                    <div class="grid-item">
+                        <h4 style="color: var(--primary);">Définitions clés</h4>
+                        <ul>
+                            <li><span class="term">Ordures ménagères</span> : Déchets alimentaires et vestimentaires produits par les ménages</li>
+                            <li><span class="term">Pré-collecte</span> : Sites où déposer les déchets avant leur enlèvement</li>
+                            <li><span class="term">Dépotoir public</span> : Lieu de traitement final des déchets</li>
+                            <li><span class="term">Endémies locales</span> : Maladies courantes dans une région</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="grid-item">
+                        <h4 style="color: var(--secondary);">Exemples d'ordures ménagères</h4>
+                        <ul>
+                            <li>Les emballages perdus (sachets, bouteilles)</li>
+                            <li>Les papiers usés (journaux, cartons)</li>
+                            <li>Les restes de nourriture (épluchures, os)</li>
+                            <li>Les vieux vêtements et textiles</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="grid-2" style="margin-top: 1.5rem;">
+                    <div class="grid-item">
+                        <h4 style="color: var(--info);">Règles de gestion (3 étapes)</h4>
+                        <ol>
+                            <li><strong>Collecter</strong> les déchets domestiques</li>
+                            <li><strong>Déposer</strong> sur les sites de pré-collecte</li>
+                            <li><strong>Traiter</strong> au dépotoir public</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="grid-item">
+                        <h4 style="color: var(--success);">Importance de bien gérer</h4>
+                        <ul>
+                            <li>Prévenir les endémies locales (maladies)</li>
+                            <li>Prévenir la dégradation du cadre de vie</li>
+                            <li>Protéger l'environnement (air, eau, sols)</li>
+                            <li>Assurer la santé de la communauté</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(104, 131, 186, 0.1); border-radius: 8px;">
+                    <h4 style="color: var(--secondary); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Ce qu'il ne faut JAMAIS faire
+                    </h4>
+                    <ul>
+                        <li>❌ Brûler les déchets à l'air libre (fumées toxiques)</li>
+                        <li>❌ Jeter dans les caniveaux ou ravins (pollution, inondations)</li>
+                        <li>❌ Abandonner les sacs n'importe où (maladies, animaux)</li>
+                        <li>❌ Mélanger déchets dangereux et ordures ménagères</li>
+                    </ul>
+                </div>
+                
+                <div style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(75, 181, 67, 0.1); border-radius: 8px; border-left: 4px solid var(--success);">
+                    <h4 style="color: var(--success); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-check-circle"></i>
+                        Mon engagement citoyen
+                    </h4>
+                    <p>En tant que citoyen responsable, je m'engage à :</p>
+                    <ul>
+                        <li>Jeter mes déchets dans les poubelles appropriées</li>
+                        <li>Respecter les horaires de collecte</li>
+                        <li>Participer au tri sélectif quand c'est possible</li>
+                        <li>Sensibiliser mon entourage aux bonnes pratiques</li>
+                        <li>Signaler les dépôts sauvages aux autorités compétentes</li>
+                        <li>Participer aux actions de nettoyage de mon quartier</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3>ClassePro - EDHC</h3>
+            <p>Leçon 14 : La Gestion des Ordures Ménagères et la Préservation du Cadre de Vie - Niveau 5ème</p>
+            <p>&copy; 2025 ClassePro. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Modales overlay (structure HTML pour les modales) -->
+    <div id="modalOverlay" class="modal-overlay">
+        <div id="feedbackModal" class="modal">
+            <div class="modal-header">
+                <div id="modalIcon" class="modal-icon"></div>
+                <h3 id="modalTitle" class="modal-title"></h3>
+            </div>
+            <div class="modal-content">
+                <p id="modalMessage"></p>
+                <div id="modalDetails" style="margin-top: 15px; display: none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="modalButton" class="modal-btn">Continuer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="lecon-14-edhc-5e.js"></script>
+</body>
+</html>
