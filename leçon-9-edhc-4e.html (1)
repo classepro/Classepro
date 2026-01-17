@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leçon 9 : Alliances Interethniques et Cohésion Sociale - 4ème - ClassePro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="leçon-9-edhc-4e.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>ClassePro</span>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="cours-exercices.html">Cours & Exercices</a></li>
+                <li><a href="support.html">Support</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="header">
+            <h1>Leçon 9 : Les Alliances Interethniques, les Cultures des Kwa et des Krou et la Cohésion Sociale</h1>
+            <p class="subtitle">Cours d'EDHC - Niveau 4ème - Vivre ensemble et traditions ivoiriennes</p>
+        </div>
+        
+        <!-- Onglets -->
+        <div class="tabs-container">
+            <button class="tab active" onclick="switchTab('lecon')">Leçon</button>
+            <button class="tab" onclick="switchTab('exercices')">Exercices</button>
+            <button class="tab" onclick="switchTab('astuces')">Astuces</button>
+            <button class="tab" onclick="switchTab('evaluation')">Évaluation</button>
+        </div>
+        
+        <!-- Onglet Leçon -->
+        <div id="lecon" class="tab-content active">
+            <!-- Section 1 : Situation d'apprentissage -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-star"></i> Situation d'apprentissage</h2>
+                
+                <div class="lesson-content definition-box">
+                    <div class="definition-title">Contexte réel</div>
+                    <p>À l'occasion d'un festival culturel organisé dans la commune, les élèves entendent le Maire expliquer que les relations de solidarité entre les différentes ethnies contribuent à maintenir l'entente et la paix dans la société.</p>
+                    
+                    <div class="key-point">
+                        <h4>Défi à relever :</h4>
+                        <p>Désireux de mieux comprendre cette idée, toi et tes camarades décidez de vous renseigner sur les alliances interethniques, d'en connaître l'utilité et de travailler à leur promotion.</p>
+                        <p>Cette situation nous amène à nous interroger : <strong>Que sont les alliances interethniques ? Comment fonctionnent-elles entre les peuples Kwa et Krou ? Pourquoi sont-elles importantes pour la cohésion sociale ?</strong></p>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">À retenir dès maintenant :</div>
+                        <p>Les alliances interethniques sont comme des ponts qui relient les différents peuples. Elles permettent de transformer la diversité en richesse plutôt qu'en source de conflit.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 2 : Les peuples Kwa et Krou -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-book-open"></i> I. Les Peuples Kwa et les Peuples Krou</h2>
+                
+                <div class="lesson-content">
+                    <h3>1. Les peuples Kwa : gardiens des traditions lagunaires et forestières</h3>
+                    
+                    <div class="grid-2">
+                        <div class="grid-item">
+                            <h4 style="color: var(--primary);">Les Kwa Lagunaires</h4>
+                            <p>Installés sur la bordure des lagunes et dans les forêts à proximité :</p>
+                            <ul>
+                                <li>Adioukrou</li>
+                                <li>Alladjan</li>
+                                <li>Tchaman</li>
+                                <li>Avikam</li>
+                                <li>Abouré</li>
+                                <li>Ehotilé</li>
+                                <li>M'batto</li>
+                                <li>N'Zima</li>
+                                <li>Essouma</li>
+                                <li>Abbey</li>
+                                <li>Akyé</li>
+                                <li>Abidji</li>
+                                <li>Kroboe</li>
+                                <li>Ega</li>
+                            </ul>
+                            <div class="tip-box" style="margin-top: 1rem;">
+                                <p><strong>Caractéristique :</strong> Habitent près des plans d'eau et des forêts côtières</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid-item">
+                            <h4 style="color: var(--secondary);">Les Kwa Akan</h4>
+                            <p>Installés au Centre et à l'Est de la Côte d'Ivoire :</p>
+                            <ul>
+                                <li><strong>Baoulé</strong> : Connus pour leur art et leur organisation sociale</li>
+                                <li><strong>Agni</strong> : Réputés pour leur culture royale</li>
+                                <li><strong>Abron</strong> : Gardiens de traditions anciennes</li>
+                            </ul>
+                            <div class="tip-box" style="margin-top: 1rem;">
+                                <p><strong>Caractéristique :</strong> Traditions de royauté et systèmes sociaux hiérarchisés</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-title">Point de repère géographique</div>
+                        <p>Les peuples Kwa occupent principalement le <span class="highlight">Sud, le Centre et l'Est</span> de la Côte d'Ivoire. Leur mode de vie est souvent lié à l'eau (lagunes) ou aux forêts.</p>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>2. Les peuples Krou : maîtres des régions de l'Ouest</h3>
+                    
+                    <div class="definition-box">
+                        <div class="definition-title">Localisation des peuples Krou</div>
+                        <p>Les peuples Krou occupent les régions de l'Ouest, du Centre-Ouest et du Sud-Ouest de la Côte d'Ivoire.</p>
+                    </div>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Peuple Krou</th>
+                                <th>Particularités</th>
+                                <th>Zone principale</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="highlight">Bété</span></td>
+                                <td>Connus pour leurs masques et sculptures</td>
+                                <td>Centre-Ouest (Gagnoa, Daloa)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Wê</span></td>
+                                <td>Réputés pour leur organisation sociale</td>
+                                <td>Ouest (Man, Duékoué)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Godié</span></td>
+                                <td>Experts en agriculture</td>
+                                <td>Sud-Ouest</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Dida</span></td>
+                                <td>Célèbres pour leur culture du riz</td>
+                                <td>Centre-Ouest</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Kroumen</span></td>
+                                <td>Historiquement navigateurs et pêcheurs</td>
+                                <td>Sud-Ouest (Tabou)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="example-box">
+                        <div class="example-title">Savoir distinguer :</div>
+                        <div class="grid-2">
+                            <div class="grid-item">
+                                <h4 style="color: var(--primary);">Peuples Kwa</h4>
+                                <ul>
+                                    <li>Zones : Sud, Centre, Est</li>
+                                    <li>Exemples : Baoulé, Agni, N'Zima</li>
+                                    <li>Traits : Traditions lagunaires ou forestières</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="grid-item">
+                                <h4 style="color: var(--secondary);">Peuples Krou</h4>
+                                <ul>
+                                    <li>Zones : Ouest, Centre-Ouest, Sud-Ouest</li>
+                                    <li>Exemples : Bété, Wê, Dida</li>
+                                    <li>Traits : Traditions de l'intérieur des terres</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>3. Pourquoi connaître ces peuples est important ?</h3>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">1</span> Comprendre la diversité ivoirienne</h4>
+                        <p>La Côte d'Ivoire compte plus de 60 ethnies. Connaître les principales familles (Kwa et Krou) permet de mieux apprécier cette richesse culturelle.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">2</span> Respecter les différences</h4>
+                        <p>Chaque peuple a ses traditions, sa langue, ses coutumes. Les connaître permet d'éviter les malentendus et les préjugés.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">3</span> Apprécier les alliances</h4>
+                        <p>Pour comprendre comment les peuples s'allient, il faut d'abord savoir qui ils sont et où ils vivent.</p>
+                    </div>
+                    
+                    <div class="important-box">
+                        <h4>Attention aux idées fausses :</h4>
+                        <p>• Connaître les différences ne signifie pas juger un peuple supérieur à un autre.<br>
+                        • Tous les peuples ont contribué à construire la Côte d'Ivoire.<br>
+                        • La diversité est une force, pas une faiblesse.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 3 : Les alliances interethniques -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-puzzle-piece"></i> II. Les Alliances Interethniques</h2>
+                
+                <div class="lesson-content">
+                    <h3>1. Définition des alliances interethniques</h3>
+                    <div class="definition-box">
+                        <div class="definition-title">Définition</div>
+                        <p>Les <span class="highlight">alliances interethniques</span> sont des parentés à plaisanterie fondées sur des pactes de non-agression entre différents peuples.</p>
+                    </div>
+                    
+                    <p>Cette définition nous révèle trois aspects importants :</p>
+                    
+                    <div class="grid-2">
+                        <div class="grid-item">
+                            <h4 style="color: var(--info);">Parentés à plaisanterie</h4>
+                            <p>Ce sont des relations spéciales qui permettent de se moquer gentiment, de faire des blagues, sans que cela ne crée de conflit.</p>
+                        </div>
+                        
+                        <div class="grid-item">
+                            <h4 style="color: var(--success);">Pactes de non-agression</h4>
+                            <p>Accords solennels par lesquels les peuples promettent de ne jamais s'attaquer, de régler leurs différends par la parole et non par la violence.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">Exemple concret :</div>
+                        <p>Quand un Baoulé et un Agni (tous deux Kwa Akan) se rencontrent, ils peuvent se faire des blagues sur leurs origines, s'appeler "mon cousin", partager leurs repas, car leurs ancêtres ont signé un pacte d'amitié il y a très longtemps.</p>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>2. Les origines des alliances</h3>
+                    
+                    <div class="definition-box">
+                        <div class="definition-title">Pourquoi ces alliances ont-elles été créées ?</div>
+                        <p>Ces alliances ont pour origine des assistances à l'occasion de conflits ou des pactes entre ancêtres pour garantir la paix et l'entraide.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">1</span> Assistance pendant les conflits</h4>
+                        <p>Quand un peuple était attaqué par un ennemi commun, un autre peuple venait à son aide. En remerciement, ils devenaient alliés.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">2</span> Pactes de paix</h4>
+                        <p>Après une guerre ou un conflit, les chefs décidaient de faire la paix et scellaient leur réconciliation par une alliance.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">3</span> Entraide économique</h4>
+                        <p>Des peuples complémentaires (pêcheurs et agriculteurs par exemple) décidaient de s'entraider et créaient une alliance.</p>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <div class="tip-title">À savoir :</div>
+                        <p>Ces alliances sont souvent très anciennes, remontant à plusieurs siècles. Elles ont été transmises de génération en génération par la tradition orale.</p>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>3. Les différents types d'alliances</h3>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Type d'alliance</th>
+                                <th>Exemples concrets</th>
+                                <th>Explication</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="highlight">À l'intérieur des peuples Akan (Kwa)</span></td>
+                                <td>Agni/Baoulé<br>Agni/Ano<br>Agni/Akyé<br>M'batto/Ebrié<br>M'batto/Abbey</td>
+                                <td>Alliances entre peuples de la même grande famille (Kwa Akan)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Au sein des peuples Krou</span></td>
+                                <td>Godié/Dida/Niaboua/Kroumen/Bakwé<br>Bété/Bakoué</td>
+                                <td>Alliances entre différents peuples du groupe Krou</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Entre peuples Kwa et Krou</span></td>
+                                <td>Dida/Abbey/Abidji/Abouré/Akyé</td>
+                                <td>Alliances entre peuples de groupes différents (ponts interculturels)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="example-box">
+                        <div class="example-title">Comment retenir ces alliances ?</div>
+                        <p><strong>Alliance Kwa-Kwa :</strong> "Les Agni et les Baoulé sont comme des frères Akan"<br>
+                        <strong>Alliance Krou-Krou :</strong> "Les Bété et les Bakoué sont cousins Krou"<br>
+                        <strong>Alliance Kwa-Krou :</strong> "Les Dida sont alliés avec plusieurs peuples Kwa (Abbey, Abidji, etc.)"</p>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>4. Comment se manifestent ces alliances aujourd'hui ?</h3>
+                    
+                    <div class="grid-2">
+                        <div class="grid-item">
+                            <h4 style="color: var(--success);">Comportements qui montrent l'alliance</h4>
+                            <ul>
+                                <li>Se faire des blagues gentilles</li>
+                                <li>S'appeler "cousin", "allié"</li>
+                                <li>S'entraider en cas de besoin</li>
+                                <li>Partager les repas</li>
+                                <li>Faire la médiation en cas de conflit</li>
+                                <li>Respecter le pacte de non-agression</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid-item">
+                            <h4 style="color: var(--warning);">Comportements interdits entre alliés</h4>
+                            <ul>
+                                <li>Se battre ou s'insulter gravement</li>
+                                <li>Refuser de s'entraider</li>
+                                <li>Voler les biens de l'allié</li>
+                                <li>Se venger</li>
+                                <li>Refuser le dialogue</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="important-box">
+                        <p><strong>Règle d'or :</strong> Entre alliés, on règle toujours les conflits par la parole et la médiation, jamais par la violence.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 4 : L'importance des alliances -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-heart"></i> III. L'Importance des Alliances Interethniques</h2>
+                
+                <div class="lesson-content">
+                    <h3>1. Les alliances comme mécanismes de paix</h3>
+                    
+                    <div class="definition-box">
+                        <div class="definition-title">Rôle principal</div>
+                        <p>Les alliances interethniques sont des <span class="highlight">mécanismes de prévention et de règlement des conflits</span>.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">✓</span> Prévention des conflits</h4>
+                        <p>Quand deux peuples sont alliés, ils évitent naturellement les conflits. Le pacte de non-agression les protège mutuellement.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">✓</span> Règlement des conflits</h4>
+                        <p>Si un conflit survient malgré tout, les alliés ont l'obligation de trouver une solution pacifique par la médiation.</p>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">Exemple dans la vie scolaire :</div>
+                        <p>Si un élève Baoulé et un élève Agni (alliés) ont un différend, ils peuvent faire appel à un autre allié pour les aider à se réconcilier, plutôt que de se battre.</p>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>2. Les valeurs transmises par les alliances</h3>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Valeur</th>
+                                <th>Explication</th>
+                                <th>Manifestation concrète</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="highlight">Honnêteté</span></td>
+                                <td>Dire la vérité à son allié</td>
+                                <td>Ne pas mentir, ne pas cacher des informations importantes</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Solidarité</span></td>
+                                <td>Soutenir son allié dans les moments difficiles</td>
+                                <td>Aider matériellement, moralement, partager ce qu'on a</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Non-violence</span></td>
+                                <td>Résoudre les problèmes sans violence</td>
+                                <td>Privilégier le dialogue, la médiation</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Respect de la parole</span></td>
+                                <td>Tenir ses promesses envers son allié</td>
+                                <td>Respecter les engagements pris</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Fraternité</span></td>
+                                <td>Considérer l'allié comme un frère</td>
+                                <td>Partager, s'entraider, se soutenir comme en famille</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="tip-box">
+                        <div class="tip-title">À retenir :</div>
+                        <p>Ces valeurs ne sont pas seulement utiles entre alliés ethniques. Ce sont des valeurs universelles qui aident à vivre ensemble harmonieusement dans toute société.</p>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>3. Contribution à la cohésion sociale et nationale</h3>
+                    
+                    <div class="grid-2">
+                        <div class="grid-item">
+                            <h4 style="color: var(--primary);">Au niveau local</h4>
+                            <ul>
+                                <li><strong>Médiation entre alliés</strong> : Résolution pacifique des conflits</li>
+                                <li><strong>Médiation avec des tiers</strong> : Les alliés peuvent aider à régler des conflits impliquant d'autres personnes</li>
+                                <li><strong>Préservation de la paix</strong> : Création d'un climat de confiance</li>
+                                <li><strong>Échanges culturels</strong> : Partage des traditions, renforcement des liens</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid-item">
+                            <h4 style="color: var(--secondary);">Au niveau national</h4>
+                            <ul>
+                                <li><strong>Fraternité nationale</strong> : Sentiment d'appartenance à une même nation</li>
+                                <li><strong>Unité dans la diversité</strong> : Les différences deviennent une richesse</li>
+                                <li><strong>Prévention des conflits ethniques</strong> : Réduction des tensions intercommunautaires</li>
+                                <li><strong>Construction nationale</strong> : Participation de tous à l'édification du pays</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-content important-box">
+                        <h3>Conclusion : Les alliances, fondement de la fraternité nationale</h3>
+                        <p>Les alliances interethniques ne sont pas de simples traditions du passé. Elles sont :</p>
+                        <ul>
+                            <li><span class="term">Des pratiques socio-culturelles vivantes</span> : Elles continuent à être pratiquées aujourd'hui</li>
+                            <li><span class="term">Des mécanismes de paix modernes</span> : Elles peuvent résoudre des conflits contemporains</li>
+                            <li><span class="term">Le fondement de la fraternité</span> : Elles créent des liens forts entre des peuples différents</li>
+                            <li><span class="term">La base de l'unité nationale</span> : Elles contribuent à construire une nation unie</li>
+                        </ul>
+                        <p>En Côte d'Ivoire, pays de grande diversité ethnique, les alliances interethniques sont plus importantes que jamais. Elles nous rappellent que malgré nos différences, nous pouvons vivre ensemble en paix, nous entraider et construire un avenir commun.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Résumé de la leçon -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-clipboard-check"></i> Résumé de la Leçon</h2>
+                
+                <div class="lesson-content" style="background: linear-gradient(135deg, rgba(61, 59, 142, 0.03), rgba(104, 131, 186, 0.1));">
+                    <div class="grid-2">
+                        <div class="grid-item">
+                            <h4 style="color: var(--primary);">Définitions clés</h4>
+                            <ul>
+                                <li><span class="term">Alliances interethniques</span> : Parentés à plaisanterie fondées sur des pactes de non-agression</li>
+                                <li><span class="term">Peuples Kwa</span> : Groupes ethniques du Sud, Centre et Est (Baoulé, Agni, N'Zima...)</li>
+                                <li><span class="term">Peuples Krou</span> : Groupes ethniques de l'Ouest (Bété, Wê, Dida...)</li>
+                                <li><span class="term">Cohésion sociale</span> : Vivre ensemble en harmonie malgré les différences</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid-item">
+                            <h4 style="color: var(--secondary);">Types d'alliances</h4>
+                            <ul>
+                                <li><strong>Kwa-Kwa</strong> : Agni/Baoulé, M'batto/Ebrié</li>
+                                <li><strong>Krou-Krou</strong> : Bété/Bakoué, Godié/Dida</li>
+                                <li><strong>Kwa-Krou</strong> : Dida/Abbey/Abidji</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="grid-2" style="margin-top: 1.5rem;">
+                        <div class="grid-item">
+                            <h4 style="color: var(--info);">Valeurs transmises</h4>
+                            <ul>
+                                <li>Honnêteté</li>
+                                <li>Solidarité</li>
+                                <li>Non-violence</li>
+                                <li>Respect de la parole</li>
+                                <li>Fraternité</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid-item">
+                            <h4 style="color: var(--success);">Importance des alliances</h4>
+                            <ul>
+                                <li>Prévention des conflits</li>
+                                <li>Règlement pacifique des différends</li>
+                                <li>Renforcement de la cohésion sociale</li>
+                                <li>Construction de l'unité nationale</li>
+                                <li>Transmission de valeurs positives</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onglet Exercices -->
+        <div id="exercices" class="tab-content">
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-pen"></i> Exercices d'application</h2>
+                
+                <div class="progress-text">Progression : <span id="progressPercent">0%</span></div>
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                
+                <!-- Activité 1 : Classification des peuples -->
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Activité 1 : Classification des peuples</div>
+                    
+                    <div class="question">
+                        <p><strong>Instructions</strong> : Range ces peuples dans la colonne qui convient.</p>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem;">
+                            <div>
+                                <h4>Colonne A : Peuples Krou</h4>
+                                <textarea id="colonneKrou" rows="6" placeholder="Écris ici les peuples Krou..."></textarea>
+                            </div>
+                            <div>
+                                <h4>Colonne B : Peuples Kwa</h4>
+                                <textarea id="colonneKwa" rows="6" placeholder="Écris ici les peuples Kwa..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <p style="margin-top: 1rem;"><strong>Liste des peuples à classer :</strong></p>
+                        <ul>
+                            <li>Les N'zima</li>
+                            <li>Les Wê</li>
+                            <li>Les Dida</li>
+                            <li>Les Kroumen</li>
+                            <li>Les Baoulé</li>
+                            <li>Les Agni</li>
+                        </ul>
+                        
+                        <button class="show-answer" onclick="checkClassification()" style="margin-top: 1rem;">Vérifier</button>
+                    </div>
+                </div>
+                
+                <!-- Activité 2 : Manifestations des alliances -->
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Activité 2 : Vrai ou Faux - Manifestations</div>
+                    
+                    <div class="question">
+                        <p><strong>Instructions</strong> : Indique si ces pratiques sont des manifestations des alliances interethniques (VRAI) ou non (FAUX).</p>
+                        
+                        <div class="question">
+                            <p>1. Respecter le pacte de non-agression avec les alliés</p>
+                            <div style="margin: 1rem 0;">
+                                <input type="radio" name="q2-1" id="q2-1a" value="vrai">
+                                <label for="q2-1a">Vrai</label>
+                                <input type="radio" name="q2-1" id="q2-1b" value="faux">
+                                <label for="q2-1b">Faux</label>
+                                <button class="show-answer" onclick="checkRadio('q2-1', 'vrai')">Vérifier</button>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>2. S'emparer des biens d'un allié</p>
+                            <div style="margin: 1rem 0;">
+                                <input type="radio" name="q2-2" id="q2-2a" value="vrai">
+                                <label for="q2-2a">Vrai</label>
+                                <input type="radio" name="q2-2" id="q2-2b" value="faux">
+                                <label for="q2-2b">Faux</label>
+                                <button class="show-answer" onclick="checkRadio('q2-2', 'faux')">Vérifier</button>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>3. Faire la médiation entre un allié et un tiers</p>
+                            <div style="margin: 1rem 0;">
+                                <input type="radio" name="q2-3" id="q2-3a" value="vrai">
+                                <label for="q2-3a">Vrai</label>
+                                <input type="radio" name="q2-3" id="q2-3b" value="faux">
+                                <label for="q2-3b">Faux</label>
+                                <button class="show-answer" onclick="checkRadio('q2-3', 'vrai')">Vérifier</button>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>4. Plaisanter entre alliés</p>
+                            <div style="margin: 1rem 0;">
+                                <input type="radio" name="q2-4" id="q2-4a" value="vrai">
+                                <label for="q2-4a">Vrai</label>
+                                <input type="radio" name="q2-4" id="q2-4b" value="faux">
+                                <label for="q2-4b">Faux</label>
+                                <button class="show-answer" onclick="checkRadio('q2-4', 'vrai')">Vérifier</button>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>5. Assister les alliés en cas de besoin</p>
+                            <div style="margin: 1rem 0;">
+                                <input type="radio" name="q2-5" id="q2-5a" value="vrai">
+                                <label for="q2-5a">Vrai</label>
+                                <input type="radio" name="q2-5" id="q2-5b" value="faux">
+                                <label for="q2-5b">Faux</label>
+                                <button class="show-answer" onclick="checkRadio('q2-5', 'vrai')">Vérifier</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Activité 3 : Définition -->
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Activité 3 : La bonne définition</div>
+                    
+                    <div class="question">
+                        <p><strong>Instructions</strong> : Choisis la bonne définition des alliances interethniques.</p>
+                        
+                        <div class="question">
+                            <p>Les alliances interethniques sont :</p>
+                            <div style="margin: 1rem 0;">
+                                <input type="radio" name="q3" id="q3a" value="a">
+                                <label for="q3a">a) Un pacte de non-agression signé entre les ancêtres de différents peuples</label><br>
+                                
+                                <input type="radio" name="q3" id="q3b" value="b">
+                                <label for="q3b">b) Une association composée de plusieurs groupes ethniques</label><br>
+                                
+                                <input type="radio" name="q3" id="q3c" value="c">
+                                <label for="q3c">c) Le partage d'une langue commune entre différents peuples</label><br>
+                                
+                                <input type="radio" name="q3" id="q3d" value="d">
+                                <label for="q3d">d) Le fait d'avoir les mêmes ancêtres</label>
+                                
+                                <button class="show-answer" onclick="checkRadio('q3', 'a')">Vérifier</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Activité 4 : Exemples d'alliances -->
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Activité 4 : Identifier les alliances</div>
+                    
+                    <div class="question">
+                        <p><strong>Instructions</strong> : Donne deux exemples d'alliances pour chaque cas.</p>
+                        
+                        <div style="margin-top: 1.5rem;">
+                            <div class="question">
+                                <p><strong>a) Dans le groupe Kwa :</strong></p>
+                                <textarea id="q4-a" rows="2" placeholder="Exemple 1 et Exemple 2..."></textarea>
+                            </div>
+                            
+                            <div class="question">
+                                <p><strong>b) Dans le groupe Krou :</strong></p>
+                                <textarea id="q4-b" rows="2" placeholder="Exemple 1 et Exemple 2..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <button class="show-answer" onclick="checkAlliances()" style="margin-top: 1rem;">Vérifier</button>
+                    </div>
+                </div>
+                
+                <!-- Activité 5 : Cas pratique -->
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Activité 5 : Cas pratique - Médiation</div>
+                    
+                    <div class="question">
+                        <p><strong>Instructions</strong> : Analyse cette situation et réponds aux questions.</p>
+                        
+                        <div class="lesson-content" style="background: rgba(104, 131, 186, 0.1);">
+                            <p><strong>Situation :</strong> Suite à des propos malheureux, deux élèves de ta classe ne s'adressent plus la parole. Tu es chargé(e) par ton chef de classe, en tant qu'allié(e) d'un(e) des élèves, de les réconcilier.</p>
+                        </div>
+                        
+                        <div style="margin-top: 1.5rem;">
+                            <div class="question">
+                                <p><strong>1. Quel est le problème posé ?</strong></p>
+                                <input type="text" id="q5-1" style="width: 100%;" placeholder="Votre réponse...">
+                            </div>
+                            
+                            <div class="question">
+                                <p><strong>2. Cite deux alliances entre les peuples Kwa et les peuples Krou.</strong></p>
+                                <textarea id="q5-2" rows="3" placeholder="Votre réponse..."></textarea>
+                            </div>
+                            
+                            <div class="question">
+                                <p><strong>3. Justifie ta décision de réconcilier les deux élèves.</strong></p>
+                                <textarea id="q5-3" rows="3" placeholder="Votre réponse..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <button class="show-answer" onclick="checkCasPratique()" style="margin-top: 1rem;">Vérifier</button>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <button class="show-answer" onclick="showAllAnswers()" style="width: 100%; margin-top: 1rem;">Voir toutes les corrections</button>
+                    
+                    <div id="allAnswers" class="answer-box">
+                        <h3>Corrections des exercices</h3>
+                        
+                        <div class="question">
+                            <p><strong>Activité 1 : Classification des peuples</strong></p>
+                            <p><strong>Colonne A : Peuples Krou</strong></p>
+                            <ul>
+                                <li>Les Wê</li>
+                                <li>Les Dida</li>
+                                <li>Les Kroumen</li>
+                            </ul>
+                            <p><strong>Colonne B : Peuples Kwa</strong></p>
+                            <ul>
+                                <li>Les N'zima</li>
+                                <li>Les Baoulé</li>
+                                <li>Les Agni</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>Activité 2 : Manifestations des alliances</strong></p>
+                            <p>1. <span class="highlight">VRAI</span> - Le respect du pacte est fondamental</p>
+                            <p>2. <span class="highlight">FAUX</span> - Prendre les biens d'un allié est interdit</p>
+                            <p>3. <span class="highlight">VRAI</span> - La médiation est un devoir entre alliés</p>
+                            <p>4. <span class="highlight">VRAI</span> - La plaisanterie est caractéristique des alliances</p>
+                            <p>5. <span class="highlight">VRAI</span> - L'assistance mutuelle est obligatoire</p>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>Activité 3 : La bonne définition</strong></p>
+                            <p><span class="highlight">a) Un pacte de non-agression signé entre les ancêtres de différents peuples</span></p>
+                            <p>Explication : Les alliances interethniques sont bien des pactes anciens qui créent des relations spéciales entre peuples différents.</p>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>Activité 4 : Identifier les alliances</strong></p>
+                            <p><strong>a) Dans le groupe Kwa :</strong></p>
+                            <ul>
+                                <li>Agni/Baoulé</li>
+                                <li>Agni/Ano</li>
+                                <li>Agni/Akyé</li>
+                                <li>M'batto/Ebrié</li>
+                                <li>M'batto/Abbey</li>
+                            </ul>
+                            <p><strong>b) Dans le groupe Krou :</strong></p>
+                            <ul>
+                                <li>Bété/Bakoué</li>
+                                <li>Godié/Dida/Niaboua/Kroumen/Bakwé</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>Activité 5 : Cas pratique</strong></p>
+                            <p><strong>1. Problème posé :</strong> Sollicitation pour la réconciliation entre un allié et son (sa) camarade suite à une dispute.</p>
+                            <p><strong>2. Deux alliances Kwa-Krou :</strong></p>
+                            <ul>
+                                <li>Dida/Abbey</li>
+                                <li>Dida/Abidji</li>
+                                <li>Dida/Abouré</li>
+                                <li>Dida/Akyé</li>
+                            </ul>
+                            <p><strong>3. Justification :</strong> Il faut respecter une des clauses des alliances en entreprenant une médiation entre l'allié et une tierce personne en cas de conflit. C'est un devoir de soutien et d'assistance envers son allié. Les alliances nous obligent à promouvoir la paix et la réconciliation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onglet Astuces -->
+        <div id="astuces" class="tab-content">
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-lightbulb"></i> Astuces pour retenir</h2>
+                
+                <div class="tip-box">
+                    <div class="tip-title">Mémoriser les peuples Kwa et Krou</div>
+                    <p><strong>Astuce 1 :</strong> Associe chaque peuple à une caractéristique marquante.</p>
+                    <p><strong>Astuce 2 :</strong> Utilise des acronymes : "Kwa" pour les peuples du Sud/Centre/Est, "Krou" pour l'Ouest.</p>
+                    <p><strong>Astuce 3 :</strong> Imagine une carte mentale : Kwa à droite (Est), Krou à gauche (Ouest).</p>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title">Retenir les alliances</div>
+                    <p><strong>Kwa-Kwa = Famille élargie :</strong> "Les Kwa entre eux, c'est comme des cousins qui habitent la même grande maison."</p>
+                    <p><strong>Krou-Krou = Frères de l'Ouest :</strong> "Les Krou sont unis comme les doigts de la main."</p>
+                    <p><strong>Kwa-Krou = Ponts d'amitié :</strong> "Les alliances Kwa-Krou sont des ponts qui relient l'Est et l'Ouest."</p>
+                    <p><strong>Question clé :</strong> Pour savoir si c'est une alliance, demande-toi : "Ces peuples ont-ils signé un pacte de non-agression ?"</p>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title">Comprendre l'importance des alliances</div>
+                    <p><strong>Phrase mnémotechnique :</strong> "Alliés = Amitié + Loyauté + Lutte contre les conflits + Intégration + Échanges + Solidarité."</p>
+                    <p><strong>Association d'images :</strong> Imagine un arbre :</p>
+                    <ul>
+                        <li>Racines = Pactes anciens</li>
+                        <li>Tronc = Valeurs (honnêteté, solidarité)</li>
+                        <li>Branches = Différents types d'alliances</li>
+                        <li>Feuilles = Actions concrètes (médiation, entraide)</li>
+                        <li>Fruits = Paix et cohésion sociale</li>
+                    </ul>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>Grille d'analyse rapide d'une situation</h3>
+                    
+                    <div class="example-box" style="text-align: center;">
+                        <div class="example-title">Quand tu rencontres une situation de conflit, pose-toi ces questions :</div>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1rem; text-align: left;">
+                            <div class="step-box">
+                                <h4><span class="step-number">1</span> Y a-t-il une alliance entre les personnes ?</h4>
+                                <p>(Kwa-Kwa, Krou-Krou, Kwa-Krou) → <strong>Identifier</strong></p>
+                            </div>
+                            <div class="step-box">
+                                <h4><span class="step-number">2</span> Quelles obligations crée cette alliance ?</h4>
+                                <p>(médiation, non-agression, entraide) → <strong>Analyser</strong></p>
+                            </div>
+                            <div class="step-box">
+                                <h4><span class="step-number">3</span> Comment appliquer les valeurs des alliances ?</h4>
+                                <p>(dialogue, respect, solidarité) → <strong>Agir</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-chart-line"></i> Comment promouvoir les alliances interethniques</h2>
+                
+                <div class="lesson-content">
+                    <h3>Actions concrètes que tu peux faire</h3>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">1</span> Apprendre et partager</h4>
+                        <p>Informe-toi sur les alliances de ta région et partage ces connaissances avec tes camarades.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">2</span> Pratiquer les valeurs</h4>
+                        <p>Applique les valeurs des alliances (solidarité, respect, non-violence) dans ta vie quotidienne à l'école.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">3</span> Être médiateur</h4>
+                        <p>Si tu sais que deux personnes sont alliées ou pourraient l'être, propose ton aide pour les réconcilier en cas de conflit.</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4><span class="step-number">4</span> Organiser des échanges</h4>
+                        <p>Propose à ton professeur d'organiser :
+                        <ul>
+                            <li>Des présentations sur différentes cultures</li>
+                            <li>Des repas où chacun apporte un plat de sa région</li>
+                            <li>Des débats sur le vivre-ensemble</li>
+                        </ul></p>
+                    </div>
+                </div>
+                
+                <div class="important-box">
+                    <h3>Ce qu'il ne faut pas faire</h3>
+                    <ul>
+                        <li><strong>Ne pas utiliser les alliances pour exclure</strong> : Les alliances unissent, elles ne divisent pas</li>
+                        <li><strong>Ne pas faire de blagues méchantes</strong> : La plaisanterie doit rester respectueuse</li>
+                        <li><strong>Ne pas ignorer ses obligations</strong> : Si tu es allié avec quelqu'un, tu as des responsabilités</li>
+                        <li><strong>Ne pas favoriser un groupe</strong> : Toutes les ethnies sont égales en dignité</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onglet Évaluation -->
+        <div id="evaluation" class="tab-content">
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-flag-checkered"></i> Situation d'évaluation</h2>
+                
+                <div class="important-box">
+                    <p><strong>Durée estimée : 25-30 minutes</strong></p>
+                    <p>Cette évaluation reprend l'ensemble des connaissances acquises dans cette leçon sur les alliances interethniques.</p>
+                </div>
+                
+                <div class="exercise-box">
+                    <div class="exercise-title"><i class="fas fa-tasks"></i> Situation d'évaluation</div>
+                    
+                    <div class="question">
+                        <div class="lesson-content">
+                            <p>Suite à un conflit communautaire qui a éclaté entre les jeunes de ton quartier, certains de tes amis de la même communauté que toi décident de mener des actions de représailles. Ils t'invitent à les rejoindre.</p>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>1. Quel est le problème posé dans cette situation ?</strong></p>
+                            <textarea id="eval1" rows="3" placeholder="Votre réponse..."></textarea>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>2. Cite trois avantages des alliances interethniques et explique brièvement chacun.</strong></p>
+                            <textarea id="eval2" rows="5" placeholder="Votre réponse..."></textarea>
+                        </div>
+                        
+                        <div class="question">
+                            <p><strong>3. Justifie ton refus de t'associer à des actions de représailles. Donne au moins deux arguments solides.</strong></p>
+                            <textarea id="eval3" rows="5" placeholder="Votre réponse..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lesson-content">
+                    <button class="show-answer" onclick="submitEvaluation()" style="width: 100%; background: linear-gradient(to right, var(--success), #27ae60);">
+                        Soumettre l'évaluation
+                    </button>
+                    
+                    <div id="evalResults" class="answer-box" style="display: none; margin-top: 1.5rem;">
+                        <h3>Corrections suggérées</h3>
+                        <div id="evalScore" style="text-align: center; font-size: 1.3rem; margin: 1rem 0;"></div>
+                        <div id="evalCorrections"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Fiche de révision -->
+            <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-clipboard-list"></i> Fiche de révision complète</h2>
+                
+                <div class="lesson-content" style="background: linear-gradient(135deg, rgba(61, 59, 142, 0.03), rgba(104, 131, 186, 0.1));">
+                    <h3 class="definition-title"><i class="fas fa-graduation-cap"></i> À retenir : Alliances Interethniques et Cohésion Sociale</h3>
+                    
+                    <div class="grid-2">
+                        <div class="grid-item">
+                            <h4 style="color: var(--primary);">Définitions essentielles</h4>
+                            <ul>
+                                <li><span class="term">Alliance interethnique</span> : Pacte de non-agression créant des parentés à plaisanterie</li>
+                                <li><span class="term">Peuples Kwa</span> : Groupes du Sud, Centre, Est (ex: Baoulé, Agni, N'Zima)</li>
+                                <li><span class="term">Peuples Krou</span> : Groupes de l'Ouest (ex: Bété, Wê, Dida)</li>
+                                <li><span class="term">Cohésion sociale</span> : Capacité d'une société à vivre ensemble harmonieusement</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid-item">
+                            <h4 style="color: var(--secondary);">Exemples d'alliances</h4>
+                            <ul>
+                                <li><strong>Kwa-Kwa</strong> : Agni/Baoulé, M'batto/Ebrié</li>
+                                <li><strong>Krou-Krou</strong> : Bété/Bakoué, Godié/Dida</li>
+                                <li><strong>Kwa-Krou</strong> : Dida/Abbey/Abidji/Abouré/Akyé</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="grid-2" style="margin-top: 1.5rem;">
+                        <div class="grid-item">
+                            <h4 style="color: var(--info);">Valeurs véhiculées</h4>
+                            <ul>
+                                <li>Honnêteté et transparence</li>
+                                <li>Solidarité et entraide</li>
+                                <li>Non-violence et dialogue</li>
+                                <li>Respect de la parole donnée</li>
+                                <li>Fraternité et considération mutuelle</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid-item">
+                            <h4 style="color: var(--success);">Avantages des alliances</h4>
+                            <ul>
+                                <li>Prévention des conflits interethniques</li>
+                                <li>Règlement pacifique des différends</li>
+                                <li>Renforcement de la paix sociale</li>
+                                <li>Promotion de l'unité nationale</li>
+                                <li>Transmission de valeurs positives</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(104, 131, 186, 0.1); border-radius: 8px;">
+                        <h4 style="color: var(--secondary); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-handshake"></i>
+                            Comment être un bon "allié" au quotidien ?
+                        </h4>
+                        <ul>
+                            <li><strong>Apprendre</strong> : Connaître les alliances de ta région et de ton pays</li>
+                            <li><strong>Respecter</strong> : Traiter tous les peuples avec considération</li>
+                            <li><strong>Dialoguer</strong> : Privilégier la parole aux conflits</li>
+                            <li><strong>Médier</strong> : Aider à réconcilier les personnes en conflit</li>
+                            <li><strong>Partager</strong> : Échanger cultures, traditions, connaissances</li>
+                            <li><strong>Promouvoir</strong> : Faire connaître les alliances autour de toi</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3>ClassePro - EDHC</h3>
+            <p>Leçon 9 : Les Alliances Interethniques, les Cultures des Kwa et des Krou et la Cohésion Sociale</p>
+            <p>&copy; 2025 ClassePro. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Modales overlay -->
+    <div id="modalOverlay" class="modal-overlay">
+        <div id="feedbackModal" class="modal">
+            <div class="modal-header">
+                <div id="modalIcon" class="modal-icon"></div>
+                <h3 id="modalTitle" class="modal-title"></h3>
+            </div>
+            <div class="modal-content">
+                <p id="modalMessage"></p>
+                <div id="modalDetails" style="margin-top: 15px; display: none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="modalButton" class="modal-btn">Continuer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="leçon-9-edhc-4e.js"></script>
+</body>
+</html>
